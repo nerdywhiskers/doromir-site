@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete your data — Doromir</title>
+<meta name="description" content="How to delete your Doromir data. All data is stored only on your device; uninstalling the app deletes everything, and there is no server copy.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="/assets/img/favicon.png">
+<link rel="apple-touch-icon" href="/assets/img/icon.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Delete your data — Doromir">
+<meta property="og:description" content="Everything is on your device. Uninstalling deletes it all. There is no server copy.">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="stream" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-row">
+      <a class="brand" href="/" aria-label="Doromir home">
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="color:#fff">
+          <circle cx="24" cy="24" r="12.5" stroke="currentColor" stroke-width="1.5" opacity=".55"/>
+          <circle cx="24" cy="24" r="17" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+          <circle cx="24" cy="24" r="21.5" stroke="currentColor" stroke-width="1" opacity=".14"/>
+          <mask id="moon"><rect width="48" height="48" fill="#000"/><circle cx="24" cy="23" r="8.4" fill="#fff"/><circle cx="28.4" cy="20" r="7.3" fill="#000"/></mask>
+          <rect width="48" height="48" fill="currentColor" mask="url(#moon)"/>
+        </svg>
+        <span class="brand-name">Doromir</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/delete-data/" aria-current="page">Delete data</a>
+      </nav>
+    </div>
+    <hr class="rule">
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <span class="chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/>
+      </svg>
+      Data deletion
+    </span>
+    <h1 class="page-title">Delete your data</h1>
+    <p class="page-meta">Last updated 4 August 2026</p>
+
+    <article class="glass prose">
+
+      <div class="summary">
+        <p>
+          <strong>All Doromir data is stored only on your device. Uninstalling the app
+          deletes everything. There is no server copy, because there is no
+          server.</strong> You do not need to contact us, submit a request, or wait
+          for anything &mdash; deletion is immediate and entirely in your hands.
+        </p>
+      </div>
+
+      <h2>Export first, if you want to keep anything</h2>
+      <p>
+        Deletion is permanent and we cannot reverse it &mdash; we have no copy to
+        restore from. If there is anything in your journal you want to keep, export it
+        before you delete:
+      </p>
+      <ul>
+        <li>Open Doromir and go to <strong>Profile</strong>.</li>
+        <li>Choose the export option and pick a folder to write the file to.</li>
+        <li>Your entries and health snapshots are written out as a file you keep.</li>
+      </ul>
+
+      <h2>Delete a single dream</h2>
+      <p>
+        Open the entry from the <strong>Journal</strong> tab and delete it. This
+        removes the entry and its audio recording from your device immediately.
+      </p>
+
+      <h2>Delete everything, keep the app</h2>
+      <p>On Android:</p>
+      <ul>
+        <li>Open your device <strong>Settings</strong>.</li>
+        <li>Go to <strong>Apps</strong> &rarr; <strong>Doromir</strong>.</li>
+        <li>Tap <strong>Storage &amp; cache</strong> &rarr; <strong>Clear storage</strong>.</li>
+      </ul>
+      <p>
+        This erases the journal database, every audio recording, your alarms, your
+        settings and any downloaded AI model. The app remains installed and starts
+        fresh, as if newly installed.
+      </p>
+
+      <h2>Delete everything, including the app</h2>
+      <p>
+        <strong>Uninstall Doromir.</strong> Android removes the app's entire private
+        storage with it &mdash; recordings, transcripts, journal entries, embeddings,
+        health snapshots, alarms, settings and any downloaded model. Nothing survives
+        the uninstall, and nothing is left behind on any server.
+      </p>
+
+      <h2>Delete a downloaded AI model on its own</h2>
+      <p>
+        If you downloaded the optional on-device language model and want the storage
+        back without losing your journal, you can remove just the model from Doromir's
+        settings. Your entries are unaffected.
+      </p>
+
+      <h2>Revoke health access</h2>
+      <p>
+        Doromir only ever <em>reads</em> from Health&nbsp;Connect &mdash; it never
+        wrote anything to your health store, so there is nothing of ours to remove from
+        it. To stop Doromir reading further:
+      </p>
+      <ul>
+        <li>Open <strong>Health Connect</strong> (or Settings &rarr; Security &amp; privacy &rarr; More privacy settings &rarr; Health Connect).</li>
+        <li>Go to <strong>App permissions</strong> &rarr; <strong>Doromir</strong>.</li>
+        <li>Remove all permissions.</li>
+      </ul>
+      <p>
+        Health figures already copied into Doromir's local database are deleted when
+        you clear the app's storage or uninstall it, as described above. The same
+        applies to the optional phone-sensor sleep detection, which you can switch off
+        in Doromir's settings or by revoking the physical activity permission.
+      </p>
+
+      <h2>What we hold about you</h2>
+      <p>
+        Nothing. Doromir has no account system, no cloud sync and no backend service.
+        We do not collect analytics, crash reports, device identifiers or an email
+        address, so there is no record of you on our side to delete and no deletion
+        request for you to file. See the <a href="/privacy/">Privacy Policy</a> for the
+        full picture.
+      </p>
+      <p>
+        The one exception is a file you exported yourself: once you have written that
+        file somewhere or shared it, it is outside the app, and deleting it is up to
+        you.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        If anything above does not match what you see on your device, or you want help
+        confirming your data is gone, email
+        <a href="mailto:support@DOMAIN-TBD"><span class="todo">support@DOMAIN-TBD</span></a>.
+      </p>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/privacy/">Privacy policy</a></li>
+      <li><a href="/terms/">Terms of service</a></li>
+      <li><a href="/delete-data/">Delete your data</a></li>
+    </ul>
+    <p class="footer-legal">
+      Doromir is published by Nerdy Whiskers LLC.<br>
+      Contact: <a href="mailto:support@DOMAIN-TBD"><span class="todo">support@DOMAIN-TBD</span></a>
+    </p>
+  </div>
+</footer>
+
+<script src="/assets/js/stream.js"></script>
+</body>
+</html>

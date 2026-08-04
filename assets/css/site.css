@@ -1,0 +1,836 @@
+/* ===========================================================================
+   Doromir — Lucid Psychedelia, web edition.
+
+   Every token below is lifted from dream-app/mobile/theme/lucid.js so the site
+   and the app cannot drift. The system is neo-brutalism (heavy 2px borders, hard
+   non-blurred offset shadows, pill actions) over organic surrealism (the ambient
+   marble shader running behind everything).
+
+   Two radii, no more — `--r-card` for every frame, `--r-pill` for everything you
+   tap. Anything else is drift; the app learned this the hard way when App.js had
+   10/14/16/17/18/20/22/24/28 all at once.
+   =========================================================================== */
+
+/* ── Fonts ────────────────────────────────────────────────────────────────────
+   Self-hosted, all three families redistributable: Guanine is CC0, Anybody and
+   Work Sans are SIL Open Font License 1.1. Static instanced weights — pick the
+   weight by family, never lean on synthetic bolding. `font-display: swap` so
+   dense legal prose is readable before the webfont lands. */
+@font-face {
+  font-family: 'Guanine';
+  src: url('../fonts/Guanine.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anybody';
+  src: url('../fonts/Anybody-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anybody';
+  src: url('../fonts/Anybody-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anybody';
+  src: url('../fonts/Anybody-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ── Tokens ─────────────────────────────────────────────────────────────────*/
+:root {
+  /* Canvas is pure black; the shader sits behind the UI layer. */
+  --bg: #000000;
+
+  /* Rose / salmon — the primary "on-dark" ink for display type, borders, chips. */
+  --rose: #ffdad4;
+  /* Tertiary teal — the brand wordmark and the primary action. */
+  --teal: #b0ecfa;
+  --teal-ink: #001f25;
+  /* Marigold — accent, used sparingly. */
+  --marigold: #ffdf9f;
+  --error: #ba1a1a;
+
+  --white: #ffffff;
+  --body-dim: #d1d5db;
+  --muted: #b8c0cc;
+  --muted-dim: #6b7280;
+
+  /* Surfaces — translucent glass over the dark canvas. */
+  --card-fill: rgba(30, 30, 30, 0.7);
+  --glass-fill: rgba(0, 0, 0, 0.6);
+  --glass-soft: rgba(0, 0, 0, 0.5);
+  --chip-fill: rgba(255, 255, 255, 0.1);
+
+  /* Borders. */
+  --border-rose: #ffdad4;
+  --border-rose-50: rgba(255, 218, 212, 0.5);
+  --border-rose-faint: rgba(226, 190, 184, 0.3);
+  --border-w10: rgba(255, 255, 255, 0.1);
+  --border-w20: rgba(255, 255, 255, 0.2);
+
+  /* Hard-shadow tints — the element's own colour at 50%. */
+  --shadow-rose: rgba(255, 218, 212, 0.5);
+  --shadow-teal: rgba(176, 236, 250, 0.5);
+
+  --r-card: 12px;
+  --r-pill: 9999px;
+  --bw-hair: 2px;
+  --bw-accent: 4px;
+
+  /* 8px rhythm; 20px margins on mobile, 64px on desktop, 1280px container. */
+  --gutter: 24px;
+  --margin: 20px;
+  --container: 1280px;
+  --prose: 74ch;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --margin: 64px;
+  }
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────────*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--body-dim);
+  font-family: 'Work Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* The shader canvas is fixed behind everything. Before it initialises (and
+   forever, if WebGL is unavailable) this gradient stands in — same pastel ring,
+   frozen. Without it a WebGL-less browser gets a flat black page. */
+#stream {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  /* Promote to its own compositing layer. Both this and the scrim are fixed over a
+     scrolling document; without the promotion Chrome repaints them on every scroll
+     tick and a fast flick can outrun the paint, flashing black behind the content. */
+  will-change: transform;
+  background:
+    radial-gradient(120% 80% at 12% 0%, rgba(112, 224, 163, 0.24), transparent 60%),
+    radial-gradient(110% 70% at 88% 22%, rgba(92, 209, 230, 0.22), transparent 62%),
+    radial-gradient(120% 90% at 30% 78%, rgba(143, 168, 247, 0.22), transparent 64%),
+    radial-gradient(100% 70% at 82% 96%, rgba(196, 169, 247, 0.2), transparent 60%);
+}
+
+/* Once the shader is drawing, drop the CSS stand-in so the two never composite. */
+#stream.is-live {
+  background: none;
+}
+
+/* Scrim between the shader and the content — the web counterpart of the app's
+   EdgeScrim (mobile/theme/EdgeScrim.js). The app scrims only the top and bottom,
+   because on a phone the middle of the screen is covered by opaque glass cards
+   anyway. A desktop page has text and open space everywhere, so the flat portion
+   runs the full height and the edges darken further, seating the header lockup and
+   the footer on a dark base exactly as the app does.
+
+   The app's canvas is pure black with the shader as atmosphere over it. Without
+   this the proportions invert at desktop width: the marble becomes the page and
+   the black canvas disappears. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  will-change: transform;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.86) 0,
+    rgba(0, 0, 0, 0.52) 200px,
+    rgba(0, 0, 0, 0.52) calc(100% - 200px),
+    rgba(0, 0, 0, 0.86) 100%
+  );
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--teal);
+  text-decoration-color: rgba(176, 236, 250, 0.4);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+a:hover {
+  color: var(--white);
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 3px solid var(--marigold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Skip link — visually hidden until focused. */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--teal);
+  color: var(--teal-ink);
+  font-weight: 600;
+  border-radius: 0 0 var(--r-card) 0;
+}
+.skip:focus {
+  left: 0;
+}
+
+.wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--margin);
+}
+
+/* ── Type ───────────────────────────────────────────────────────────────────
+   Guanine carries every heading (the app's `font.heading`). Anybody is reserved
+   for numerals and display figures, exactly as in the app, where the clock stays
+   in Anybody for glance clarity. Work Sans is body and labels. */
+h1,
+h2,
+h3 {
+  font-family: 'Guanine', 'Anybody', system-ui, sans-serif;
+  font-weight: 400;
+  color: var(--rose);
+  margin: 0;
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6.2vw, 4.5rem);
+  line-height: 1.06;
+  color: var(--white);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  line-height: 1.24;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  color: var(--white);
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* Uppercase technical label — Work Sans semibold with generous tracking. */
+.kicker {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--marigold);
+  margin: 0 0 12px;
+}
+
+.lede {
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  line-height: 1.6;
+  color: var(--body-dim);
+  max-width: 56ch;
+}
+
+.small {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--muted);
+}
+
+/* ── Page header — the shared Doromir lockup ────────────────────────────────
+   Mirrors mobile/theme/PageHeader.js: white crescent mark + teal wordmark, a 4px
+   rule beneath, page name under that. One definition; no page rolls its own. */
+.site-header {
+  padding-top: 28px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gutter);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand svg {
+  width: 56px;
+  height: 56px;
+  flex: none;
+}
+
+/* Teal wordmark, normal case. Teal ties the brand to the primary capture action
+   and — unlike rose — is not also the body ink, so the lockup reads as distinct
+   from page text. */
+.brand-name {
+  font-family: 'Guanine', system-ui, sans-serif;
+  font-size: 26px;
+  line-height: 32px;
+  letter-spacing: 0.3px;
+  color: var(--teal);
+}
+
+.brand:hover .brand-name {
+  color: var(--white);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Chrome, not an action: half-strength border, no hard shadow. The app applies
+   the same rule to its one non-action button, the settings control. */
+.site-nav a {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--rose);
+  text-decoration: none;
+  padding: 9px 16px;
+  border: var(--bw-hair) solid transparent;
+  border-radius: var(--r-pill);
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.site-nav a:hover {
+  border-color: var(--border-rose-50);
+  background: var(--glass-fill);
+  color: var(--white);
+}
+
+.site-nav a[aria-current='page'] {
+  border-color: var(--border-rose-50);
+  background: var(--glass-fill);
+  color: var(--white);
+}
+
+/* At phone width the three nav items wrap to a second line and strand "Delete data"
+   on its own. Tightening the chrome — which is what the nav is — buys enough room
+   for one line without touching the tap-target height. */
+@media (max-width: 480px) {
+  .brand svg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-name {
+    font-size: 22px;
+  }
+
+  .site-nav {
+    gap: 2px;
+  }
+
+  .site-nav a {
+    padding: 9px 9px;
+    letter-spacing: 0.02em;
+    font-size: 13px;
+  }
+}
+
+/* Rule directly under the brand row. Matches the app's section-header rule
+   exactly, so the system has one divider treatment rather than two. */
+.rule {
+  height: var(--bw-accent);
+  background: var(--border-w10);
+  border: 0;
+  margin: 18px 0 0;
+}
+
+/* ── Chips ──────────────────────────────────────────────────────────────────*/
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: var(--r-pill);
+  border: var(--bw-hair) solid var(--border-rose-50);
+  background: var(--chip-fill);
+  color: var(--rose);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.chip svg {
+  width: 14px;
+  height: 14px;
+}
+
+.chip--teal {
+  border-color: rgba(176, 236, 250, 0.5);
+  color: var(--teal);
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────────
+   Large, uppercase, 2px border, hard 4px offset shadow. On hover the shadow
+   expands to 6px and the element translates -2px on both axes, simulating a
+   physical press. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border-radius: var(--r-pill);
+  border: var(--bw-hair) solid var(--teal);
+  background: var(--teal);
+  color: var(--teal-ink);
+  font-family: 'Anybody', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--shadow-teal);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.btn:hover {
+  color: var(--teal-ink);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--shadow-teal);
+}
+
+.btn:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 var(--shadow-teal);
+}
+
+.btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn--ghost {
+  background: var(--glass-fill);
+  border-color: var(--border-rose);
+  color: var(--rose);
+  box-shadow: 4px 4px 0 var(--shadow-rose);
+}
+
+.btn--ghost:hover {
+  color: var(--white);
+  box-shadow: 6px 6px 0 var(--shadow-rose);
+}
+
+.btn--ghost:active {
+  box-shadow: 2px 2px 0 var(--shadow-rose);
+}
+
+/* Not-yet-a-link: the app is not on the store yet, so the primary CTA is a
+   status, not a button. It keeps the button's shape but none of its affordance —
+   no shadow, no hover, no pointer. */
+.btn--pending {
+  background: transparent;
+  border-color: var(--border-rose-50);
+  border-style: dashed;
+  color: var(--rose);
+  box-shadow: none;
+  cursor: default;
+}
+
+.btn--pending:hover {
+  transform: none;
+  box-shadow: none;
+  color: var(--rose);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  margin-top: 36px;
+}
+
+/* ── Surfaces ───────────────────────────────────────────────────────────────*/
+.glass {
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: var(--bw-hair) solid var(--border-w10);
+  border-radius: var(--r-card);
+}
+
+.card {
+  background: var(--card-fill);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: var(--bw-hair) solid var(--border-rose-faint);
+  border-radius: var(--r-card);
+  padding: var(--gutter);
+  transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+/* Passive cards carry no shadow — that is how this system marks secondary
+   importance. Hover promotes one to the active treatment: the hard rose offset and
+   the -2px translate the app uses for a pressable surface. */
+.card:hover {
+  border-color: var(--border-rose-50);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--shadow-rose);
+}
+
+.card h3 {
+  margin-bottom: 8px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Feature icon — a rose-outlined square, matching the app's icon treatment. */
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  border-radius: var(--r-card);
+  border: var(--bw-hair) solid var(--border-rose-50);
+  background: var(--chip-fill);
+  color: var(--rose);
+}
+
+.card-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────────*/
+section {
+  padding: clamp(56px, 8vw, 104px) 0;
+}
+
+.hero {
+  padding-top: clamp(48px, 7vw, 88px);
+  padding-bottom: clamp(48px, 7vw, 88px);
+}
+
+.hero h1 {
+  max-width: 18ch;
+}
+
+.hero .lede {
+  margin-top: 24px;
+}
+
+.grid {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 40px;
+}
+
+.section-head {
+  max-width: 62ch;
+}
+
+.section-head p {
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+/* ── Privacy pledge panel ───────────────────────────────────────────────────
+   The one loud claim on the site, so it gets the accent-bar treatment the app
+   gives an active card. */
+.pledge {
+  border-left: var(--bw-accent) solid var(--teal);
+  padding: var(--gutter) clamp(20px, 3vw, 36px);
+}
+
+.pledge h2 {
+  color: var(--teal);
+}
+
+.pledge ul {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.pledge li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--body-dim);
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.pledge li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--r-pill);
+  background: var(--teal);
+}
+
+/* ── Prose (the legal pages) ────────────────────────────────────────────────
+   Dense text on a full-bleed animated background is unreadable, so legal copy
+   sits on the same glass surface the app uses for its in-app policy screen. */
+.prose {
+  max-width: var(--prose);
+  padding: clamp(24px, 4vw, 48px);
+  margin-bottom: 72px;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin: 44px 0 12px;
+}
+
+.prose h2:first-of-type {
+  margin-top: 0;
+}
+
+.prose h3 {
+  font-size: 1.0625rem;
+  margin: 28px 0 8px;
+  color: var(--marigold);
+}
+
+.prose p,
+.prose li {
+  font-size: 17px;
+  line-height: 28px;
+}
+
+.prose ul {
+  margin: 0 0 1rem;
+  padding-left: 22px;
+}
+
+.prose li {
+  margin-bottom: 8px;
+}
+
+.prose li::marker {
+  color: var(--rose);
+}
+
+.page-title {
+  margin: 26px 0 8px;
+  color: var(--rose);
+  font-size: clamp(2.25rem, 4.5vw, 3rem);
+  line-height: 1.1;
+}
+
+.page-meta {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0 0 40px;
+}
+
+/* Summary box at the top of a legal page — the honest one-paragraph version. */
+.summary {
+  border-left: var(--bw-accent) solid var(--marigold);
+  padding: 20px 24px;
+  margin-bottom: 36px;
+  background: var(--glass-soft);
+  border-radius: 0 var(--r-card) var(--r-card) 0;
+}
+
+.summary p {
+  color: var(--white);
+  font-size: 17px;
+  line-height: 27px;
+}
+
+/* Callout for the things a reader must not miss — alarm reliability, the
+   not-medical disclaimer. Rose, because in this system rose is emphasis ink. */
+.note {
+  border: var(--bw-hair) solid var(--border-rose-50);
+  border-radius: var(--r-card);
+  background: var(--chip-fill);
+  padding: 18px 22px;
+  margin: 24px 0;
+}
+
+.note p {
+  color: var(--body-dim);
+  font-size: 16px;
+  line-height: 26px;
+}
+
+/* Unfilled value the publisher must replace before this site goes live. Loud on
+   purpose: a placeholder that ships unnoticed into a legal document is the whole
+   failure mode this styling exists to prevent. */
+.todo {
+  background: rgba(255, 223, 159, 0.16);
+  border-bottom: 2px dashed var(--marigold);
+  color: var(--marigold);
+  padding: 0 3px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────────*/
+.site-footer {
+  border-top: var(--bw-accent) solid var(--border-w10);
+  padding: 40px 0 56px;
+  margin-top: auto;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gutter);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links a {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--rose);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+/* --muted, not --muted-dim. The app bumped its own muted token from #9CA3AF to
+   #B8C0CC in the launch-readiness audit for exactly this case: small text over a
+   translucent surface on top of the animated background. #6B7280 lands around
+   4:1 here, under the 4.5:1 AA floor for text this size. */
+.footer-legal {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 22px;
+  max-width: 46ch;
+}
+
+.footer-legal a {
+  color: var(--teal);
+}
+
+/* Sticky footer without a wrapper div. */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body > main {
+  flex: 1 0 auto;
+}
