@@ -13,25 +13,31 @@
 
   // ── Palette ────────────────────────────────────────────────────────────────
   // Six rgb (0-1) stops the shader walks as a smooth cyclic ramp, so the last
-  // stop wraps back into the first — a ring, not a gradient. The app ships four
-  // palettes; the site uses "Lucid", the app's default.
+  // stop wraps back into the first — a ring, not a gradient. The app ships four;
+  // the site uses "Ink", not the app's "Lucid" default. Ink is near-neutral — the
+  // ring turns on value rather than hue — so it reads as weather behind the page
+  // instead of colour competing with the rose and teal the UI spends on meaning.
+  //
+  // Keep this in sync with the CSS stand-in gradient on `#stream` in site.css,
+  // which is these same stops flattened for browsers without WebGL.
   var STOPS = [
-    [0.44, 0.88, 0.64], // mint
-    [0.36, 0.82, 0.9], // aqua
-    [0.44, 0.66, 0.96], // sky
-    [0.56, 0.6, 0.97], // periwinkle
-    [0.76, 0.66, 0.97], // lavender
-    [0.92, 0.74, 0.9], // lilac
+    [0.62, 0.66, 0.74], // pale slate
+    [0.48, 0.52, 0.62], // slate
+    [0.36, 0.4, 0.5], // deep slate
+    [0.5, 0.54, 0.66], // slate blue
+    [0.68, 0.72, 0.8], // mist
+    [0.56, 0.6, 0.7], // grey blue
   ];
 
-  // The app's "subtle" intensity preset, not its "medium" default. streamPalettes.js
-  // says why subtle exists: "the full-bleed background sits directly under body
-  // text". On a phone that is occasionally true — most of the screen is covered by
-  // opaque glass cards. On a desktop page it is true everywhere, all the time, so
-  // subtle is the correct preset here rather than a deviation from the app.
+  // The app's "subtle" preset. Ink is a near-neutral ring, so the same multiplier
+  // that reads as atmosphere in Lucid reads as grey haze here — the palette change
+  // and the step down the intensity scale are one decision, not two.
   //
   // A page-wide scrim sits over this too (see `body::before` in site.css); the two
-  // multiply, and were tuned together.
+  // multiply, so this is not the whole story — mid-page the scrim still removes
+  // about half. If prose legibility ever needs defending, move the scrim's middle
+  // stop rather than this, and check the privacy page, not the home page: dense
+  // legal copy over the full height is where contrast breaks first.
   var INTENSITY = 0.3;
 
   var STOP_COUNT = 6;

@@ -14,6 +14,10 @@
 <meta property="og:image" content="/assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/assets/css/site.css">
+<!-- The hero screenshot is the largest thing above the fold and the page's LCP
+     candidate. Preload the WebP so it is in flight before the CSS resolves the
+     <picture>; the PNG fallback path is unaffected. -->
+<link rel="preload" as="image" href="/assets/img/screens/wake.webp" type="image/webp">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -36,11 +40,6 @@
         </svg>
         <span class="brand-name">Doromir</span>
       </a>
-      <nav class="site-nav" aria-label="Main">
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
-        <a href="/delete-data/">Delete data</a>
-      </nav>
     </div>
     <hr class="rule">
   </div>
@@ -48,169 +47,189 @@
 
 <main id="main">
 
+  <!-- ── Hero ──────────────────────────────────────────────────────────────
+       Copy left, product right. DOM order is visual order at every width — the
+       phone never jumps above the h1 on mobile, so the headline is the first
+       thing read and the first thing a crawler sees. -->
   <section class="hero">
-    <div class="wrap">
-      <p class="kicker">Dream journal &middot; Android</p>
-      <h1>Speak your dream before it fades.</h1>
-      <p class="lede">
-        Doromir is an alarm clock that wakes you straight into a voice recorder.
-        Say what you saw, half-asleep, in the dark — then go back to sleep.
-        Nothing leaves your phone.
-      </p>
-      <div class="btn-row">
-        <span class="btn btn--pending">Coming to Google Play</span>
-        <a class="btn btn--ghost" href="/privacy/">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
-            <path d="m9 12 2 2 4-4"/>
-          </svg>
-          How privacy works
-        </a>
-      </div>
-    </div>
-  </section>
+    <div class="wrap hero-grid">
 
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">What it does</p>
-        <h2>Built around the ninety seconds after you wake.</h2>
-        <p>
-          Dream recall collapses within minutes of waking. Every design decision
-          in Doromir serves getting words out of your head before that happens —
-          and keeping them somewhere only you can read.
+      <div class="hero-copy">
+        <p class="kicker reveal">Dream journal &middot; Android</p>
+        <h1 class="reveal" style="--d:1">Speak your dream before it fades.</h1>
+        <p class="lede reveal" style="--d:2">
+          An alarm clock that wakes you into a voice recorder.
+          Nothing leaves your phone.
         </p>
+        <div class="btn-row btn-row--stack reveal" style="--d:3">
+          <span class="btn btn--pending">Coming to Android</span>
+          <a class="btn btn--ghost" href="/privacy/">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            How privacy works
+          </a>
+        </div>
       </div>
 
-      <div class="grid">
-
-        <article class="card">
-          <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/><path d="M6.38 18.7 4 21"/><path d="M17.64 18.67 20 21"/>
-            </svg>
-          </span>
-          <h3>An alarm that opens into a recorder</h3>
-          <p>
-            The alarm takes over the lock screen with a full-screen wake interface.
-            One tap starts recording — no unlocking, no hunting for an app while
-            the dream evaporates.
-          </p>
-        </article>
-
-        <article class="card">
-          <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/>
-            </svg>
-          </span>
-          <h3>Voice capture, transcribed on the device</h3>
-          <p>
-            Speak naturally and stop when you run out. Your phone's own speech
-            recognition turns it into text, with a bundled Whisper model as a
-            fallback. Recordings are deleted after transcription unless you
-            choose to keep them.
-          </p>
-        </article>
-
-        <article class="card">
-          <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>
-            </svg>
-          </span>
-          <h3>Nightstand mode</h3>
-          <p>
-            A black screen, a large dim clock, and a wake target big enough to hit
-            half-asleep in the dark. Park the phone beside the bed and it stops
-            being a phone.
-          </p>
-        </article>
-
-        <article class="card">
-          <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
-            </svg>
-          </span>
-          <h3>A journal that notices its own patterns</h3>
-          <p>
-            Entries get titles, tags and moods automatically. Search across
-            everything you have logged, filter by date, and watch recurring motifs
-            surface as the journal grows.
-          </p>
-        </article>
-
-        <article class="card">
-          <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>
-            </svg>
-          </span>
-          <h3>Sleep, correlated — only if you ask</h3>
-          <p>
-            Connect Health Connect, or log a night by hand, to see your dreams
-            against sleep duration, REM, deep sleep, HRV and resting heart rate.
-            Read-only, analysed on-device. Decline it and everything else still
-            works.
-          </p>
-        </article>
-
-        <article class="card">
-          <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-            </svg>
-          </span>
-          <h3>Optional on-device AI</h3>
-          <p>
-            Doromir can run a small language model locally for richer themes and
-            reflections. Downloading it is your choice, it runs offline once it is
-            there, and your dreams are never uploaded to be analysed.
-          </p>
-        </article>
-
+      <div class="hero-art reveal" style="--d:2">
+        <span class="phone-glow" aria-hidden="true"></span>
+        <div class="phone phone--tilt float">
+          <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
+          <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
+          <div class="phone-screen">
+            <picture>
+              <source srcset="/assets/img/screens/wake.webp" type="image/webp">
+              <img src="/assets/img/screens/wake.png" width="780" height="1688" fetchpriority="high"
+                   alt="Doromir's wake screen: a glowing green capture target above the time 06:45, the greeting Good morning, and a Dismiss and speak button.">
+            </picture>
+          </div>
+        </div>
       </div>
+
     </div>
   </section>
 
+  <!-- ── Showcase ──────────────────────────────────────────────────────────
+       Four screens, sides alternating, one headline and one line each. -->
+  <section class="showcase-set">
+    <div class="wrap">
+
+      <div class="showcase">
+        <div class="showcase-art reveal">
+          <div class="phone float">
+            <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
+            <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
+            <div class="phone-screen">
+              <picture>
+                <source srcset="/assets/img/screens/wake.webp" type="image/webp">
+                <img src="/assets/img/screens/wake.png" width="780" height="1688" loading="lazy"
+                     alt="The alarm ringing full-screen with a large capture target and a Dismiss and speak button.">
+              </picture>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-copy reveal" style="--d:1">
+          <p class="kicker">Capture</p>
+          <h2>Wake up. Start talking.</h2>
+          <p>
+            The alarm takes over the lock screen. One tap records — no unlocking,
+            no hunting for an app while the dream drains away.
+          </p>
+        </div>
+      </div>
+
+      <hr class="rule rule--section">
+
+      <div class="showcase showcase--flip">
+        <div class="showcase-art reveal">
+          <div class="phone float" data-scrollshot>
+            <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
+            <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
+            <div class="phone-screen">
+              <picture>
+                <source srcset="/assets/img/screens/journal.webp" type="image/webp">
+                <img src="/assets/img/screens/journal.png" width="780" height="2882" loading="lazy"
+                     alt="The dream journal: a capture streak, weekly stats, and dated entries titled Sinking cruise ship, Forgot my lines and Driving from the backseat, each tagged with its motifs.">
+              </picture>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-copy reveal" style="--d:1">
+          <p class="kicker">Journal</p>
+          <h2>Your journal writes itself.</h2>
+          <p>
+            Titles, tags and moods are added for you. Search everything you have
+            ever logged, and watch the motifs start repeating.
+          </p>
+        </div>
+      </div>
+
+      <hr class="rule rule--section">
+
+      <div class="showcase">
+        <div class="showcase-art reveal">
+          <div class="phone float" data-scrollshot>
+            <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
+            <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
+            <div class="phone-screen">
+              <picture>
+                <source srcset="/assets/img/screens/insights.webp" type="image/webp">
+                <img src="/assets/img/screens/insights.png" width="780" height="3538" loading="lazy"
+                     alt="The insights screen, charting recurring dream motifs and moods against sleep duration and heart rate.">
+              </picture>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-copy reveal" style="--d:1">
+          <p class="kicker">Insights</p>
+          <h2>Patterns you would never notice.</h2>
+          <p>
+            Recurring motifs read against sleep duration, REM, deep sleep and
+            resting heart rate. Worked out on your device, or not at all.
+          </p>
+        </div>
+      </div>
+
+      <hr class="rule rule--section">
+
+      <div class="showcase showcase--flip">
+        <div class="showcase-art reveal">
+          <div class="phone float">
+            <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
+            <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
+            <div class="phone-screen">
+              <picture>
+                <source srcset="/assets/img/screens/nightstand.webp" type="image/webp">
+                <img src="/assets/img/screens/nightstand.png" width="780" height="1688" loading="lazy"
+                     alt="Nightstand mode: a black screen showing only a dim crescent moon, the time 06:45, and the alarm name.">
+              </picture>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-copy reveal" style="--d:1">
+          <p class="kicker">Nightstand</p>
+          <h2>It stops being a phone.</h2>
+          <p>
+            A black screen, a dim clock, and a wake target big enough to hit
+            half-asleep in the dark.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── The pledge ────────────────────────────────────────────────────────
+       The one loud claim on the page, so it keeps the full active-surface
+       treatment. Four promises, not eight; the policy page carries the rest. -->
   <section>
     <div class="wrap">
-      <div class="glass pledge">
+      <div class="glass pledge reveal">
         <p class="kicker">The pledge</p>
         <h2>Nothing leaves your phone.</h2>
-        <p class="lede" style="margin-top:16px">
-          This is not a marketing line with an asterisk. Doromir has no backend to
-          send anything to.
-        </p>
         <ul>
-          <li>No account, no sign-in, no email address required.</li>
-          <li>No analytics, no crash reporting, no advertising, no third-party trackers.</li>
-          <li>No server &mdash; your dreams have nowhere else to go.</li>
-          <li>Transcription, tagging and analysis all run on your device.</li>
-          <li>Health data is read-only, never written back, never uploaded, never sold.</li>
-          <li>Export your whole journal as a file whenever you want it.</li>
-          <li>Uninstalling deletes everything, because there is no copy anywhere else.</li>
+          <li>No account, no sign-in, no email address.</li>
+          <li>No analytics, no ads, no trackers.</li>
+          <li>No server, so your dreams have nowhere to go.</li>
+          <li>Uninstalling deletes everything. There is no other copy.</li>
         </ul>
         <div class="btn-row">
-          <a class="btn" href="/privacy/">Read the privacy policy</a>
+          <a class="btn" href="/privacy/">Read the privacy &amp; data policy</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
+  <section class="closer">
     <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">Availability</p>
-        <h2>Android first. Not on the store yet.</h2>
-        <p>
-          Doromir is in testing ahead of a Google Play release. The full-screen
-          wake alarm &mdash; the reason the app exists &mdash; is built on Android
-          platform features, so Android is where it ships first. There is no iOS
-          version yet.
-        </p>
-      </div>
+      <p class="kicker reveal">Availability</p>
+      <h2 class="reveal" style="--d:1">Android first. In beta now.</h2>
+      <p class="reveal" style="--d:2">
+        There is no iOS version yet. To join the beta, email
+        <a href="mailto:support@DOMAIN-TBD"><span class="todo">support@DOMAIN-TBD</span></a>.
+      </p>
     </div>
   </section>
 
@@ -219,9 +238,9 @@
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <ul class="footer-links">
-      <li><a href="/privacy/">Privacy policy</a></li>
+      <li><a href="/privacy/">Privacy &amp; data</a></li>
       <li><a href="/terms/">Terms of service</a></li>
-      <li><a href="/delete-data/">Delete your data</a></li>
+      <li><a href="/privacy/#delete">Data deletion</a></li>
     </ul>
     <p class="footer-legal">
       Doromir is published by Nerdy Whiskers LLC.<br>
@@ -233,5 +252,6 @@
 </footer>
 
 <script src="/assets/js/stream.js"></script>
+<script src="/assets/js/reveal.js" defer></script>
 </body>
 </html>

@@ -103,8 +103,16 @@
 
   --r-card: 12px;
   --r-pill: 9999px;
+  /* A third radius, and the only one the two-radii rule allows. A device bezel is
+     a picture of a physical object, not a UI frame — at --r-card a phone reads as
+     a tablet. Named so it stays an exception rather than becoming drift. */
+  --r-device: 38px;
   --bw-hair: 2px;
   --bw-accent: 4px;
+
+  /* How far a revealed element rises into place. One value so every reveal on the
+     page travels the same distance. */
+  --reveal-lift: 24px;
 
   /* 8px rhythm; 20px margins on mobile, 64px on desktop, 1280px container. */
   --gutter: 24px;
@@ -169,11 +177,15 @@ body {
      scrolling document; without the promotion Chrome repaints them on every scroll
      tick and a fast flick can outrun the paint, flashing black behind the content. */
   will-change: transform;
+  /* Stand-in for browsers without WebGL: the shader's "Ink" ring flattened to four
+     static blooms. These are the same six stops from stream.js converted to 8-bit —
+     change one and change the other, or a WebGL-less browser gets a palette the
+     shader no longer uses. */
   background:
-    radial-gradient(120% 80% at 12% 0%, rgba(112, 224, 163, 0.24), transparent 60%),
-    radial-gradient(110% 70% at 88% 22%, rgba(92, 209, 230, 0.22), transparent 62%),
-    radial-gradient(120% 90% at 30% 78%, rgba(143, 168, 247, 0.22), transparent 64%),
-    radial-gradient(100% 70% at 82% 96%, rgba(196, 169, 247, 0.2), transparent 60%);
+    radial-gradient(120% 80% at 12% 0%, rgba(173, 184, 204, 0.24), transparent 60%),
+    radial-gradient(110% 70% at 88% 22%, rgba(143, 153, 179, 0.22), transparent 62%),
+    radial-gradient(120% 90% at 30% 78%, rgba(122, 133, 158, 0.22), transparent 64%),
+    radial-gradient(100% 70% at 82% 96%, rgba(92, 102, 128, 0.2), transparent 60%);
 }
 
 /* Once the shader is drawing, drop the CSS stand-in so the two never composite. */
@@ -363,44 +375,9 @@ strong {
   color: var(--white);
 }
 
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-/* Chrome, not an action: half-strength border, no hard shadow. The app applies
-   the same rule to its one non-action button, the settings control. */
-.site-nav a {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--rose);
-  text-decoration: none;
-  padding: 9px 16px;
-  border: var(--bw-hair) solid transparent;
-  border-radius: var(--r-pill);
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
-}
-
-.site-nav a:hover {
-  border-color: var(--border-rose-50);
-  background: var(--glass-fill);
-  color: var(--white);
-}
-
-.site-nav a[aria-current='page'] {
-  border-color: var(--border-rose-50);
-  background: var(--glass-fill);
-  color: var(--white);
-}
-
-/* At phone width the three nav items wrap to a second line and strand "Delete data"
-   on its own. Tightening the chrome — which is what the nav is — buys enough room
-   for one line without touching the tap-target height. */
+/* The header carries the brand lockup alone; Privacy, Terms and data deletion live
+   in the footer, which is where people look for them and where Play's review
+   expects them. */
 @media (max-width: 480px) {
   .brand svg {
     width: 44px;
@@ -409,16 +386,6 @@ strong {
 
   .brand-name {
     font-size: 22px;
-  }
-
-  .site-nav {
-    gap: 2px;
-  }
-
-  .site-nav a {
-    padding: 9px 9px;
-    letter-spacing: 0.02em;
-    font-size: 13px;
   }
 }
 
@@ -550,52 +517,101 @@ strong {
   border-radius: var(--r-card);
 }
 
-.card {
-  background: var(--card-fill);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+/* ── Device frame ───────────────────────────────────────────────────────────
+   The page's one piece of illustration. Drawn in CSS rather than shipped as a
+   mockup PNG so it inherits the system's border weight and hard offset shadow,
+   and so the screenshot inside stays a real image at real resolution.
+
+   The screen is a fixed 780:1688 window — the source captures' viewport ratio.
+   Two of the four screenshots are full-scroll captures much taller than that;
+   they overflow deliberately and reveal.js pans them (see [data-scrollshot]). */
+.phone {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #000;
   border: var(--bw-hair) solid var(--border-rose-faint);
-  border-radius: var(--r-card);
-  padding: var(--gutter);
-  transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+  border-radius: var(--r-device);
+  box-shadow: 8px 8px 0 var(--shadow-rose);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* Passive cards carry no shadow — that is how this system marks secondary
-   importance. Hover promotes one to the active treatment: the hard rose offset and
-   the -2px translate the app uses for a pressable surface. */
-.card:hover {
+.phone:hover {
   border-color: var(--border-rose-50);
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--shadow-rose);
+  box-shadow: 10px 10px 0 var(--shadow-rose);
 }
 
-.card h3 {
-  margin-bottom: 8px;
+.phone-screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 780 / 1688;
+  border-radius: calc(var(--r-device) - 12px);
+  background: #000;
 }
 
-.card p {
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 24px;
+.phone-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* The viewport-height captures match the frame's ratio to within a rounding
+     error, which can leave a sub-pixel strip of bare screen at the bottom edge.
+     min-height closes it and object-fit absorbs the difference by cropping rather
+     than stretching. Neither touches the full-scroll captures, whose auto height
+     is several times the frame. */
+  min-height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  /* Panned by reveal.js on tall captures; the transform origin must be the top so
+     progress 0 shows the top of the screen. */
+  transform-origin: top center;
+  will-change: transform;
 }
 
-/* Feature icon — a rose-outlined square, matching the app's icon treatment. */
-.card-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 16px;
-  border-radius: var(--r-card);
-  border: var(--bw-hair) solid var(--border-rose-50);
-  background: var(--chip-fill);
-  color: var(--rose);
+/* Side buttons. Purely decorative, but without them the frame reads as a picture
+   frame rather than a phone. */
+/* Side buttons. Decorative, but without them the frame reads as a picture frame
+   rather than a phone — so they have to actually be visible. At the border's own
+   30% alpha they vanished against the shader; these sit on the silhouette at the
+   same 50% the system uses for an active edge. */
+.phone-btn {
+  position: absolute;
+  right: -5px;
+  width: 5px;
+  border-radius: 0 3px 3px 0;
+  background: var(--border-rose-50);
 }
 
-.card-icon svg {
-  width: 22px;
-  height: 22px;
+.phone-btn--vol {
+  top: 22%;
+  height: 9%;
+}
+
+.phone-btn--pwr {
+  top: 36%;
+  height: 14%;
+}
+
+.phone--tilt {
+  transform: rotate(-3deg);
+}
+
+/* The app's capture orb, bloomed out behind the hero device. Teal rather than the
+   screenshot's green: on the page this is brand atmosphere, and teal is what the
+   system already spends on the capture action. */
+.phone-glow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(460px, 92%);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(176, 236, 250, 0.42), transparent 66%);
+  filter: blur(44px);
+  pointer-events: none;
+  animation: bloom 9s ease-in-out infinite;
 }
 
 /* ── Layout ─────────────────────────────────────────────────────────────────*/
@@ -604,8 +620,8 @@ section {
 }
 
 .hero {
-  padding-top: clamp(48px, 7vw, 88px);
-  padding-bottom: clamp(48px, 7vw, 88px);
+  padding-top: clamp(40px, 6vw, 76px);
+  padding-bottom: clamp(40px, 6vw, 72px);
 }
 
 .hero h1 {
@@ -614,61 +630,191 @@ section {
 
 .hero .lede {
   margin-top: 24px;
+  max-width: 40ch;
 }
 
-.grid {
+/* Copy first in the DOM at every width, so the h1 is never pushed below an image
+   on a phone. Below 900px the columns simply stack in that order. */
+.hero-grid {
   display: grid;
-  gap: var(--gutter);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  margin-top: 40px;
+  gap: clamp(40px, 6vw, 72px);
+  align-items: center;
 }
 
-.section-head {
-  max-width: 62ch;
+.hero-art {
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.section-head p {
+.hero-art .phone {
+  max-width: 300px;
+}
+
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .hero-art .phone {
+    max-width: 340px;
+  }
+}
+
+/* Duolingo's stacked full-width action pair on a phone; inline once there is
+   room. The button's own press physics is unchanged. */
+.btn-row--stack {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+@media (min-width: 560px) {
+  .btn-row--stack {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* ── Showcase ───────────────────────────────────────────────────────────────
+   One screen, one headline, one line. Art first in the DOM so that when the
+   columns stack you see the screen and then read what it is. */
+.showcase-set {
+  padding-top: clamp(48px, 7vw, 88px);
+  padding-bottom: clamp(48px, 7vw, 88px);
+}
+
+.showcase {
+  display: grid;
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+}
+
+.showcase-copy {
+  max-width: 46ch;
+}
+
+.showcase-copy h2 {
+  margin-top: 4px;
+}
+
+/* :not(.kicker) is load-bearing, not defensive. A bare `.showcase-copy p` scores
+   0,1,1 against .kicker's 0,1,0, so it silently repaints every section label from
+   marigold to muted grey — the label stops reading as a label and the page loses
+   its only accent colour. Same guard as .closer below. */
+.showcase-copy p:not(.kicker) {
   color: var(--muted);
-  margin-top: 12px;
+  margin-top: 14px;
+}
+
+@media (min-width: 860px) {
+  .showcase {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  /* Flip only the painted order, never the DOM order — the art stays first for a
+     screen reader and for the stacked layout.
+
+     Deliberately no `justify-self: end` on the flipped copy. It looks like the
+     tidier choice and it does work, but the copy box is 46ch inside a wider
+     column, so all it buys is an ~80px inset — and that inset pushes the text off
+     the page margin that the header, the pledge and the footer all sit on. A
+     straight left edge down the whole page is worth more than closing a gap. */
+  .showcase--flip .showcase-art {
+    order: 2;
+  }
+
+  .showcase--flip .showcase-copy {
+    order: 1;
+  }
+
+  .showcase--flip {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+/* Bigger than the hero device: these carry the journal and insights captures,
+   whose real UI text has to stay readable at rest. */
+.showcase-set .phone {
+  max-width: 360px;
+}
+
+/* The hairline between showcase rows — Duolingo's section divider, drawn with the
+   rule the app already uses under a section head. */
+.rule--section {
+  margin: clamp(48px, 7vw, 88px) 0;
+}
+
+.closer {
+  text-align: center;
+}
+
+.closer h2 {
+  color: var(--teal);
+}
+
+.closer p:not(.kicker) {
+  color: var(--muted);
+  margin-top: 14px;
 }
 
 /* ── Privacy pledge panel ───────────────────────────────────────────────────
-   The one loud claim on the site, so it gets the accent-bar treatment the app
-   gives an active card. */
+   The one loud claim on the site, so it carries the app's full active-surface
+   treatment rather than a left accent bar: a solid 2px border in the claim's own
+   colour plus the hard non-blurred offset shadow. That pairing — border and hard
+   shadow in the same hue — is the app's signature, and a bar-plus-dots callout is
+   the generic framework pattern it exists to avoid. Teal because this is the
+   privacy claim, and teal is what the app spends on trust. */
 .pledge {
-  border-left: var(--bw-accent) solid var(--teal);
-  padding: var(--gutter) clamp(20px, 3vw, 36px);
+  border: var(--bw-hair) solid var(--teal);
+  box-shadow: 6px 6px 0 var(--shadow-teal);
+  padding: clamp(24px, 4vw, 40px);
 }
 
 .pledge h2 {
   color: var(--teal);
 }
 
+/* Two columns once there is room: seven single-line promises stacked vertically
+   read as a terms-and-conditions list, which is the opposite of the intent. */
 .pledge ul {
-  margin: 20px 0 0;
+  margin: 28px 0 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 12px;
+  grid-template-columns: 1fr;
+  column-gap: 40px;
 }
 
+@media (min-width: 820px) {
+  .pledge ul {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Hairline rules rather than gaps, matching the app's settings rows and the rule
+   it draws under a section head. */
 .pledge li {
-  position: relative;
-  padding-left: 30px;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: var(--bw-hair) solid var(--border-w10);
   color: var(--body-dim);
   font-size: 16px;
   line-height: 26px;
 }
 
+/* Drawn, not an icon font: two borders on a rotated box give the same 3px stroke
+   as the lucide Check the app puts in an active toggle knob. */
 .pledge li::before {
   content: '';
-  position: absolute;
-  left: 0;
-  top: 9px;
-  width: 9px;
-  height: 9px;
-  border-radius: var(--r-pill);
-  background: var(--teal);
+  width: 8px;
+  height: 14px;
+  margin: 5px 0 0 4px;
+  border: solid var(--teal);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
 }
 
 /* ── Prose (the legal pages) ────────────────────────────────────────────────
@@ -772,52 +918,63 @@ section {
   white-space: nowrap;
 }
 
-/* ── Footer ─────────────────────────────────────────────────────────────────*/
+/* ── Footer ─────────────────────────────────────────────────────────────────
+   The one place on the page that deliberately stops shouting. Everything above
+   is neo-brutalist — 4px rules, rose display type, uppercase chips — and the
+   footer answers with a hairline and small plain-case links in --muted. It is
+   wayfinding and boilerplate: the visitor should be able to find the privacy
+   policy without the privacy policy ever pulling their eye off the product. */
 .site-footer {
-  border-top: var(--bw-accent) solid var(--border-w10);
-  padding: 40px 0 56px;
+  border-top: var(--bw-hair) solid var(--border-w10);
+  padding: 32px 0 44px;
   margin-top: auto;
 }
 
 .footer-inner {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gutter);
+  gap: 16px var(--gutter);
   justify-content: space-between;
   align-items: flex-start;
 }
 
+/* Type set on the list, not the anchor. The <li> strut is what positions the
+   line box, so a font-size on the <a> alone leaves the links riding ~7px below
+   the legal column beside them — they are top-aligned, but the body's 1.6
+   line-height is still doing the leading. Matching the legal block's 19px here
+   puts the two columns on the same first baseline. */
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 22px;
+  gap: 6px 18px;
   list-style: none;
   margin: 0;
   padding: 0;
+  font-size: 13px;
+  line-height: 19px;
 }
 
 .footer-links a {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--rose);
+  color: var(--muted);
   text-decoration: none;
 }
 
+/* Muted plain text is a weak link affordance, so the hover has to be the strong
+   one — colour alone would not carry it. */
 .footer-links a:hover {
   color: var(--white);
   text-decoration: underline;
 }
 
-/* --muted, not --muted-dim. The app bumped its own muted token from #9CA3AF to
-   #B8C0CC in the launch-readiness audit for exactly this case: small text over a
-   translucent surface on top of the animated background. #6B7280 lands around
-   4:1 here, under the 4.5:1 AA floor for text this size. */
+/* --muted, not --muted-dim, and that matters more at 12px than it did at 14px:
+   the AA floor is 4.5:1 either way, and #6B7280 lands around 4:1 over the
+   animated background. The app bumped its own muted token from #9CA3AF to
+   #B8C0CC in the launch-readiness audit for exactly this case. Shrink this text
+   further only by shrinking it — never by dimming it. */
 .footer-legal {
   color: var(--muted);
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 12px;
+  line-height: 19px;
   max-width: 46ch;
 }
 
@@ -834,3 +991,87 @@ body {
 body > main {
   flex: 1 0 auto;
 }
+
+/* ── Motion ─────────────────────────────────────────────────────────────────
+   Everything here is decoration, so everything here has to be optional. The rule
+   the whole section is built on: the *resting* state is the visible state, and
+   motion is only ever added on top by something that has proven it can also take
+   it away.
+
+   That is why `.reveal` hides nothing by default. reveal.js adds `.reveal-armed`
+   to <html> only once it has confirmed it is running and that the visitor has not
+   asked for reduced motion; the `opacity: 0` below is scoped under that class. A
+   visitor with JavaScript off, or an IntersectionObserver that never fires, gets a
+   fully painted page rather than a blank one. This is not hypothetical — the
+   reduced-motion block near the top of this file forces
+   `transition-duration: 0.01ms !important` globally, so a reveal built the usual
+   way (hide in CSS, unhide in JS) would strand every section at zero opacity for
+   exactly the people least able to work around it. */
+.reveal {
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: calc(var(--d, 0) * 90ms);
+}
+
+html.reveal-armed .reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-lift));
+}
+
+html.reveal-armed .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* The idle drift on the device frames. Animates the standalone `translate`
+   property rather than `transform`, so it composes with `.phone--tilt`'s rotation
+   instead of overwriting it — one element cannot hold two `transform` values, and
+   an animation always wins. Browsers without independent transform properties
+   simply skip the drift and keep the tilt. */
+.float {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* Opposite phase on flipped rows, so two devices on screen at once never bob in
+   lockstep. */
+.showcase--flip .float {
+  animation-delay: -3.5s;
+}
+
+/* What makes the two loops below safe under reduced motion, verified in the
+   browser rather than assumed: the global reduce block collapses each one to a
+   single 0.01ms iteration, and because `animation-fill-mode` is left at its
+   default of `none`, a finished animation reverts to the element's *base* style —
+   not to its 100% keyframe. So the rule to preserve is simply that the base style
+   is the resting pose: the devices sit level, the bloom sits unscaled.
+   Adding `animation-fill-mode: forwards` to either of these would break that and
+   strand the element on its last frame. Keyframes still return to their start so
+   the loops are seamless when motion *is* allowed. */
+@keyframes float {
+  0% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
+@keyframes bloom {
+  0% {
+    opacity: 0.75;
+    scale: 1;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.06;
+  }
+  100% {
+    opacity: 0.75;
+    scale: 1;
+  }
+}
+
