@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ — Doromir</title>
+<meta name="description" content="How to record a dream, what the Dream Map is, why REM needs a watch, and where your data lives. The same questions Doromir answers inside the app.">
+<meta name="theme-color" content="#000000">
+<!-- SVG first; browsers that understand it prefer it, the PNG stays for those
+     that do not. -->
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FAQ — Doromir">
+<meta property="og:description" content="How to record a dream, what the Dream Map is, and where your data lives.">
+<meta property="og:image" content="/assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="stream" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-row">
+      <a class="brand" href="/" aria-label="Doromir home">
+        <img class="brand-mark" src="/assets/img/icon.svg" width="40" height="40" alt="" aria-hidden="true">
+        <span class="brand-name">Doromir</span>
+      </a>
+      <nav class="header-actions" aria-label="Main">
+        <a class="header-link" href="/faq/" aria-current="page">FAQ</a>
+        <a class="btn btn--sm" href="/#download">Download</a>
+      </nav>
+    </div>
+    <hr class="rule">
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <span class="chip chip--teal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+        <path d="M12 17h.01"/>
+      </svg>
+      Questions
+    </span>
+    <h1 class="page-title">Frequently asked questions</h1>
+    <p class="page-meta">The same answers Doromir shows under Profile &rarr; FAQ, so you can read them before you install</p>
+
+    <article class="glass prose">
+
+      <div class="summary">
+        <p>
+          <strong>Set an alarm. When it wakes you, say what you remember.</strong> That
+          is the whole loop &mdash; everything else in Doromir is built from those
+          recordings, and all of it happens on your phone. If your question is about
+          what we can see, the short answer is nothing; the long answer is the
+          <a href="/privacy/">privacy policy</a>.
+        </p>
+      </div>
+
+      <!-- Section list rather than a full question index. Twenty-three links would
+           be a wall the size of the page it is supposed to shortcut. -->
+      <nav class="faq-toc" aria-label="Sections">
+        <a href="#getting-started">Getting started</a>
+        <a href="#capturing">Recording a dream</a>
+        <a href="#insights">Insights and the Dream Map</a>
+        <a href="#sleep">Sleep data</a>
+        <a href="#privacy">Your data</a>
+        <a href="#troubleshooting">When something goes wrong</a>
+      </nav>
+
+      <h2 id="getting-started">Getting started</h2>
+
+      <h3>What do I actually do with this app?</h3>
+      <p>
+        Set an alarm on the Alarm tab. When it wakes you, Doromir asks you to say what
+        you remember, right there, before you get up. It writes down what you said. That
+        is the whole loop &mdash; everything else is built from those recordings.
+      </p>
+
+      <h3>When should I record a dream?</h3>
+      <p>
+        Immediately, before you sit up or look at your phone. Dream memory fades within
+        about a minute of waking, and almost completely once you start thinking about
+        your day. A mumbled ten seconds recorded straight away beats a careful paragraph
+        written at lunchtime.
+      </p>
+
+      <h3>I do not remember my dreams. Is this app useless for me?</h3>
+      <p>
+        No &mdash; this is the most common starting point. Recall improves with the habit
+        itself. Set the alarm, and on mornings you remember nothing, still open the app
+        and note that. Most people start catching fragments within a week or two.
+      </p>
+
+      <h3>What if I would rather type than talk?</h3>
+      <p>
+        Tap "Write it down instead" on the Journal tab. Typed entries work exactly the
+        same everywhere else in the app.
+      </p>
+
+      <h2 id="capturing">Recording a dream</h2>
+
+      <h3>Do I have to speak clearly?</h3>
+      <p>
+        No. Half-asleep mumbling is normal and expected. Say the images and feelings in
+        whatever order they come &mdash; "there was water, and my old house, and I was
+        worried" is a perfectly good entry.
+      </p>
+
+      <h3>How does it stop recording?</h3>
+      <p>
+        It stops on its own after a few seconds of silence, so you can put the phone down
+        and go back to sleep. You can also tap to finish it yourself.
+      </p>
+
+      <h3>Can I fix the transcript afterwards?</h3>
+      <p>
+        Yes. Open the entry from the Journal tab and tap the pencil. You can edit the
+        title, the text, and the tags at any time.
+      </p>
+
+      <h3>What are tags for?</h3>
+      <p>
+        Tags are short labels like "water", "flying", or "work". They are what the app
+        uses to spot themes that repeat across months, and they are how the Dream Map
+        connects one dream to another. You can add your own when you save, and the app
+        suggests some itself.
+      </p>
+
+      <h2 id="insights">Insights and the Dream Map</h2>
+
+      <h3>When do Insights start being useful?</h3>
+      <p>
+        Around ten entries you will see recurring tags. Around a month, the sleep
+        correlations and the mood mix start to mean something. Before that there simply
+        is not enough to compare.
+      </p>
+
+      <h3>What is the Dream Map?</h3>
+      <p>
+        A picture of your journal where each dream is a dot and a line joins two dreams
+        that resemble each other &mdash; either because they share tags or because they
+        describe similar things. Clusters are your recurring subjects. Tap any dot to
+        open that dream.
+      </p>
+
+      <h3>Can I look at a specific week or month?</h3>
+      <p>
+        Yes. On the Insights tab, pick Week, Month, or Year, then use the arrows to step
+        back through them. Everything below updates to that period.
+      </p>
+
+      <h3>Should I take an insight seriously?</h3>
+      <p>
+        Treat it as a prompt for reflection, nothing more. Doromir describes patterns in
+        what you wrote. It is not a diagnosis, not a prediction, and not medical or
+        psychological advice.
+      </p>
+
+      <h2 id="sleep">Sleep data</h2>
+
+      <h3>Why connect health data at all?</h3>
+      <p>
+        So you can see your dreams next to the nights that produced them &mdash; whether
+        you recall more after longer sleep, or after a late workout. It is optional, and
+        every other feature works without it.
+      </p>
+
+      <h3>Why is there no REM figure for me?</h3>
+      <p>
+        No phone can detect REM on its own. It needs a watch or sleep tracker that records
+        sleep stages and syncs them to your phone. Without one you will still get sleep
+        duration, which is enough for most of the comparisons.
+      </p>
+
+      <h3>I do not have a watch. What can I do?</h3>
+      <p>
+        On Android, let Doromir estimate sleep using the phone's own sensors &mdash;
+        Settings, Health setup. You can also log a night by hand from the same place.
+        Both feed the same insights.
+      </p>
+
+      <h2 id="privacy">Your data</h2>
+
+      <h3>Where do my dreams go?</h3>
+      <p>
+        Nowhere. They stay in a database on this phone. There is no account, no sign-in,
+        and no server that receives them. Transcription and analysis both run on the
+        device itself.
+      </p>
+
+      <h3>How do I back them up?</h3>
+      <p>
+        Profile, then "Export my data" &mdash; it writes a single file containing your
+        journal and sleep data. On Android, set a backup folder first so exports land
+        somewhere you can find them. Uninstalling the app deletes everything, so export
+        before you switch phones.
+      </p>
+
+      <h3>Can I delete a dream?</h3>
+      <p>
+        Open it from the Journal tab and use Delete. That removes the entry and its
+        recording from the phone permanently. To remove everything at once, see
+        <a href="/privacy/#delete">delete your data</a>.
+      </p>
+
+      <h3>Does keeping the recordings take up much space?</h3>
+      <p>
+        Recordings are the largest thing Doromir stores. If space is tight, turn off
+        "Save recording audio" in Settings &mdash; transcripts are kept either way.
+      </p>
+
+      <h2 id="troubleshooting">When something goes wrong</h2>
+
+      <h3>The alarm did not go off.</h3>
+      <p>
+        Battery optimisation is almost always the cause. Check the Alarm tab for a
+        warning banner and tap it to fix &mdash; it opens the exact system setting that
+        needs changing.
+      </p>
+
+      <h3>The alarm only showed a notification instead of taking over the screen.</h3>
+      <p>
+        That happens when your phone was already awake and unlocked. Android only lets an
+        app seize the screen from the background if you allow it to display over other
+        apps &mdash; the Alarm tab shows a banner that opens the right setting. The same
+        permission is what lets nightstand mode dock itself at bedtime.
+      </p>
+
+      <h3>The transcript is wrong or empty.</h3>
+      <p>
+        Speech recognition struggles with a very quiet or very sleepy voice. Edit the
+        entry and correct it by hand; the recording is still there to listen back to if
+        you kept it.
+      </p>
+
+      <h3>Insights are slow, or the app closes while generating one.</h3>
+      <p>
+        That is the optional downloaded AI model being too heavy for the phone. Remove it
+        in Settings and the built-in engine takes over &mdash; it is faster and always
+        available.
+      </p>
+
+      <div class="note">
+        <p>
+          Still stuck? Email
+          <a href="mailto:support@DOMAIN-TBD"><span class="todo">support@DOMAIN-TBD</span></a>.
+          Doromir is a reflection tool, not a medical device, and does not provide medical
+          advice.
+        </p>
+      </div>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/privacy/">Privacy &amp; data</a></li>
+      <li><a href="/terms/">Terms of service</a></li>
+      <li><a href="/privacy/#delete">Data deletion</a></li>
+    </ul>
+    <p class="footer-legal">
+      Doromir is published by Nerdy Whiskers LLC.<br>
+      Contact: <a href="mailto:support@DOMAIN-TBD"><span class="todo">support@DOMAIN-TBD</span></a>
+    </p>
+  </div>
+</footer>
+
+<script src="/assets/js/stream.js"></script>
+</body>
+</html>

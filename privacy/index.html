@@ -6,7 +6,10 @@
 <title>Privacy &amp; Data Policy — Doromir</title>
 <meta name="description" content="Doromir's privacy and data policy. No account, no server, no analytics. Dreams, transcripts and health data stay on your device, and you can delete everything yourself.">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="/assets/img/favicon.png">
+<!-- SVG first; browsers that understand it prefer it, the PNG stays for those
+     that do not. -->
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/icon.png">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Privacy &amp; Data Policy — Doromir">
@@ -21,15 +24,13 @@
   <div class="wrap">
     <div class="brand-row">
       <a class="brand" href="/" aria-label="Doromir home">
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="color:#fff">
-          <circle cx="24" cy="24" r="12.5" stroke="currentColor" stroke-width="1.5" opacity=".55"/>
-          <circle cx="24" cy="24" r="17" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
-          <circle cx="24" cy="24" r="21.5" stroke="currentColor" stroke-width="1" opacity=".14"/>
-          <mask id="moon"><rect width="48" height="48" fill="#000"/><circle cx="24" cy="23" r="8.4" fill="#fff"/><circle cx="28.4" cy="20" r="7.3" fill="#000"/></mask>
-          <rect width="48" height="48" fill="currentColor" mask="url(#moon)"/>
-        </svg>
+        <img class="brand-mark" src="/assets/img/icon.svg" width="40" height="40" alt="" aria-hidden="true">
         <span class="brand-name">Doromir</span>
       </a>
+      <nav class="header-actions" aria-label="Main">
+        <a class="header-link" href="/faq/">FAQ</a>
+        <a class="btn btn--sm" href="/#download">Download</a>
+      </nav>
     </div>
     <hr class="rule">
   </div>
@@ -37,12 +38,6 @@
 
 <main id="main">
   <div class="wrap">
-    <span class="chip chip--teal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
-      </svg>
-      Privacy &amp; Data
-    </span>
     <h1 class="page-title">Privacy &amp; Data Policy</h1>
     <p class="page-meta">Effective 6 August 2026 &middot; applies to the Doromir mobile app and this website</p>
 

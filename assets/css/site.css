@@ -354,9 +354,13 @@ strong {
   text-decoration: none;
 }
 
-.brand svg {
-  width: 56px;
-  height: 56px;
+/* An <img> rather than inline SVG: the file carries a C2PA provenance block that
+   dwarfs its own artwork, so inlining it would repeat ~28KB on all six pages
+   instead of fetching it once into the cache. The mark is multi-colour, so it has
+   no currentColor to inherit and loses nothing by being external. */
+.brand-mark {
+  width: 40px;
+  height: 40px;
   flex: none;
 }
 
@@ -375,17 +379,51 @@ strong {
   color: var(--white);
 }
 
-/* The header carries the brand lockup alone; Privacy, Terms and data deletion live
-   in the footer, which is where people look for them and where Play's review
-   expects them. */
+/* The header carries the brand lockup and two actions — the thing you came to do
+   (Download) and the thing you came to ask (FAQ). Privacy, Terms and data
+   deletion stay in the footer, which is where people look for them and where
+   Play's review expects them.
+
+   Only one of the two is styled as a button. A row of equal-weight buttons has no
+   primary, and the header's job is to make the download obvious. */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.header-link {
+  font-family: 'Work Sans', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header-link:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+/* The FAQ page's own header link. Rose rather than muted, matching how the app
+   marks the tab you are on. */
+.header-link[aria-current='page'] {
+  color: var(--rose);
+}
+
 @media (max-width: 480px) {
-  .brand svg {
-    width: 44px;
-    height: 44px;
+  .brand-mark {
+    width: 32px;
+    height: 32px;
   }
 
   .brand-name {
     font-size: 22px;
+  }
+
+  .header-actions {
+    gap: 16px;
   }
 }
 
@@ -464,6 +502,29 @@ strong {
 .btn svg {
   width: 20px;
   height: 20px;
+}
+
+/* Header-sized. The press physics are the same gesture at a smaller scale — the
+   shadow and its hover growth shrink with the button, so it reads as the same
+   object rather than a different one. */
+.btn--sm {
+  padding: 10px 20px;
+  font-size: 13px;
+  line-height: 20px;
+  box-shadow: 3px 3px 0 var(--shadow-teal);
+}
+
+.btn--sm:hover {
+  box-shadow: 5px 5px 0 var(--shadow-teal);
+}
+
+.btn--sm:active {
+  box-shadow: 2px 2px 0 var(--shadow-teal);
+}
+
+.btn--sm svg {
+  width: 16px;
+  height: 16px;
 }
 
 .btn--ghost {
@@ -738,6 +799,97 @@ section {
   max-width: 360px;
 }
 
+/* Copy between two devices. Two columns below the breakpoint so the phones sit
+   side by side with the copy spanning underneath; three above it, with the copy
+   placed into the middle column of the same row.
+
+   Must come after the 860px block above, not inside it — `.showcase--split` and
+   `.showcase` score the same specificity, so source order is the whole argument. */
+.showcase--split {
+  grid-template-columns: 1fr 1fr;
+}
+
+.showcase--split .showcase-copy {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 860px) {
+  .showcase--split {
+    grid-template-columns: 1fr 1.25fr 1fr;
+    align-items: center;
+  }
+
+  .showcase-art--left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .showcase-art--right {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  /* Centred, which the rest of the page deliberately is not. The straight left
+     edge the flipped rows protect is a page-margin edge; this copy sits in an
+     interior column with a device either side, where a left rag would read as a
+     mistake rather than as the grid. */
+  .showcase--split .showcase-copy {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .showcase--split .fineprint {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Fine print under a showcase claim — the conditions attached to it. Small, and
+   --muted-dim would fail contrast at this size, so it stays on --muted and earns
+   its quietness from size and width instead. */
+.fineprint {
+  font-size: 13px;
+  line-height: 20px;
+  max-width: 42ch;
+}
+
+.showcase-copy .fineprint {
+  margin-top: 16px;
+}
+
+/* ── Dream-map focus cycle ──────────────────────────────────────────────────
+   Real captures of one map with a different tag focused in each, stacked in the
+   phone screen. The bottom layer is the unfiltered map and never animates: it is
+   the resting pose, so the reduced-motion collapse (which reverts each overlay to
+   its `opacity: 0` base) lands on a complete picture rather than an empty frame.
+   The same rule as the marquee and the float — see the Motion section. */
+.map-cycle > .map-focus {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: mapFocus 17s ease-in-out infinite;
+}
+
+.map-cycle > .map-focus img {
+  height: 100%;
+}
+
+/* A quarter of the cycle each, in DOM order. */
+.map-cycle > .map-focus:nth-of-type(2) {
+  animation-delay: 0s;
+}
+.map-cycle > .map-focus:nth-of-type(3) {
+  animation-delay: 4.25s;
+}
+.map-cycle > .map-focus:nth-of-type(4) {
+  animation-delay: 8.5s;
+}
+.map-cycle > .map-focus:nth-of-type(5) {
+  animation-delay: 12.75s;
+}
+
 /* The hairline between showcase rows — Duolingo's section divider, drawn with the
    rule the app already uses under a section head. */
 .rule--section {
@@ -890,6 +1042,31 @@ section {
   line-height: 27px;
 }
 
+/* FAQ section jumps. Chip-shaped like the app's filter pills, but muted — this is
+   navigation for people who already know which of the six they want, not a second
+   headline competing with the page title. */
+.faq-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.faq-toc a {
+  padding: 7px 15px;
+  border-radius: var(--r-pill);
+  border: var(--bw-hair) solid var(--border-w20);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.faq-toc a:hover {
+  border-color: var(--border-rose-50);
+  color: var(--rose);
+}
+
 /* Callout for the things a reader must not miss — alarm reliability, the
    not-medical disclaimer. Rose, because in this system rose is emphasis ink. */
 .note {
@@ -1039,13 +1216,14 @@ html.reveal-armed .reveal.is-in {
   animation-delay: -3.5s;
 }
 
-/* What makes the two loops below safe under reduced motion, verified in the
+/* What makes the three loops below safe under reduced motion, verified in the
    browser rather than assumed: the global reduce block collapses each one to a
    single 0.01ms iteration, and because `animation-fill-mode` is left at its
    default of `none`, a finished animation reverts to the element's *base* style —
    not to its 100% keyframe. So the rule to preserve is simply that the base style
-   is the resting pose: the devices sit level, the bloom sits unscaled.
-   Adding `animation-fill-mode: forwards` to either of these would break that and
+   is the resting pose: the devices sit level, the bloom sits unscaled, and every
+   dream-map focus overlay sits transparent over the unfiltered map.
+   Adding `animation-fill-mode: forwards` to any of these would break that and
    strand the element on its last frame. Keyframes still return to their start so
    the loops are seamless when motion *is* allowed. */
 @keyframes float {
@@ -1057,6 +1235,26 @@ html.reveal-armed .reveal.is-in {
   }
   100% {
     translate: 0 0;
+  }
+}
+
+/* Fade up, hold, fade back to the unfiltered map underneath. The gap at the end
+   of each quarter is deliberate — returning to the whole map between focuses is
+   what makes the next one read as a cluster lighting up rather than a slideshow
+   cut. */
+@keyframes mapFocus {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  19% {
+    opacity: 1;
+  }
+  23% {
+    opacity: 0;
   }
 }
 

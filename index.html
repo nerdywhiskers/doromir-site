@@ -6,7 +6,10 @@
 <title>Doromir — speak your dream before it fades</title>
 <meta name="description" content="Doromir is an alarm clock that wakes you into a full-screen voice recorder, so you can capture a dream before it evaporates. Everything stays on your phone.">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="/assets/img/favicon.png">
+<!-- SVG first; browsers that understand it prefer it, the PNG stays for those
+     that do not. -->
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Doromir — speak your dream before it fades">
@@ -27,19 +30,13 @@
   <div class="wrap">
     <div class="brand-row">
       <a class="brand" href="/" aria-label="Doromir home">
-        <!-- Brand mark: a crescent moon surrounded by concentric ripples.
-             Mirrors mobile/theme/DoromirLogo.js. The mark stays white against the
-             teal wordmark — it has to read on every background, and white is the
-             only ink that always does. -->
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="color:#fff">
-          <circle cx="24" cy="24" r="12.5" stroke="currentColor" stroke-width="1.5" opacity=".55"/>
-          <circle cx="24" cy="24" r="17" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
-          <circle cx="24" cy="24" r="21.5" stroke="currentColor" stroke-width="1" opacity=".14"/>
-          <mask id="moon"><rect width="48" height="48" fill="#000"/><circle cx="24" cy="23" r="8.4" fill="#fff"/><circle cx="28.4" cy="20" r="7.3" fill="#000"/></mask>
-          <rect width="48" height="48" fill="currentColor" mask="url(#moon)"/>
-        </svg>
+        <img class="brand-mark" src="/assets/img/icon.svg" width="40" height="40" alt="" aria-hidden="true">
         <span class="brand-name">Doromir</span>
       </a>
+      <nav class="header-actions" aria-label="Main">
+        <a class="header-link" href="/faq/">FAQ</a>
+        <a class="btn btn--sm" href="/#download">Download</a>
+      </nav>
     </div>
     <hr class="rule">
   </div>
@@ -55,7 +52,7 @@
     <div class="wrap hero-grid">
 
       <div class="hero-copy">
-        <p class="kicker reveal">Dream journal &middot; Android</p>
+
         <h1 class="reveal" style="--d:1">Speak your dream before it fades.</h1>
         <p class="lede reveal" style="--d:2">
           An alarm clock that wakes you into a voice recorder.
@@ -63,28 +60,6 @@
         </p>
         <div class="btn-row btn-row--stack reveal" style="--d:3">
           <span class="btn btn--pending">Coming to Android</span>
-          <a class="btn btn--ghost" href="/privacy/">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
-              <path d="m9 12 2 2 4-4"/>
-            </svg>
-            How privacy works
-          </a>
-        </div>
-      </div>
-
-      <div class="hero-art reveal" style="--d:2">
-        <span class="phone-glow" aria-hidden="true"></span>
-        <div class="phone phone--tilt float">
-          <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
-          <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
-          <div class="phone-screen">
-            <picture>
-              <source srcset="/assets/img/screens/wake.webp" type="image/webp">
-              <img src="/assets/img/screens/wake.png" width="780" height="1688" fetchpriority="high"
-                   alt="Doromir's wake screen: a glowing green capture target above the time 06:45, the greeting Good morning, and a Dismiss and speak button.">
-            </picture>
-          </div>
         </div>
       </div>
 
@@ -130,8 +105,8 @@
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/journal.webp" type="image/webp">
-                <img src="/assets/img/screens/journal.png" width="780" height="2882" loading="lazy"
-                     alt="The dream journal: a capture streak, weekly stats, and dated entries titled Sinking cruise ship, Forgot my lines and Driving from the backseat, each tagged with its motifs.">
+                <img src="/assets/img/screens/journal.png" width="780" height="3990" loading="lazy"
+                     alt="The dream journal: a five-day capture streak, a row of recurring tags, and dated entries titled The tide came up the stairs, Rehearsing a talk I never wrote and Flying low over the harbour, each tagged with its motifs.">
               </picture>
             </div>
           </div>
@@ -148,28 +123,86 @@
 
       <hr class="rule rule--section">
 
-      <div class="showcase">
-        <div class="showcase-art reveal">
+      <!-- The one symmetric row on the page: copy in the middle with a device on
+           each side, because this section makes two claims of equal weight — the
+           numbers on the left, the map on the right.
+
+           Both devices come before the copy in the DOM — the same rule the rest of
+           the showcase follows, so the stacked layout reads picture, picture, then
+           words. Which column each one lands in is placement, not order. -->
+      <div class="showcase showcase--split">
+
+        <div class="showcase-art showcase-art--left reveal">
           <div class="phone float" data-scrollshot>
             <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
             <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/insights.webp" type="image/webp">
-                <img src="/assets/img/screens/insights.png" width="780" height="3538" loading="lazy"
-                     alt="The insights screen, charting recurring dream motifs and moods against sleep duration and heart rate.">
+                <img src="/assets/img/screens/insights.png" width="780" height="5044" loading="lazy"
+                     alt="The insights screen: recurring themes and mood mix, then a row of sleep metrics — 7.5 hours, 23% REM, 17% deep, 53ms HRV — and a chart laying dream entries over sleep and activity.">
               </picture>
             </div>
           </div>
         </div>
+
+        <div class="showcase-art showcase-art--right reveal" style="--d:2">
+          <div class="phone float">
+            <span class="phone-btn phone-btn--vol" aria-hidden="true"></span>
+            <span class="phone-btn phone-btn--pwr" aria-hidden="true"></span>
+            <!-- Five real captures of the same map, one per top tag, stacked and
+                 cross-faded. The force layout is not re-run between them, so every
+                 node holds its position and only the focused cluster lights up —
+                 the frames register exactly and the fade reads as the app
+                 responding to a tap rather than as a slideshow.
+
+                 The unfiltered frame is the bottom layer and never animates, so
+                 it is what remains under reduced motion (where the global block
+                 collapses the overlays to their opacity: 0 base state) and what
+                 shows in the gaps between focuses. -->
+            <div class="phone-screen map-cycle">
+              <picture>
+                <source srcset="/assets/img/screens/dreammap.webp" type="image/webp">
+                <img src="/assets/img/screens/dreammap.png" width="780" height="1688" loading="lazy"
+                     alt="The Dream Map: 240 dreams drawn as coloured dots joined by 1,122 lines, clustering into recurring subjects. Tapping a tag lights up only the dreams that share it.">
+              </picture>
+              <picture class="map-focus" aria-hidden="true">
+                <source srcset="/assets/img/screens/dreammap-1.webp" type="image/webp">
+                <img src="/assets/img/screens/dreammap-1.png" width="780" height="1688" loading="lazy" alt="">
+              </picture>
+              <picture class="map-focus" aria-hidden="true">
+                <source srcset="/assets/img/screens/dreammap-2.webp" type="image/webp">
+                <img src="/assets/img/screens/dreammap-2.png" width="780" height="1688" loading="lazy" alt="">
+              </picture>
+              <picture class="map-focus" aria-hidden="true">
+                <source srcset="/assets/img/screens/dreammap-3.webp" type="image/webp">
+                <img src="/assets/img/screens/dreammap-3.png" width="780" height="1688" loading="lazy" alt="">
+              </picture>
+              <picture class="map-focus" aria-hidden="true">
+                <source srcset="/assets/img/screens/dreammap-4.webp" type="image/webp">
+                <img src="/assets/img/screens/dreammap-4.png" width="780" height="1688" loading="lazy" alt="">
+              </picture>
+            </div>
+          </div>
+        </div>
+
         <div class="showcase-copy reveal" style="--d:1">
           <p class="kicker">Insights</p>
           <h2>Patterns you would never notice.</h2>
           <p>
-            Recurring motifs read against sleep duration, REM, deep sleep and
-            resting heart rate. Worked out on your device, or not at all.
+            Every dream becomes a dot, and dreams that resemble each other join up
+            — your recurring subjects show as clusters. Underneath, the same
+            entries read against sleep duration, REM, deep sleep and HRV.
+            Worked out on your device, or not at all.
+          </p>
+          <p class="fineprint">
+            Sleep figures depend on what your phone and any connected watch or
+            tracker actually record. No phone can detect REM on its own, so stage
+            data needs a wearable that reports it; without one you still get sleep
+            duration.
           </p>
         </div>
+
       </div>
 
       <hr class="rule rule--section">
@@ -216,13 +249,15 @@
           <li>Uninstalling deletes everything. There is no other copy.</li>
         </ul>
         <div class="btn-row">
-          <a class="btn" href="/privacy/">Read the privacy &amp; data policy</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="closer">
+  <!-- The header's Download button lands here. Until there is a store listing to
+       point at, this section *is* the download: it says which platform, that it
+       is a beta, and how to get in. -->
+  <section class="closer" id="download">
     <div class="wrap">
       <p class="kicker reveal">Availability</p>
       <h2 class="reveal" style="--d:1">Android first. In beta now.</h2>
