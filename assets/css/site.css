@@ -829,20 +829,14 @@ section {
     grid-row: 1;
   }
 
-  /* Centred, which the rest of the page deliberately is not. The straight left
-     edge the flipped rows protect is a page-margin edge; this copy sits in an
-     interior column with a device either side, where a left rag would read as a
-     mistake rather than as the grid. */
+  /* The copy box is centred inside its interior column, but the text itself is
+     ragged right like every other block on the page — one reading edge whether a
+     row is flipped, split, or plain. */
   .showcase--split .showcase-copy {
     grid-column: 2;
     grid-row: 1;
     margin: 0 auto;
-    text-align: center;
-  }
-
-  .showcase--split .fineprint {
-    margin-left: auto;
-    margin-right: auto;
+    text-align: left;
   }
 }
 
