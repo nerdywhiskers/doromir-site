@@ -630,30 +630,6 @@ strong {
   will-change: transform;
 }
 
-/* Side buttons. Purely decorative, but without them the frame reads as a picture
-   frame rather than a phone. */
-/* Side buttons. Decorative, but without them the frame reads as a picture frame
-   rather than a phone — so they have to actually be visible. At the border's own
-   30% alpha they vanished against the shader; these sit on the silhouette at the
-   same 50% the system uses for an active edge. */
-.phone-btn {
-  position: absolute;
-  right: -5px;
-  width: 5px;
-  border-radius: 0 3px 3px 0;
-  background: var(--border-rose-50);
-}
-
-.phone-btn--vol {
-  top: 22%;
-  height: 9%;
-}
-
-.phone-btn--pwr {
-  top: 36%;
-  height: 14%;
-}
-
 .phone--tilt {
   transform: rotate(-3deg);
 }
