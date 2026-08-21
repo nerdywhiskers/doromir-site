@@ -63,11 +63,20 @@
         </div>
       </div>
 
+      <!-- The app's breathing dream orb, at several times the size the wake screen
+           draws it. Same shader, so it is the same object the screenshot below
+           shows behind the sunrise icon rather than a decorative echo of it.
+           Decorative here: it is named nowhere in the copy and says nothing the
+           headline does not, so it stays out of the accessibility tree. -->
+      <div class="hero-art reveal" style="--d:2" aria-hidden="true">
+        <canvas class="orb" data-orb></canvas>
+      </div>
+
     </div>
   </section>
 
   <!-- ── Showcase ──────────────────────────────────────────────────────────
-       Four screens, sides alternating, one headline and one line each. -->
+       Five rows, sides alternating, one headline and one line each. -->
   <section class="showcase-set">
     <div class="wrap">
 
@@ -78,7 +87,7 @@
               <picture>
                 <source srcset="/assets/img/screens/wake.webp" type="image/webp">
                 <img src="/assets/img/screens/wake.png" width="780" height="1688" loading="lazy"
-                     alt="The alarm ringing full-screen with a large capture target and a Dismiss and speak button.">
+                     alt="The alarm ringing full-screen: a glowing green orb over the time 06:45, the greeting Good morning, and a Dismiss and speak button.">
               </picture>
             </div>
           </div>
@@ -100,7 +109,7 @@
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/journal.webp" type="image/webp">
-                <img src="/assets/img/screens/journal.png" width="780" height="3990" loading="lazy"
+                <img src="/assets/img/screens/journal.png" width="780" height="3988" loading="lazy"
                      alt="The dream journal: a five-day capture streak, a row of recurring tags, and dated entries titled The tide came up the stairs, Rehearsing a talk I never wrote and Flying low over the harbour, each tagged with its motifs.">
               </picture>
             </div>
@@ -132,8 +141,8 @@
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/insights.webp" type="image/webp">
-                <img src="/assets/img/screens/insights.png" width="780" height="5044" loading="lazy"
-                     alt="The insights screen: recurring themes and mood mix, then a row of sleep metrics — 7.5 hours, 23% REM, 17% deep, 53ms HRV — and a chart laying dream entries over sleep and activity.">
+                <img src="/assets/img/screens/insights.png" width="780" height="5188" loading="lazy"
+                     alt="The insights screen: a dreams-and-sleep finding, a recall summary, recurring themes and mood mix, then a row of sleep metrics — 7.5 hours, 23% REM, 17% deep, 53ms HRV — and a chart laying dream entries over sleep and activity.">
               </picture>
             </div>
           </div>
@@ -194,15 +203,53 @@
 
       <hr class="rule rule--section">
 
-      <div class="showcase showcase--flip">
+      <!-- Art left, so the sides keep alternating down the page: this row, the
+           flipped one below it, and the plain one at the top of the set. -->
+      <div class="showcase">
         <div class="showcase-art reveal">
           <div class="phone float">
             <div class="phone-screen">
               <picture>
-                <source srcset="/assets/img/screens/nightstand.webp" type="image/webp">
-                <img src="/assets/img/screens/nightstand.png" width="780" height="1688" loading="lazy"
-                     alt="Nightstand mode: a black screen showing only a dim crescent moon, the time 06:45, and the alarm name.">
+                <source srcset="/assets/img/screens/private-ai.webp" type="image/webp">
+                <img src="/assets/img/screens/private-ai.png" width="780" height="1688" loading="lazy"
+                     alt="An onboarding step titled Pick how your dream insights are written, with a panel confirming Gemini Nano is ready and no download is needed.">
               </picture>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-copy reveal" style="--d:1">
+          <p class="kicker">Private</p>
+          <h2>Fully Offline and Private.</h2>
+          <p>
+            Your phone is perfectly capable of analysing your dreams using local AI
+            models. Your dreams are never sent anywhere.
+          </p>
+          <p class="fineprint">
+            * Only supported on newer devices. Subject to your device's privacy settings.
+          </p>
+        </div>
+      </div>
+
+      <hr class="rule rule--section">
+
+      <div class="showcase showcase--flip">
+        <div class="showcase-art reveal">
+          <div class="phone float">
+            <!-- Not a capture. This section is about what the app can be turned
+                 into rather than any one screen it ships, so the frame holds the
+                 app's ambient background with the brand mark on it — Teal at
+                 Subtle, the shipped default — running live off the same shader as
+                 the page behind it.
+
+                 The mark is the same file the header and every launcher icon use,
+                 and its interior is transparent, so the stream drifts through the
+                 letterforms rather than sitting behind a solid badge. Decorative:
+                 the wordmark is already in the header and the copy beside this
+                 says what the row is about. -->
+            <div class="phone-screen">
+              <canvas class="phone-stream" data-stream aria-hidden="true"></canvas>
+              <img class="phone-mark" src="/assets/img/icon.svg" width="240" height="240"
+                   alt="" aria-hidden="true" loading="lazy">
             </div>
           </div>
         </div>
@@ -210,9 +257,22 @@
           <p class="kicker">Beyond</p>
           <h2>Go beyond a Dream Journal.</h2>
           <p>
-            Doromir can also be used as a smart note-taking app. It supports exporting in multiple formats, and is designed to be modular. Sync it into an Obsidian vault for even more control over your data. Additional features on the roadmap.
-    
+            Doromir can also be used as a smart note-taking app. It supports exporting in multiple formats, and is designed to be modular. Sync it into an Obsidian vault for even more control over your data.
           </p>
+          <!-- The roadmap is the one list on the page describing things that do
+               *not* exist yet, so it deliberately does not borrow the pledge's
+               filled checkmark — a tick against an unbuilt feature reads as a
+               claim. Hollow marigold rings instead: same list grammar, visibly
+               unfinished. -->
+          <div class="glass roadmap">
+            <p class="roadmap-title">Additional features on the roadmap:</p>
+            <ul>
+              <li>Fine-tuned local AI model</li>
+              <li>Fully local journal chat</li>
+              <li>Multi-device sync</li>
+              <li>Multiple journal profiles</li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -272,6 +332,7 @@
 </footer>
 
 <script src="/assets/js/stream.js"></script>
+<script src="/assets/js/orb.js" defer></script>
 <script src="/assets/js/reveal.js" defer></script>
 </body>
 </html>

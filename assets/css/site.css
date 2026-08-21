@@ -630,6 +630,50 @@ strong {
   will-change: transform;
 }
 
+/* An empty screen running the app's ambient background instead of a capture —
+   the last showcase row. Sized by its own box rather than the viewport (see the
+   `element` branch in stream.js), so it fills the frame at every width.
+
+   The gradient is the stand-in for browsers without WebGL, the same job the one
+   on `#stream` does: the Teal ring's six stops flattened to four blooms. Change
+   one and change the other. */
+.phone-stream {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(120% 80% at 18% 4%, rgba(62, 208, 224, 0.3), transparent 60%),
+    radial-gradient(110% 70% at 84% 26%, rgba(30, 169, 187, 0.28), transparent 62%),
+    radial-gradient(120% 90% at 26% 74%, rgba(21, 121, 132, 0.28), transparent 64%),
+    radial-gradient(100% 70% at 80% 98%, rgba(124, 223, 234, 0.24), transparent 60%);
+}
+
+/* Once the shader is drawing, drop the stand-in so the two never composite. */
+.phone-stream.is-live {
+  background: none;
+}
+
+/* The brand mark centred on that empty screen. Needs the extra `.phone-screen`
+   qualifier to outscore the screenshot rules above, which would otherwise stretch
+   it to the full width of the frame and crop it to the top edge.
+
+   Sized as a share of the frame rather than in pixels, so it holds its proportion
+   as the device scales — the app draws the same mark at 68-104pt on a phone, which
+   is about this fraction of the screen. The artwork's interior is transparent, so
+   the stream shows through the letterforms; nothing here paints a backing. */
+.phone-screen .phone-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: 44%;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
+  transform-origin: center;
+  will-change: auto;
+}
+
 .phone--tilt {
   transform: rotate(-3deg);
 }
@@ -688,6 +732,34 @@ section {
   max-width: 300px;
 }
 
+/* The app's dream orb at hero scale. Square, because the shader corrects for
+   aspect and a non-square canvas just wastes pixels around a circle.
+
+   It has no box of its own — no border, no frame, no shadow. The orb ends in a
+   halo that fades to nothing, and any edge drawn around that would be an edge the
+   app does not have. Everything else on this page is neo-brutalist and hard-edged;
+   this is the one soft thing, which is precisely why it reads. */
+.orb {
+  display: block;
+  width: clamp(220px, 32vw, 400px);
+  aspect-ratio: 1;
+  /* Stand-in until the shader compiles, and permanently where WebGL is missing:
+     the same emerald core and mint halo, frozen mid-breath. */
+  background: radial-gradient(
+    circle,
+    rgba(71, 204, 143, 0.95) 0,
+    rgba(71, 204, 143, 0.9) 24%,
+    rgba(140, 235, 189, 0.34) 42%,
+    transparent 62%
+  );
+  border-radius: 50%;
+}
+
+.orb.is-live {
+  background: none;
+  border-radius: 0;
+}
+
 @media (min-width: 900px) {
   .hero-grid {
     grid-template-columns: 1.05fr 0.95fr;
@@ -696,6 +768,10 @@ section {
   .hero-art .phone {
     max-width: 340px;
   }
+
+  /* Below this width the columns stack and the orb is centred under the copy;
+     once there is a second column it belongs to that column's centre, which is
+     already what `.hero-art` does. Nothing to add — the size clamp carries it. */
 }
 
 /* Duolingo's stacked full-width action pair on a phone; inline once there is
@@ -814,6 +890,60 @@ section {
     margin: 0 auto;
     text-align: left;
   }
+}
+
+/* ── Roadmap card ───────────────────────────────────────────────────────────
+   Sits inside a showcase column, so it takes the glass surface rather than the
+   pledge's full active-surface treatment (coloured border plus hard shadow).
+   That treatment is what the page spends on its one loud claim; a list of things
+   that do not exist yet has not earned it, and two panels shouting at that
+   volume would leave the pledge with nothing to be louder than. */
+.roadmap {
+  margin-top: 28px;
+  padding: 20px 22px;
+}
+
+/* Three classes, and that is the point: `.showcase-copy p:not(.kicker)` scores
+   0,2,1 and would otherwise repaint this line to --muted, flattening the card's
+   one piece of hierarchy. Same trap the showcase kicker documents above — a
+   `p` selector in this column needs to outscore that rule or it loses. */
+.showcase-copy .roadmap .roadmap-title {
+  margin: 0;
+  color: var(--white);
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.roadmap ul {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.roadmap li {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: start;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 24px;
+}
+
+/* A hollow ring, not the pledge's drawn checkmark. The shape carries the tense:
+   the pledge ticks things that are true today, this one marks things that are
+   not built. Marigold because the system already spends it on accents, and
+   because it is not the teal the pledge uses for what it can promise. */
+.roadmap li::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  margin-top: 7px;
+  border: 2px solid var(--marigold);
+  border-radius: 50%;
 }
 
 /* Fine print under a showcase claim — the conditions attached to it. Small, and
