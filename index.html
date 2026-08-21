@@ -63,6 +63,15 @@
         </div>
       </div>
 
+      <!-- The app's breathing dream orb, at several times the size the wake screen
+           draws it. Same shader, so it is the same object the screenshot below
+           shows behind the sunrise icon rather than a decorative echo of it.
+           Decorative here: it is named nowhere in the copy and says nothing the
+           headline does not, so it stays out of the accessibility tree. -->
+      <div class="hero-art reveal" style="--d:2" aria-hidden="true">
+        <canvas class="orb" data-orb></canvas>
+      </div>
+
     </div>
   </section>
 
@@ -78,7 +87,7 @@
               <picture>
                 <source srcset="/assets/img/screens/wake.webp" type="image/webp">
                 <img src="/assets/img/screens/wake.png" width="780" height="1688" loading="lazy"
-                     alt="The alarm ringing full-screen with a large capture target and a Dismiss and speak button.">
+                     alt="The alarm ringing full-screen: a glowing green orb over the time 06:45, the greeting Good morning, and a Dismiss and speak button.">
               </picture>
             </div>
           </div>
@@ -100,7 +109,7 @@
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/journal.webp" type="image/webp">
-                <img src="/assets/img/screens/journal.png" width="780" height="3990" loading="lazy"
+                <img src="/assets/img/screens/journal.png" width="780" height="3988" loading="lazy"
                      alt="The dream journal: a five-day capture streak, a row of recurring tags, and dated entries titled The tide came up the stairs, Rehearsing a talk I never wrote and Flying low over the harbour, each tagged with its motifs.">
               </picture>
             </div>
@@ -132,8 +141,8 @@
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/insights.webp" type="image/webp">
-                <img src="/assets/img/screens/insights.png" width="780" height="5044" loading="lazy"
-                     alt="The insights screen: recurring themes and mood mix, then a row of sleep metrics — 7.5 hours, 23% REM, 17% deep, 53ms HRV — and a chart laying dream entries over sleep and activity.">
+                <img src="/assets/img/screens/insights.png" width="780" height="5188" loading="lazy"
+                     alt="The insights screen: a dreams-and-sleep finding, a recall summary, recurring themes and mood mix, then a row of sleep metrics — 7.5 hours, 23% REM, 17% deep, 53ms HRV — and a chart laying dream entries over sleep and activity.">
               </picture>
             </div>
           </div>
@@ -197,12 +206,14 @@
       <div class="showcase showcase--flip">
         <div class="showcase-art reveal">
           <div class="phone float">
+            <!-- Not a capture. This section is about what the app can be turned
+                 into rather than any one screen it ships, so the frame holds the
+                 app's ambient background with nothing on it — Teal at Subtle, the
+                 shipped default — running live off the same shader as the page
+                 behind it. An empty screen is the point; it has nothing to
+                 describe, so it is decorative. -->
             <div class="phone-screen">
-              <picture>
-                <source srcset="/assets/img/screens/nightstand.webp" type="image/webp">
-                <img src="/assets/img/screens/nightstand.png" width="780" height="1688" loading="lazy"
-                     alt="Nightstand mode: a black screen showing only a dim crescent moon, the time 06:45, and the alarm name.">
-              </picture>
+              <canvas class="phone-stream" data-stream aria-hidden="true"></canvas>
             </div>
           </div>
         </div>
@@ -272,6 +283,7 @@
 </footer>
 
 <script src="/assets/js/stream.js"></script>
+<script src="/assets/js/orb.js" defer></script>
 <script src="/assets/js/reveal.js" defer></script>
 </body>
 </html>

@@ -8,19 +8,24 @@
 // A single full-screen canvas is fixed behind the page at z-index -1. Time is
 // throttled to ~30fps to match the app. Under prefers-reduced-motion the clock
 // never advances, so one still frame renders and the loop stops.
+//
+// The same shader also drives smaller canvases inside the page — any element
+// carrying `data-stream` — so a phone frame can show the app's live background
+// rather than a still capture of it. Those instances size to their own box.
 (function () {
   'use strict';
 
-  // ── Palette ────────────────────────────────────────────────────────────────
+  // ── Palettes ───────────────────────────────────────────────────────────────
   // Six rgb (0-1) stops the shader walks as a smooth cyclic ramp, so the last
-  // stop wraps back into the first — a ring, not a gradient. The app ships four;
-  // the site uses "Ink", not the app's "Lucid" default. Ink is near-neutral — the
-  // ring turns on value rather than hue — so it reads as weather behind the page
-  // instead of colour competing with the rose and teal the UI spends on meaning.
+  // stop wraps back into the first — a ring, not a gradient. The site's page
+  // background uses "Ink", not the app's shipped default. Ink is near-neutral —
+  // the ring turns on value rather than hue — so it reads as weather behind the
+  // page instead of colour competing with the rose and teal the UI spends on
+  // meaning.
   //
   // Keep this in sync with the CSS stand-in gradient on `#stream` in site.css,
   // which is these same stops flattened for browsers without WebGL.
-  var STOPS = [
+  var INK = [
     [0.62, 0.66, 0.74], // pale slate
     [0.48, 0.52, 0.62], // slate
     [0.36, 0.4, 0.5], // deep slate
@@ -29,15 +34,47 @@
     [0.56, 0.6, 0.7], // grey blue
   ];
 
-  // The app's "subtle" preset. Ink is a near-neutral ring, so the same multiplier
-  // that reads as atmosphere in Lucid reads as grey haze here — the palette change
-  // and the step down the intensity scale are one decision, not two.
+  // The app's own default, Teal — one of the monochrome rings from
+  // dream-app/mobile/theme/streamPalettes.js. Generated rather than pasted as six
+  // hand-copied triples, for the same reason the shader generators below are kept:
+  // if upstream retunes the hue, saturation or the lightness ramp, the diff lands
+  // in the same three numbers here.
   //
-  // A page-wide scrim sits over this too (see `body::before` in site.css); the two
-  // multiply, so this is not the whole story — mid-page the scrim still removes
-  // about half. If prose legibility ever needs defending, move the scrim's middle
-  // stop rather than this, and check the privacy page, not the home page: dense
-  // legal copy over the full height is where contrast breaks first.
+  // The ramp is a palindrome (dark → light → dark) because the shader walks the
+  // stops as a cycle; a straight ramp puts a visible seam where the last wraps
+  // back into the first.
+  var MONO_LIGHTNESS = [0.3, 0.42, 0.56, 0.7, 0.56, 0.42];
+
+  function hslStop(hue, saturation, lightness) {
+    var chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+    var sector = (((hue % 360) + 360) % 360) / 60;
+    var second = chroma * (1 - Math.abs((sector % 2) - 1));
+    var rgb =
+      sector < 1 ? [chroma, second, 0]
+      : sector < 2 ? [second, chroma, 0]
+      : sector < 3 ? [0, chroma, second]
+      : sector < 4 ? [0, second, chroma]
+      : sector < 5 ? [second, 0, chroma]
+      : [chroma, 0, second];
+    var lift = lightness - chroma / 2;
+    return [rgb[0] + lift, rgb[1] + lift, rgb[2] + lift];
+  }
+
+  var TEAL = MONO_LIGHTNESS.map(function (l) {
+    return hslStop(186, 0.72, l);
+  });
+
+  // The app's "subtle" preset, and its shipped default. Ink is a near-neutral
+  // ring, so the same multiplier that reads as atmosphere in Lucid reads as grey
+  // haze here — the palette change and the step down the intensity scale are one
+  // decision, not two.
+  //
+  // A page-wide scrim sits over the full-screen instance too (see `body::before`
+  // in site.css); the two multiply, so this is not the whole story — mid-page the
+  // scrim still removes about half. If prose legibility ever needs defending, move
+  // the scrim's middle stop rather than this, and check the privacy page, not the
+  // home page: dense legal copy over the full height is where contrast breaks
+  // first.
   var INTENSITY = 0.3;
 
   var STOP_COUNT = 6;
@@ -171,12 +208,15 @@
   ].join('\n');
 
   // ── Runtime ────────────────────────────────────────────────────────────────
-  function start() {
-    var canvas = document.getElementById('stream');
+  // One instance per canvas. `stops` and `intensity` are per-instance so the page
+  // background and an in-page phone screen can run different palettes off the same
+  // compiled shader source. `fill` decides what the canvas sizes itself to: the
+  // viewport for the fixed background, its own layout box for anything inline.
+  function mount(canvas, stops, intensity, fill) {
     if (!canvas) return;
 
     var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    // No WebGL: the CSS fallback gradient on <body> is already showing. Leave it.
+    // No WebGL: the CSS fallback gradient underneath is already showing. Leave it.
     if (!gl) return;
 
     var compile = function (type, src) {
@@ -215,8 +255,10 @@
     // retina laptop is a lot of pixels for a decorative background.
     var dpr = Math.min(1.5, window.devicePixelRatio || 1);
     var resize = function () {
-      canvas.width = Math.max(1, Math.floor(window.innerWidth * dpr));
-      canvas.height = Math.max(1, Math.floor(window.innerHeight * dpr));
+      var w = fill === 'viewport' ? window.innerWidth : canvas.clientWidth;
+      var h = fill === 'viewport' ? window.innerHeight : canvas.clientHeight;
+      canvas.width = Math.max(1, Math.floor(w * dpr));
+      canvas.height = Math.max(1, Math.floor(h * dpr));
     };
     resize();
     window.addEventListener('resize', resize);
@@ -234,14 +276,24 @@
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform1f(uTime, elapsed);
       gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uIntensity, INTENSITY);
+      gl.uniform1f(uIntensity, intensity);
       uStops.forEach(function (loc, i) {
-        gl.uniform3f(loc, STOPS[i][0], STOPS[i][1], STOPS[i][2]);
+        gl.uniform3f(loc, stops[i][0], stops[i][1], stops[i][2]);
       });
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
     canvas.classList.add('is-live');
+
+    // An inline canvas can change size without the window doing so — the phone
+    // frame is a percentage of a grid column that reflows on its own. Observe the
+    // box where the API exists; the window listener above is the floor.
+    if (fill !== 'viewport' && typeof ResizeObserver === 'function') {
+      new ResizeObserver(function () {
+        resize();
+        if (reduceMotion) draw(120);
+      }).observe(canvas);
+    }
 
     if (reduceMotion) {
       // One still frame at a pleasant point in the flow, then nothing moves.
@@ -266,6 +318,16 @@
       requestAnimationFrame(render);
     };
     render();
+  }
+
+  function start() {
+    mount(document.getElementById('stream'), INK, INTENSITY, 'viewport');
+    // Every in-page instance runs the app's own default look — Teal at Subtle —
+    // because those canvases stand in for the app's background rather than for the
+    // site's. Nothing is drawn over them, so there is no scrim and no legibility
+    // argument for stepping away from what the phone actually ships.
+    var inline = document.querySelectorAll('canvas[data-stream]');
+    for (var i = 0; i < inline.length; i++) mount(inline[i], TEAL, INTENSITY, 'element');
   }
 
   if (document.readyState === 'loading') {

@@ -119,10 +119,23 @@ product look like the same thing. Source of truth is
   grow to 6px on hover.
 - **Background** (`assets/js/stream.js`) is the app's ambient "river of
   consciousness" shader — the GLSL is ported verbatim from
-  `mobile/theme/streamShader.js` with the default *Lucid* palette and *medium*
-  intensity from `mobile/theme/streamPalettes.js`. It freezes to a single still
-  frame under `prefers-reduced-motion`, stops advancing in a background tab, and
-  falls back to a static CSS gradient where WebGL is unavailable.
+  `mobile/theme/streamShader.js`, with the palettes generated the same way
+  `mobile/theme/streamPalettes.js` generates them. The full-page instance runs
+  *Ink* at *subtle*; a near-neutral ring reads as weather behind the page rather
+  than as colour competing with the rose and teal the UI spends on meaning.
+  Any `canvas[data-stream]` in the page gets its own instance sized to its own
+  box, running the app's shipped default instead — *Teal* at *subtle* — because
+  those stand in for the app's background rather than the site's. The landing
+  page uses one for the empty phone screen in the last showcase row. Every
+  instance freezes to a single still frame under `prefers-reduced-motion`, stops
+  advancing in a background tab, and falls back to a static CSS gradient where
+  WebGL is unavailable.
+- **Dream orb** (`assets/js/orb.js`) is the breathing orb from the app's wake
+  screen, ported from `mobile/theme/orbShader.js` and drawn on the hero at
+  several times the size the phone gives it. One line differs from upstream: the
+  app returns opaque black outside the halo because the wake screen behind it is
+  black, so the web port recovers alpha from the colour the shader already
+  computed — identical over black, correct over the ambient background.
 - **Header** mirrors `mobile/theme/PageHeader.js`: white crescent mark, teal
   wordmark, 4px rule beneath.
 - **Legal prose** sits on a blurred glass panel, the same way the app renders its
