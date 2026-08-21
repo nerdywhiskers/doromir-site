@@ -653,6 +653,27 @@ strong {
   background: none;
 }
 
+/* The brand mark centred on that empty screen. Needs the extra `.phone-screen`
+   qualifier to outscore the screenshot rules above, which would otherwise stretch
+   it to the full width of the frame and crop it to the top edge.
+
+   Sized as a share of the frame rather than in pixels, so it holds its proportion
+   as the device scales — the app draws the same mark at 68-104pt on a phone, which
+   is about this fraction of the screen. The artwork's interior is transparent, so
+   the stream shows through the letterforms; nothing here paints a backing. */
+.phone-screen .phone-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: 44%;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
+  transform-origin: center;
+  will-change: auto;
+}
+
 .phone--tilt {
   transform: rotate(-3deg);
 }
