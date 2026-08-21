@@ -892,6 +892,60 @@ section {
   }
 }
 
+/* ── Roadmap card ───────────────────────────────────────────────────────────
+   Sits inside a showcase column, so it takes the glass surface rather than the
+   pledge's full active-surface treatment (coloured border plus hard shadow).
+   That treatment is what the page spends on its one loud claim; a list of things
+   that do not exist yet has not earned it, and two panels shouting at that
+   volume would leave the pledge with nothing to be louder than. */
+.roadmap {
+  margin-top: 28px;
+  padding: 20px 22px;
+}
+
+/* Three classes, and that is the point: `.showcase-copy p:not(.kicker)` scores
+   0,2,1 and would otherwise repaint this line to --muted, flattening the card's
+   one piece of hierarchy. Same trap the showcase kicker documents above — a
+   `p` selector in this column needs to outscore that rule or it loses. */
+.showcase-copy .roadmap .roadmap-title {
+  margin: 0;
+  color: var(--white);
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.roadmap ul {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.roadmap li {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: start;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 24px;
+}
+
+/* A hollow ring, not the pledge's drawn checkmark. The shape carries the tense:
+   the pledge ticks things that are true today, this one marks things that are
+   not built. Marigold because the system already spends it on accents, and
+   because it is not the teal the pledge uses for what it can promise. */
+.roadmap li::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  margin-top: 7px;
+  border: 2px solid var(--marigold);
+  border-radius: 50%;
+}
+
 /* Fine print under a showcase claim — the conditions attached to it. Small, and
    --muted-dim would fail contrast at this size, so it stays on --muted and earns
    its quietness from size and width instead. */
