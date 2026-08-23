@@ -1,11 +1,13 @@
 # doromir-site
 
-The public website for **Doromir** — the four pages Google Play and the App Store
-require before they will accept a submission:
+The public website for **Doromir**. Three of these pages are what Google Play and the
+App Store require before they will accept a submission; the rest are the product:
 
 | Path | Purpose |
 |---|---|
 | `/` | Landing page |
+| `/pricing/` | What the app costs, what it will cost later, and why the free tier can stay free |
+| `/faq/` | The same answers the app shows under Profile → FAQ |
 | `/privacy/` | Privacy policy — **required by both stores** |
 | `/terms/` | Terms of service |
 | `/delete-data/` | Data-deletion instructions — **Google specifically requires this URL** |
@@ -89,7 +91,8 @@ release*:
 | Cloud sync, accounts, or a backend of any kind | Most of the privacy policy, and the whole premise of `/delete-data/` |
 | A new Health Connect record type | The enumerated list in privacy §7 |
 | A new Android permission | The list in privacy §10 |
-| In-app purchases or subscriptions | The liability cap in terms §12 refers to Doromir being free |
+| In-app purchases or subscriptions | The liability cap in terms §12 refers to Doromir being free, and `/pricing/` says every tier is unbuilt |
+| A feature listed on `/pricing/` moving behind a paywall | The first of the four promises on that page, which is the strongest commitment on the site |
 
 Verified at the time of writing (`dream-app` @ `main`, 2026-08-04):
 
@@ -103,6 +106,58 @@ Verified at the time of writing (`dream-app` @ `main`, 2026-08-04):
 - Health Connect record types read: `SleepSession`, `HeartRateVariabilityRmssd`,
   `RestingHeartRate`, `Steps`, `ActiveCaloriesBurned`, `ExerciseSession` — read
   access only (`mobile/lib/healthProviders/healthConnectMappers.js`).
+
+---
+
+## The pricing page
+
+`/pricing/` is the one page that is partly about the future, so it is the one most
+able to become untrue quietly. Two halves, with different failure modes.
+
+### The free card is a factual claim about the shipped app
+
+Six lines cover twelve features, so **each line has to be true of everything folded
+into it.** Checked against `dream-app` @ `main` on 2026-08-23, the same way the
+privacy claims are:
+
+- "export as JSON, CSV or an Obsidian vault" — all three exist: `lib/dataExport.js`,
+  `lib/dreamCsv.js`, and the Obsidian-compatible Markdown vault in `lib/dreamMarkdown.js`.
+- "automatic backups" — scheduled backup to a user-chosen SAF folder ships
+  (`lib/backupSchedule.js` + `lib/backupDestination.js`), which is why the page can put
+  it in the free card rather than in a plan.
+- "encrypted dream text" is deliberate wording, not shorthand for everything.
+  `lib/contentCipher.js` seals title, mood, transcript, insight and attachment captions;
+  **the recording file and any attached image are not encrypted.** Never widen this to
+  "everything is encrypted" — same guardrail as the store listing.
+- The page says "search" and "the Dream Map" as separate things and never says
+  *semantic search*, because the journal search box is keyword-based. Semantic matching
+  appears on an opened entry and in the Dream Map only.
+
+### The two plans are proposals, and nothing behind them is built
+
+No accounts, no sync, no offline chat, no journal profiles, no IAP. Three things say
+so, and **all three are load-bearing** because the section carries no explanatory prose:
+
+1. the `Planned` kicker on each card,
+2. the `Not yet available` line where a second price would normally sit,
+3. `.tier--planned`'s dashed, shadowless border — the same not-yet-a-link treatment
+   `.btn--pending` gives the store button on the landing page.
+
+Remove any one and the section reads as a store, which would mislead the first person
+who tries to buy. **If either plan ever ships, all three go in the same release**, and
+terms §12 has to stop saying Doromir is provided free of charge.
+
+The closer also promises **a free lifetime subscription to the first 100 users.** Nothing
+counts them, so that is a commitment kept by hand from the `support@doromir.com` inbox.
+Either keep a list as beta requests arrive, or take the sentence down — it is the one
+claim on the site that can be quietly broken by simply not tracking it.
+
+Prices and contents last set 2026-08-23 (Plus $4.99/mo; Lifetime $49.99 once). They
+descend from Scenario C of
+[`dream-app/docs/Cost Model - Hosting and Scaling.md`](../dream-app/docs/Cost%20Model%20-%20Hosting%20and%20Scaling.md)
+but no longer match it — the cost model prices image generation, which this page does
+not offer. Re-read that document before changing a number here, and update it if the
+product decision has genuinely moved.
 
 ---
 

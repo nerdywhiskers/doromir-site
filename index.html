@@ -34,6 +34,7 @@
         <span class="brand-name">Doromir</span>
       </a>
       <nav class="header-actions" aria-label="Main">
+        <a class="header-link" href="/pricing/">Pricing</a>
         <a class="header-link" href="/faq/">FAQ</a>
         <a class="btn btn--sm" href="/#download">Download</a>
       </nav>
@@ -79,7 +80,6 @@
        Five rows, sides alternating, one headline and one line each. -->
   <section class="showcase-set">
     <div class="wrap">
-
       <div class="showcase">
         <div class="showcase-art reveal">
           <div class="phone float">
@@ -94,39 +94,52 @@
         </div>
         <div class="showcase-copy reveal" style="--d:1">
           <p class="kicker">Capture</p>
-          <h2>Wake up. Start talking.</h2>
+          <h2>Wake up. Start remembering.</h2>
           <p>
             The alarm takes over the lock screen. One tap starts recording. No unlocking or hunting for an app while the dream fades away.
           </p>
         </div>
       </div>
+    </div>
 
-      <hr class="rule rule--section">
+    <!-- A band, not a card: full width, so it reads as the page changing
+         ground under the row rather than as this row being singled out. The
+         two banded rows alternate with three unbanded ones, which is what
+         breaks a long single-colour scroll into readable movements.
 
-      <div class="showcase showcase--flip">
-        <div class="showcase-art reveal">
-          <div class="phone float" data-scrollshot>
-            <div class="phone-screen">
-              <picture>
-                <source srcset="/assets/img/screens/journal.webp" type="image/webp">
-                <img src="/assets/img/screens/journal.png" width="780" height="3988" loading="lazy"
-                     alt="The dream journal: a five-day capture streak, a row of recurring tags, and dated entries titled The tide came up the stairs, Rehearsing a talk I never wrote and Flying low over the harbour, each tagged with its motifs.">
-              </picture>
+         It is a real element rather than a `100vw` pseudo-element because
+         `100vw` includes the scrollbar on every platform that draws one, so
+         the trick buys a horizontal scrollbar on Windows. The band also
+         replaces the hairline rules that used to divide these rows: its own
+         edge is the divider, and a rule sitting exactly on the seam of a
+         background change reads as a mistake. -->
+    <div class="band">
+      <div class="wrap">
+        <div class="showcase showcase--flip">
+          <div class="showcase-art reveal">
+            <div class="phone float" data-scrollshot>
+              <div class="phone-screen">
+                <picture>
+                  <source srcset="/assets/img/screens/journal.webp" type="image/webp">
+                  <img src="/assets/img/screens/journal.png" width="780" height="3988" loading="lazy"
+                       alt="The dream journal: a five-day capture streak, a row of recurring tags, and dated entries titled The tide came up the stairs, Rehearsing a talk I never wrote and Flying low over the harbour, each tagged with its motifs.">
+                </picture>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="showcase-copy reveal" style="--d:1">
-          <p class="kicker">Journal</p>
-          <h2>Your journal writes itself.</h2>
-          <p>
-            Titles, tags and moods are added for you. Search everything you have
-            ever logged, and watch the motifs start repeating. No complicated charts to fill out, or unscientific mystical predictions. 
-          </p>
+          <div class="showcase-copy reveal" style="--d:1">
+            <p class="kicker">Journal</p>
+            <h2>Your journal writes itself.</h2>
+            <p>
+              Titles, tags and moods are added for you. Search everything you have
+              ever logged, and watch the motifs start repeating. No complicated charts to fill out, or unscientific mystical predictions. 
+            </p>
+          </div>
         </div>
       </div>
+    </div>
 
-      <hr class="rule rule--section">
-
+    <div class="wrap">
       <!-- The one symmetric row on the page: copy in the middle with a device on
            each side, because this section makes two claims of equal weight — the
            numbers on the left, the map on the right.
@@ -200,38 +213,41 @@
         </div>
 
       </div>
+    </div>
 
-      <hr class="rule rule--section">
-
-      <!-- Art left, so the sides keep alternating down the page: this row, the
-           flipped one below it, and the plain one at the top of the set. -->
-      <div class="showcase">
-        <div class="showcase-art reveal">
-          <div class="phone float">
-            <div class="phone-screen">
-              <picture>
-                <source srcset="/assets/img/screens/private-ai.webp" type="image/webp">
-                <img src="/assets/img/screens/private-ai.png" width="780" height="1688" loading="lazy"
-                     alt="An onboarding step titled Pick how your dream insights are written, with a panel confirming Gemini Nano is ready and no download is needed.">
-              </picture>
+    <!-- Second band. See the first. -->
+    <div class="band">
+      <div class="wrap">
+        <!-- Art left, so the sides keep alternating down the page: this row, the
+             flipped one below it, and the plain one at the top of the set. -->
+        <div class="showcase">
+          <div class="showcase-art reveal">
+            <div class="phone float">
+              <div class="phone-screen">
+                <picture>
+                  <source srcset="/assets/img/screens/private-ai.webp" type="image/webp">
+                  <img src="/assets/img/screens/private-ai.png" width="780" height="1688" loading="lazy"
+                       alt="An onboarding step titled Pick how your dream insights are written, with a panel confirming Gemini Nano is ready and no download is needed.">
+                </picture>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="showcase-copy reveal" style="--d:1">
-          <p class="kicker">Private</p>
-          <h2>Fully Offline and Private.</h2>
-          <p>
-            Your phone is perfectly capable of analysing your dreams using local AI
-            models. Your dreams are never sent anywhere.
-          </p>
-          <p class="fineprint">
-            * Only supported on newer devices. Subject to your device's privacy settings.
-          </p>
+          <div class="showcase-copy reveal" style="--d:1">
+            <p class="kicker">Private</p>
+            <h2>Fully Offline and Private.</h2>
+            <p>
+              Your phone is perfectly capable of analysing your dreams using local AI
+              models. Your dreams are never sent anywhere.
+            </p>
+            <p class="fineprint">
+              * Only supported on newer devices. Subject to your device's privacy settings.
+            </p>
+          </div>
         </div>
       </div>
+    </div>
 
-      <hr class="rule rule--section">
-
+    <div class="wrap">
       <div class="showcase showcase--flip">
         <div class="showcase-art reveal">
           <div class="phone float">
@@ -275,7 +291,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -287,14 +302,12 @@
       <div class="glass pledge reveal">
         <p class="kicker">The pledge</p>
         <h2>Nothing leaves your phone.</h2>
-        <ul>
+        <ul class="ticks ticks--2col">
           <li>No account or email required.</li>
           <li>No analytics, no ads, no trackers.</li>
           <li>No external servers. (Why let OpenAI read your dreams?)</li>
-          <li>Uninstalling deletes everything. There is no other copy.</li>
+          <li>Uninstalling deletes everything.</li>
         </ul>
-        <div class="btn-row">
-        </div>
       </div>
     </div>
   </section>
