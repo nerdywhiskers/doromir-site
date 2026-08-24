@@ -37,7 +37,7 @@
   </div>
 </header>
 
-<main id="main">
+<main id="main" class="legal">
   <div class="wrap">
     <h1 class="page-title">Privacy &amp; Data Policy</h1>
     <p class="page-meta">Effective 6 August 2026 &middot; applies to the Doromir mobile app and this website</p>
@@ -50,7 +50,7 @@
           recordings, transcripts, journal entries and any health data you connect live
           in a database on your own phone. We run no analytics and no advertising, and
           we have no way to read your dreams. The one thing that can leave your phone is
-          an optional crash report, which never carries dream content &mdash; see
+          an optional crash report, which never carries dream content. See
           <a href="#crash">crash diagnostics</a>. Deleting is entirely in your hands:
           see <a href="#delete">delete your data</a>.
         </p>
@@ -68,15 +68,15 @@
         Most privacy policies describe what a company does with data it has collected.
         Doromir is built so that we never receive your data in the first place: no
         account system, no login, no backend, no cloud storage. That is not a promise
-        about our intentions &mdash; it is a property of how the software is built. We
-        could not hand your dream journal to anyone, because we do not have it.
+        about our intentions. It is a property of how the software is built. We could
+        not hand your dream journal to anyone, because we do not have it.
       </p>
 
       <h2>3. What Doromir stores on your device</h2>
       <p>All of this is written to local storage on your phone and stays there:</p>
       <ul>
         <li>Audio recordings of your dream notes, and their transcripts.</li>
-        <li>Journal entries &mdash; titles, tags, moods and anything you type.</li>
+        <li>Journal entries: titles, tags, moods and anything you type.</li>
         <li>Numeric representations of entries ("embeddings") used for on-device search and recurring themes.</li>
         <li>Alarms, sounds and settings.</li>
         <li>Health and sleep figures, if you connect a health source or enter them by hand.</li>
@@ -123,9 +123,9 @@
       </p>
       <p>
         Transcription happens on your device. Doromir uses your phone's built-in speech
-        recognition where available &mdash; a component of your operating system,
-        governed by your device manufacturer's privacy policy &mdash; and otherwise
-        falls back to a Whisper model that ships inside the app. If you would rather not
+        recognition where available (a component of your operating system, governed by
+        your device manufacturer's privacy policy), and otherwise falls back to a
+        Whisper model that ships inside the app. If you would rather not
         use the system service, the bundled offline model works without it.
       </p>
 
@@ -141,8 +141,8 @@
       </p>
       <p>
         These are stored locally alongside your journal and analysed
-        <strong>on the device</strong> to show reflective correlations &mdash; for
-        example whether longer dream entries follow nights with more REM sleep. Results
+        <strong>on the device</strong> to show reflective correlations, for example
+        whether longer dream entries follow nights with more REM sleep. Results
         are shown only to you, in the app. Health data is never transmitted off your
         device, never sold or shared, never used for advertising, never used to make
         decisions about you regarding employment, insurance or credit, and never used to
@@ -169,7 +169,7 @@
       </p>
       <p>
         <strong>Downloading that optional model is the only other time Doromir touches
-        the network.</strong> If &mdash; and only if &mdash; you choose to download it,
+        the network.</strong> If, and only if, you choose to download it,
         your device connects to Hugging Face (huggingface.co) to fetch the file. That is
         an ordinary file download: it reveals to that host the same things any download
         does, such as your IP address, and is subject to their privacy policy.
@@ -186,15 +186,15 @@
 
       <h2>8. Permissions, and why</h2>
       <ul>
-        <li><strong>Microphone</strong> &mdash; to record dream notes.</li>
-        <li><strong>Notifications</strong> &mdash; to deliver alarms and reminders.</li>
-        <li><strong>Exact alarms</strong> &mdash; so an alarm fires at the minute you set it for.</li>
-        <li><strong>Full-screen intent</strong> &mdash; so the alarm can present its wake interface over the lock screen.</li>
-        <li><strong>Display over other apps</strong> &mdash; optional. Android suppresses a full-screen alarm while the phone is awake and in use; this lets the alarm open properly in that case. Doromir draws no overlay windows, and the alarm still rings without it.</li>
-        <li><strong>Run at startup</strong> &mdash; to restore your alarms after a restart.</li>
-        <li><strong>Foreground service, wake lock and vibration</strong> &mdash; to keep an alarm ringing and wake the screen.</li>
-        <li><strong>Physical activity</strong> &mdash; optional, for phone-sensor sleep detection.</li>
-        <li><strong>Health Connect (read)</strong> &mdash; optional, for the six record types in section 6.</li>
+        <li><strong>Microphone</strong>: to record dream notes.</li>
+        <li><strong>Notifications</strong>: to deliver alarms and reminders.</li>
+        <li><strong>Exact alarms</strong>: so an alarm fires at the minute you set it for.</li>
+        <li><strong>Full-screen intent</strong>: so the alarm can present its wake interface over the lock screen.</li>
+        <li><strong>Display over other apps</strong>: optional. Android suppresses a full-screen alarm while the phone is awake and in use; this lets the alarm open properly in that case. Doromir draws no overlay windows, and the alarm still rings without it.</li>
+        <li><strong>Run at startup</strong>: to restore your alarms after a restart.</li>
+        <li><strong>Foreground service, wake lock and vibration</strong>: to keep an alarm ringing and wake the screen.</li>
+        <li><strong>Physical activity</strong>: optional, for phone-sensor sleep detection.</li>
+        <li><strong>Health Connect (read)</strong>: optional, for the six record types in section 6.</li>
       </ul>
       <p>
         Every permission can be changed from your device's system settings, and the
@@ -208,23 +208,23 @@
         submit and nothing to wait for.
       </p>
       <p>
-        Deletion is permanent and we cannot reverse it &mdash; we have no copy to
-        restore from. <strong>If you want to keep anything, export first:</strong> open
+        Deletion is permanent and we cannot reverse it. We have no copy to restore
+        from. <strong>If you want to keep anything, export first:</strong> open
         <strong>Profile</strong>, choose the export option and pick a folder. Your
         entries and health snapshots are written out as a file you keep.
       </p>
       <ul>
-        <li><strong>One dream</strong> &mdash; open the entry from the Journal tab and delete it. The entry and its audio go immediately.</li>
-        <li><strong>Everything, keeping the app</strong> &mdash; Settings &rarr; Apps &rarr; Doromir &rarr; Storage &amp; cache &rarr; <strong>Clear storage</strong>. This erases the journal database, every recording, your alarms, settings and any downloaded model. The app starts fresh, as if newly installed.</li>
-        <li><strong>Everything, including the app</strong> &mdash; <strong>uninstall Doromir.</strong> Android removes its entire private storage with it. Nothing survives, and nothing is left behind on any server.</li>
-        <li><strong>Just a downloaded AI model</strong> &mdash; remove it from Doromir's settings to reclaim the storage without touching your journal.</li>
-        <li><strong>Health access</strong> &mdash; open Health&nbsp;Connect &rarr; App permissions &rarr; Doromir and remove all permissions. Doromir only ever read from your health store, so there is nothing of ours to remove from it. Figures already copied into Doromir go when you clear its storage or uninstall.</li>
+        <li><strong>One dream</strong>: open the entry from the Journal tab and delete it. The entry and its audio go immediately.</li>
+        <li><strong>Everything, keeping the app</strong>: Settings &rarr; Apps &rarr; Doromir &rarr; Storage &amp; cache &rarr; <strong>Clear storage</strong>. This erases the journal database, every recording, your alarms, settings and any downloaded model. The app starts fresh, as if newly installed.</li>
+        <li><strong>Everything, including the app</strong>: <strong>uninstall Doromir.</strong> Android removes its entire private storage with it. Nothing survives, and nothing is left behind on any server.</li>
+        <li><strong>Just a downloaded AI model</strong>: remove it from Doromir's settings to reclaim the storage without touching your journal.</li>
+        <li><strong>Health access</strong>: open Health&nbsp;Connect &rarr; App permissions &rarr; Doromir and remove all permissions. Doromir only ever read from your health store, so there is nothing of ours to remove from it. Figures already copied into Doromir go when you clear its storage or uninstall.</li>
       </ul>
       <p>
         <strong>On our side there is nothing to delete</strong>, because there is nothing
         to hold: no account, no sync, no analytics, no email address. The two exceptions
-        are a file you exported yourself &mdash; once it is outside the app, deleting it
-        is up to you &mdash; and any crash reports you opted into sending, which contain
+        are a file you exported yourself (once it is outside the app, deleting it is up
+        to you) and any crash reports you opted into sending, which contain
         no dream content and no identifier tying them to you, but which you can ask us
         to purge by emailing the address below.
       </p>
@@ -255,7 +255,7 @@
       <p>
         Doromir is not directed to children and is not intended for anyone under 13, or
         the minimum age of digital consent where you live if that is higher. We do not
-        knowingly collect information from children &mdash; and in fact collect none
+        knowingly collect information from children, and in fact collect none
         from anyone.
       </p>
 
