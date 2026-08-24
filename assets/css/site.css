@@ -423,7 +423,31 @@ strong {
   }
 
   .header-actions {
-    gap: 16px;
+    gap: 14px;
+  }
+
+  /* Three items where there were two. The button keeps its height, so the touch
+     target is unchanged; only the air either side of the word comes in. */
+  .header-actions .btn--sm {
+    padding: 10px 16px;
+  }
+}
+
+/* Below about 400px the brand lockup and three actions stop sharing a line, and
+   `.brand-row` wraps. Left alone the actions land under the wordmark hugging the
+   left edge, which reads as an overflow rather than a decision. Giving them the
+   whole second row and spreading them across it makes it a two-row header
+   instead — and the tighter row gap keeps the two halves reading as one lockup.
+
+   Measured, not guessed: at the sizes set above, the row fits down to 398px. */
+@media (max-width: 400px) {
+  .brand-row {
+    row-gap: 14px;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 
@@ -441,7 +465,7 @@ strong {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 16px;
+  padding: 9px 18px;
   border-radius: var(--r-pill);
   border: var(--bw-hair) solid var(--border-rose-50);
   background: var(--chip-fill);
@@ -461,6 +485,21 @@ strong {
 .chip--teal {
   border-color: rgba(176, 236, 250, 0.5);
   color: var(--teal);
+}
+
+/* A chip introducing a page sits on its own line, and the block under it needs
+   air the inline box does not provide. Matches the 26px the FAQ page gets from
+   `.page-title`'s own top margin. */
+.hero .chip {
+  margin-bottom: 26px;
+}
+
+/* On the pages that open with a chip rather than a title, it lands about five
+   pixels under the header rule, because `.page-title` is what carried the
+   clearance and there is no title above the chip to provide it. Matches the
+   26px `.page-title` sets, so a page reads the same whichever it opens with. */
+main > .wrap > .chip:first-child {
+  margin-top: 26px;
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────
@@ -990,10 +1029,44 @@ section {
   animation-delay: 12.75s;
 }
 
-/* The hairline between showcase rows — Duolingo's section divider, drawn with the
-   rule the app already uses under a section head. */
-.rule--section {
-  margin: clamp(48px, 7vw, 88px) 0;
+/* ── Showcase bands ───────────────────────────────────────────
+   Two of the five showcase rows sit on a band, so the set reads as alternating
+   ground rather than one uninterrupted scroll of black.
+
+   The fill is a film of white rather than a wash of black, because the thing
+   behind it is the shader. Darkening would hide the ambient motion exactly where
+   the band is; lightening lets it through and tints it, so the band reads as a
+   pane laid over the page rather than a hole cut in it. It is deliberately near
+   the limit of what is visible — the effect wanted here is "something changed",
+   not "here is a panel".
+
+   The 2px edges are the same ink `.rule` used, and they do the job the rules
+   between these rows used to do. */
+.band {
+  background: rgba(255, 255, 255, 0.03);
+  border-top: var(--bw-hair) solid var(--border-w10);
+  border-bottom: var(--bw-hair) solid var(--border-w10);
+  padding: var(--row-gap) 0;
+}
+
+/* One gap, spent either as a band's padding or as an unbanded row's margin, so
+   the rhythm down the set is unchanged from when hairline rules carried it. */
+.showcase-set {
+  --row-gap: clamp(48px, 7vw, 88px);
+}
+
+.showcase-set > .wrap > .showcase {
+  margin: var(--row-gap) 0;
+}
+
+/* The set's own padding already spaces the first and last rows off their
+   neighbours; a margin here would double it. */
+.showcase-set > :first-child > .showcase {
+  margin-top: 0;
+}
+
+.showcase-set > :last-child > .showcase {
+  margin-bottom: 0;
 }
 
 .closer {
@@ -1017,6 +1090,7 @@ section {
    the generic framework pattern it exists to avoid. Teal because this is the
    privacy claim, and teal is what the app spends on trust. */
 .pledge {
+  --tick: var(--teal);
   border: var(--bw-hair) solid var(--teal);
   box-shadow: 6px 6px 0 var(--shadow-teal);
   padding: clamp(24px, 4vw, 40px);
@@ -1026,10 +1100,17 @@ section {
   color: var(--teal);
 }
 
-/* Two columns once there is room: seven single-line promises stacked vertically
-   read as a terms-and-conditions list, which is the opposite of the intent. */
-.pledge ul {
-  margin: 28px 0 0;
+.pledge .ticks {
+  margin-top: 28px;
+}
+
+/* ── Ticked claim list ──────────────────────────────────────────────────────
+   The pledge's promises and the pricing page's tier contents are the same
+   object: a short line the panel is asserting, one per row. One definition, and
+   the panel around it sets `--tick` to its own accent so the marks agree with
+   the border they sit inside. */
+.ticks {
+  margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
@@ -1037,15 +1118,17 @@ section {
   column-gap: 40px;
 }
 
+/* Two columns once there is room: a dozen single-line claims stacked vertically
+   read as a terms-and-conditions list, which is the opposite of the intent. */
 @media (min-width: 820px) {
-  .pledge ul {
+  .ticks--2col {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 /* Hairline rules rather than gaps, matching the app's settings rows and the rule
    it draws under a section head. */
-.pledge li {
+.ticks li {
   display: grid;
   grid-template-columns: 18px 1fr;
   align-items: start;
@@ -1055,18 +1138,189 @@ section {
   color: var(--body-dim);
   font-size: 16px;
   line-height: 26px;
+  /* These lines are two to four words from wrapping, so a claim regularly lands
+     with one word alone on a second line. Where it is supported this rebalances
+     the break; where it is not, nothing changes. */
+  text-wrap: pretty;
 }
 
 /* Drawn, not an icon font: two borders on a rotated box give the same 3px stroke
    as the lucide Check the app puts in an active toggle knob. */
-.pledge li::before {
+.ticks li::before {
   content: '';
   width: 8px;
   height: 14px;
   margin: 5px 0 0 4px;
-  border: solid var(--teal);
+  border: solid var(--tick, var(--teal));
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
+}
+
+/* ── Pricing ──────────────────────────────────────────────────────
+   The free tier is the loud card and the paid ones are the quiet ones, which is
+   the inverse of how a pricing page usually ranks its own contents. That
+   inversion is the argument the page is making, so it is carried in the styling
+   rather than only in the copy.
+
+   Free gets the app's full active-surface treatment — solid 2px border plus the
+   hard non-blurred offset shadow, both in teal — the same pairing `.pledge` uses,
+   because this is the same claim about trust. The planned tiers get `.btn--pending`'s
+   treatment instead: the shape kept, the affordance removed. Dashed and shadowless
+   is what this system already means by "real, but not yet something you can act
+   on", and it stops two unbuilt tiers from reading as products. */
+.tier {
+  padding: clamp(24px, 3.6vw, 40px);
+}
+
+/* Narrower than the plans below it and centred. Two columns of ticks at the full
+   1280px container turned the one card that matters into a spec sheet to be
+   scanned; a single column at a readable measure is looked at instead. Being the
+   only centred block on the page is what makes it the first thing seen. */
+.tier--free {
+  --tick: var(--teal);
+  border: var(--bw-hair) solid var(--teal);
+  box-shadow: 6px 6px 0 var(--shadow-teal);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.tier--free h2 {
+  color: var(--teal);
+}
+
+.tier--planned {
+  --tick: var(--border-rose-50);
+  border: var(--bw-hair) dashed var(--border-rose-50);
+  box-shadow: none;
+}
+
+.tier--planned h3 {
+  color: var(--rose);
+  font-size: 1.5rem;
+  font-family: 'Guanine', 'Anybody', system-ui, sans-serif;
+}
+
+/* Anybody, at display size, for the same reason the app keeps the clock in it:
+   this is a numeral the eye reads at a glance rather than a word it parses. */
+.price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 0;
+  font-family: 'Anybody', system-ui, sans-serif;
+}
+
+.price-figure {
+  font-size: clamp(2.75rem, 6vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.tier--free .price-figure {
+  color: var(--teal);
+}
+
+.price-unit {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* The second way to pay for the same tier — the annual price, the founding
+   price. Small and plain, so it never competes with the figure above it. */
+.price-alt {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--muted);
+}
+
+.tier-lede {
+  margin: 18px 0 0;
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--body-dim);
+}
+
+.tier .ticks {
+  margin-top: 24px;
+}
+
+/* Two planned tiers, side by side once there is room. They are a fork rather than
+   a ladder — nobody should buy both — so they are the same width and neither is
+   marked as recommended. The top margin is the gap under the section heading,
+   which now stands on its own with no paragraph between it and the cards. */
+.tier-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  margin-top: 36px;
+}
+
+@media (min-width: 900px) {
+  .tier-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Body copy on a pricing page still has to be readable, and the reason-why
+   sections here are three paragraphs deep. Same measure as the legal prose. */
+.pricing-copy {
+  max-width: 66ch;
+}
+
+.pricing-copy p {
+  margin-bottom: 18px;
+}
+
+.pricing-copy .lede {
+  max-width: none;
+}
+
+/* The landing page's section rhythm is sized for full-bleed device shots with
+   large empty margins around them. This page is cards and paragraphs, and at the
+   same spacing the free tier, the reason it is free, and the promise not to take
+   it away drift apart into three unrelated statements. They are one argument
+   read top to bottom, so the gaps close by roughly a third. */
+.pricing section {
+  padding: clamp(40px, 5.4vw, 68px) 0;
+}
+
+.pricing .hero {
+  padding-bottom: clamp(24px, 3.4vw, 40px);
+}
+
+/* The free card is the hero's second half rather than the next section, so it
+   keeps the pair together instead of sitting a full section gap below it — and
+   the copy above it is centred on the same axis. A left-aligned headline over a
+   centred card reads as two blocks that missed each other; centring both makes
+   the pair one composition, and the left-aligned plans below it then read as the
+   page moving on to a different subject. */
+.pricing .free-tier {
+  padding-top: clamp(16px, 2.2vw, 28px);
+}
+
+.pricing .hero .pricing-copy {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricing .hero h1,
+.pricing .hero .lede {
+  max-width: none;
+}
+
+/* The closer is the one place the page should breathe again — it is a change of
+   subject, not the next step of the argument. */
+.pricing .closer {
+  padding-top: clamp(56px, 8vw, 104px);
 }
 
 /* ── Prose (the legal pages) ────────────────────────────────────────────────

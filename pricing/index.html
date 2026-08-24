@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing — Doromir</title>
+<meta name="description" content="Doromir is free, and everything already in it stays free. No account, no ads, no trial. Here is what we plan to charge for later, and the reason we can give away the rest.">
+<meta name="theme-color" content="#000000">
+<!-- SVG first; browsers that understand it prefer it, the PNG stays for those
+     that do not. -->
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pricing — Doromir">
+<meta property="og:description" content="The app is free, and everything already in it stays free. Here is what we plan to charge for later, and why.">
+<meta property="og:image" content="/assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="stream" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-row">
+      <a class="brand" href="/" aria-label="Doromir home">
+        <img class="brand-mark" src="/assets/img/icon.svg" width="40" height="40" alt="" aria-hidden="true">
+        <span class="brand-name">Doromir</span>
+      </a>
+      <nav class="header-actions" aria-label="Main">
+        <a class="header-link" href="/pricing/" aria-current="page">Pricing</a>
+        <a class="header-link" href="/faq/">FAQ</a>
+        <a class="btn btn--sm" href="/#download">Download</a>
+      </nav>
+    </div>
+    <hr class="rule">
+  </div>
+</header>
+
+<main id="main" class="pricing">
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────────
+       One claim, and the reason it is credible, in the same breath. The reason
+       is the important half: "free" on its own is a promotion, and "free because
+       there is no server to pay for" is a property of the thing. -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="pricing-copy">
+      <span class="chip chip--teal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/>
+          <path d="M7 7h.01"/>
+        </svg>
+        Pricing
+      </span>
+      <h1 class="reveal" style="--d:1">Always Free.</h1>
+      <p class="lede reveal" style="--d:2">
+        No account, no trial, no ads.
+      </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The free tier ───────────────────────────────────────
+       The loudest card on the page — the inverse of how a pricing page usually
+       ranks its own contents — but not the widest. It is narrower than the two
+       plans below it and centred, so the eye lands on it first and reads one
+       column rather than scanning two.
+
+       Six lines covering twelve features. An itemised dozen reads as a spec sheet
+       and stops being scanned about a third of the way down; six grouped lines
+       give up nothing and are actually read. Each line still has to be true of
+       everything folded into it — see the pricing section of the README. -->
+  <section class="free-tier">
+    <div class="wrap">
+      <div class="glass tier tier--free reveal">
+        <p class="kicker">Free, forever</p>
+        <h2>Doromir</h2>
+        <div class="price">
+          <span class="price-figure">$0</span>
+        </div>
+        <p class="tier-lede">
+          Everything the app does today, for as long as you keep
+          it installed.
+        </p>
+        <ul class="ticks">
+          <li>An alarm that wakes you into a recorder, transcribed on the phone</li>
+          <li>Unlimited journal entries, with titles, tags and moods</li>
+          <li>Search, the recurring-theme view, and the Dream Map</li>
+          <li>Insights, dreams read against sleep, REM and activity</li>
+          <li>App lock, encrypted dream text, and nightstand mode</li>
+          <li>Automatic local backups, and export as JSON, CSV or an Obsidian vault</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The paid part ───────────────────────────────────────
+       Prices for things that do not exist yet, and no prose explaining that — so
+       the dashed shadowless card, the "Planned" kicker and the line under each
+       price are the only things carrying it. All three are load-bearing. If any
+       of them goes, the section reads as a store and the first person who tries
+       to buy one has been misled. -->
+  <section>
+    <div class="wrap">
+      <h2 class="reveal">Optional user-supported plans</h2>
+
+      <div class="tier-grid">
+
+        <div class="glass tier tier--planned reveal">
+          <p class="kicker">Planned</p>
+          <h3>Plus</h3>
+          <div class="price">
+            <span class="price-figure">$4.99</span>
+            <span class="price-unit">per month</span>
+          </div>
+          <p class="price-alt">Not yet available</p>
+          <ul class="ticks">
+            <li>Encrypted backup and sync</li>
+            <li>Multiple journal profiles</li>
+            <li>Offline chat with your journal</li>
+            <li>Everything in the free app</li>
+          </ul>
+        </div>
+
+        <div class="glass tier tier--planned reveal" style="--d:1">
+          <p class="kicker">Planned</p>
+          <h3>Lifetime</h3>
+          <div class="price">
+            <span class="price-figure">$49.99</span>
+            <span class="price-unit">once</span>
+          </div>
+          <p class="price-alt">Not yet available</p>
+          <ul class="ticks">
+            <li>Encrypted backup and sync</li>
+            <li>Early access to new features and models</li>
+            <li>Priority user support</li>
+            <li>Everything in Plus</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The promises ──────────────────────────────────────────────────────
+       The landing page's pledge is about data. This one is about money, and it
+       is what a reader is actually scanning a pricing page for: what changes
+       about the free app once a paid one exists. -->
+  <section>
+    <div class="wrap">
+      <div class="glass pledge reveal">
+        <p class="kicker">The promise</p>
+        <h2>Four things we will not do.</h2>
+        <ul class="ticks ticks--2col">
+          <li>
+            <span><strong>Move a free feature behind the paywall.</strong>
+            Anything you can use today stays usable, in every version after this
+            one.</span>
+          </li>
+          <li>
+            <span><strong>Charge you for your own data.</strong>
+            Recording, reading, searching and exporting are never metered.</span>
+          </li>
+          <li>
+            <span><strong>Run ads, trackers, or a data sale.</strong>
+            There is nothing to sell and nowhere to sell it from.</span>
+          </li>
+          <li>
+            <span><strong>Strand you.</strong>
+            If a paid tier ever shut down, your journal is already on your phone
+            and your export is a plain file.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="closer">
+    <div class="wrap">
+      <p class="kicker reveal">Availability</p>
+      <h2 class="reveal" style="--d:1">Free now. Still free later.</h2>
+      <p class="reveal" style="--d:2">
+        Doromir is in beta on Android. First 100 users receive a free lifetime subscription. To join, email
+        <a href="mailto:support@doromir.com">support@doromir.com</a>.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/privacy/">Privacy &amp; data</a></li>
+      <li><a href="/terms/">Terms of service</a></li>
+      <li><a href="/privacy/#delete">Data deletion</a></li>
+    </ul>
+    <p class="footer-legal">
+      Doromir is published by Nerdy Whiskers LLC.<br>
+      Contact: <a href="mailto:support@doromir.com">support@doromir.com</a><br>
+      Doromir is a reflection tool, not a medical device, and does not provide
+      medical advice.
+    </p>
+  </div>
+</footer>
+
+<script src="/assets/js/stream.js"></script>
+<script src="/assets/js/reveal.js" defer></script>
+</body>
+</html>
