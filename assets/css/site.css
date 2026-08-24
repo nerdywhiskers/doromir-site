@@ -1367,6 +1367,43 @@ section {
   color: var(--rose);
 }
 
+/* Terms and Privacy run several times longer than the FAQ, and at the shared
+   prose size the column reads as a wall. One step down across the whole type
+   stack keeps the proportions intact while fitting more of a clause on screen.
+   The FAQ and delete-data keep the larger default. */
+.legal .prose p,
+.legal .prose li {
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.legal .prose h2 {
+  font-size: 1.3125rem;
+}
+
+.legal .prose h3 {
+  font-size: 0.9375rem;
+}
+
+.legal .summary p {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.legal .note p {
+  font-size: 14px;
+  line-height: 23px;
+}
+
+.legal .page-title {
+  font-size: clamp(2rem, 4vw, 2.625rem);
+}
+
+.legal .page-meta {
+  font-size: 13px;
+  line-height: 21px;
+}
+
 .page-title {
   margin: 26px 0 8px;
   color: var(--rose);
