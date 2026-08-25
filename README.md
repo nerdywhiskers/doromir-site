@@ -7,6 +7,7 @@ App Store require before they will accept a submission; the rest are the product
 |---|---|
 | `/` | Landing page |
 | `/pricing/` | What the app costs, what it will cost later, and why the free tier can stay free |
+| `/blog/` | The dev log. One page, entries stacked newest first |
 | `/faq/` | The same answers the app shows under Profile → FAQ |
 | `/privacy/` | Privacy policy — **required by both stores** |
 | `/terms/` | Terms of service |
@@ -158,6 +159,78 @@ descend from Scenario C of
 but no longer match it — the cost model prices image generation, which this page does
 not offer. Re-read that document before changing a number here, and update it if the
 product decision has genuinely moved.
+
+---
+
+## The dev log
+
+`/blog/` is one file. Entries live inside it, newest first, and each is an
+`<article>` with the date as its `id`. There is no page per post and no index to
+keep in sync, because there is no build step here to generate either — a page per
+post would mean hand-copying the `<head>`, header and footer every time.
+
+`blog/index.html` carries two commented-out blocks, and neither is meant to be
+deleted:
+
+- **SKELETON** — the minimum entry. Copy it, paste it at the top of `.log`, fill in
+  the dates and the copy.
+- **REFERENCE** — a worked entry using every element the stylesheet already handles:
+  sub-heading, both list kinds, both figure kinds, the `.note` callout. It describes
+  itself in its own copy, because HTML comments cannot nest and a commented block
+  therefore cannot carry comments of its own. Lift pieces out of it rather than
+  inventing markup.
+
+Delete the `.log-empty` card once the first real entry lands. Three things matter:
+
+- **The `id` is the permalink**, and it is the date in `YYYY-MM-DD` form. It never
+  changes once published, even if the headline does — a linked entry that moves is
+  worse than one with a stale title.
+- **`datetime` and the visible date have to agree.** The attribute is what a reader
+  or a feed reads; the text beside it is what a person reads.
+- **Entry bodies reuse `.prose`**, the same typography the FAQ and the legal pages
+  set, so `<h3>`, `<ul>`, `<ol>` and `<strong>` are already styled. Only `.log-date`,
+  `.log-title` and `.log-figure` are the log's own.
+
+Screenshots go in `assets/img/blog/`, named for the entry that uses them, and get a
+`<figure class="log-figure">`. A capture off the phone adds `log-figure--portrait`
+as well: portrait captures are about twice as tall as they are wide, and at the
+column's full width one is taller than the screen reading it, so the entry becomes a
+screenshot with text around it. The modifier holds it to a phone-sized column.
+
+The visitor-facing label is **Blog** everywhere it appears: the header link, the
+chip at the top of the page, and the `<title>`. The page's own headline is what
+says the rest. "Dev log" survives only in this README and in the source comments,
+where it describes the kind of thing the page is.
+
+Renaming that link is not free. The header fits four actions and a button on one
+row only down to a measured width, and the two-row fallback below it is scoped to
+a media query holding that number. A longer label moves it. See the two header
+queries in `assets/css/site.css` — the comment on the second one carries the
+current measurements and the reason they travel together.
+
+---
+
+## Social links
+
+Three accounts, in the footer of every page: TikTok
+([@nerdywhiskers](https://www.tiktok.com/@nerdywhiskers)), X
+([@NerdyWhisker](https://x.com/NerdyWhisker)) and
+[Substack](https://nerdywhiskers.substack.com/). They belong to **Nerdy Whiskers**,
+the publisher, not to Doromir the product, which is why each `aria-label` says so.
+
+They are inline SVG rather than an icon font or a sprite, for the same reason
+everything else here is: no network request, no dependency, and `currentColor` so
+they take the footer's `--muted` and its white hover for free. Brand marks are the
+one place on this site that draws filled icons instead of the 2px strokes the chips
+and buttons use — there is no recognisable X or TikTok note in an outline.
+
+Adding a fourth is a copy of one `<li>` into every page's footer. Two rules travel
+with it:
+
+- Each mark keeps its 40px box. It is the tap target, and three adjacent 18px
+  glyphs with no padding are three links a thumb cannot pick between.
+- The list's `margin-left: -11px` is that box's own padding cancelled, so the first
+  glyph lines up with the column of links above it rather than sitting inset.
 
 ---
 
