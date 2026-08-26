@@ -612,6 +612,14 @@ main > .wrap > .chip:first-child {
   margin-top: 36px;
 }
 
+/* `.closer` centres its text, but a flex row does not inherit that. Without this the
+   row still starts at the left edge of the section and the button sits under nothing.
+   A modifier rather than a `.closer .btn-row` descendant rule, so the centred row
+   stays available to any section that wants it. */
+.btn-row--center {
+  justify-content: center;
+}
+
 /* ── Surfaces ───────────────────────────────────────────────────────────────*/
 .glass {
   background: var(--glass-fill);
@@ -996,9 +1004,11 @@ section {
   font-size: 13px;
   line-height: 20px;
   max-width: 42ch;
+  color: var(--muted);
 }
 
-.showcase-copy .fineprint {
+.showcase-copy .fineprint,
+.hero-copy .fineprint {
   margin-top: 16px;
 }
 

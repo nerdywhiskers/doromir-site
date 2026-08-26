@@ -47,10 +47,37 @@ The US state the LLC is registered in. One occurrence, in section 14.
 
 ### 3. Store link on the landing page
 
-The primary call to action is currently a non-interactive
-`<span class="btn btn--pending">Coming to Google Play</span>`. Once the listing is
-live, swap it for an `<a class="btn" href="…">` and it picks up the real button
-styling (hard shadow, hover press) automatically.
+The hero's button row is a pair: a non-interactive
+`<span class="btn btn--pending">Coming to Android</span>` beside the live
+`<a class="btn">` Subscribe action. The pending pill is the placeholder. Once the
+listing is live, swap it for an `<a class="btn" href="…">` and it picks up the real
+button styling (hard shadow, hover press) automatically.
+
+Once it does, the two buttons become two live actions of equal weight, which the row
+was not designed for. Demote the Subscribe one to `.btn--ghost` in the same release, so
+the store link is unambiguously the primary.
+
+---
+
+## How someone joins the beta
+
+Three buttons point at `https://doromir.substack.com/subscribe`: one in the landing
+hero, and one closing each Availability section on `/` and `/pricing/`. Subscribing is
+the signup, because the invites go out through the publication, so the site never has to
+collect an address itself. **All three carry the same label and the same Substack mark.**
+Changing one means changing all three.
+
+This is a plain link, not Substack's `/embed` iframe, and that is deliberate. The iframe
+renders Substack's own white panel at a fixed 480px, which overflows a phone and cannot
+be restyled from this side because it is cross-origin. It also loads third-party script
+and cookies onto the same page as the "No analytics, no ads, no trackers" pledge. A link
+keeps the site's own button, costs no network request, and hands the email field to
+Substack, which is where it has to be validated anyway.
+
+The closer rows use `.btn-row .btn-row--center`. `.closer` centres its *text*, but a flex
+row does not inherit that, so without the modifier the button sits at the left edge under
+centred copy. The hero row is left-aligned like its copy, so it keeps plain
+`.btn-row .btn-row--stack` and needs no modifier.
 
 ---
 
@@ -148,10 +175,12 @@ Remove any one and the section reads as a store, which would mislead the first p
 who tries to buy. **If either plan ever ships, all three go in the same release**, and
 terms §12 has to stop saying Doromir is provided free of charge.
 
-The closer also promises **a free lifetime subscription to the first 100 users.** Nothing
-counts them, so that is a commitment kept by hand from the `support@doromir.com` inbox.
-Either keep a list as beta requests arrive, or take the sentence down — it is the one
-claim on the site that can be quietly broken by simply not tracking it.
+Both closers also promise **a free lifetime membership to the first 100 users.** Nothing
+counts them. They now point at the Doromir Substack instead of the
+`support@doromir.com` inbox, so the subscriber list, which Substack orders by signup
+date, is the closest thing to a record. It is still not a list of the first 100 *users*,
+so either keep the count by hand as invites go out, or take the sentence down. It is the
+one claim on the site that can be quietly broken by simply not tracking it.
 
 Prices and contents last set 2026-08-23 (Plus $4.99/mo; Lifetime $49.99 once). They
 descend from Scenario C of
@@ -215,8 +244,14 @@ current measurements and the reason they travel together.
 Three accounts, in the footer of every page: TikTok
 ([@nerdywhiskers](https://www.tiktok.com/@nerdywhiskers)), X
 ([@NerdyWhisker](https://x.com/NerdyWhisker)) and
-[Substack](https://nerdywhiskers.substack.com/). They belong to **Nerdy Whiskers**,
-the publisher, not to Doromir the product, which is why each `aria-label` says so.
+[Substack](https://doromir.substack.com/). The first two belong to **Nerdy Whiskers**,
+the publisher, not to Doromir the product, which is why their `aria-label`s say so.
+
+The Substack is the exception. `doromir.substack.com` is the app's own publication, so
+its `aria-label` reads "Doromir on Substack". Nerdy Whiskers keeps a separate general dev
+log at `nerdywhiskers.substack.com`; this site deliberately does not link it, because the
+Availability closer sends beta signups to the Doromir publication and two Substack links
+in one footer would split them.
 
 They are inline SVG rather than an icon font or a sprite, for the same reason
 everything else here is: no network request, no dependency, and `currentColor` so

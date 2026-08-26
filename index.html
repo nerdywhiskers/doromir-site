@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Doromir — speak your dream before it fades</title>
@@ -16,15 +16,15 @@
 <meta property="og:description" content="An alarm clock that wakes you into a voice recorder. Nothing leaves your phone.">
 <meta property="og:image" content="/assets/img/icon.png">
 <meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="/assets/css/site.css">
+
 <!-- The hero screenshot is the largest thing above the fold and the page's LCP
      candidate. Preload the WebP so it is in flight before the CSS resolves the
      <picture>; the PNG fallback path is unaffected. -->
 <link rel="preload" as="image" href="/assets/img/screens/wake.webp" type="image/webp">
-</head>
-<body>
+<link rel="stylesheet" href="/assets/css/site.css"></head>
+<body class="zaemit-text-editing">
 <a class="skip" href="#main">Skip to content</a>
-<canvas id="stream" aria-hidden="true"></canvas>
+<canvas id="stream" aria-hidden="true" width="1653" height="6307" class="is-live"></canvas>
 
 <header class="site-header">
   <div class="wrap">
@@ -60,8 +60,15 @@
           An alarm clock and dream journal that wakes you into a voice recorder.
           Fully private, nothing leaves your phone.
         </p>
-        <div class="btn-row btn-row--stack reveal" style="--d:3">
+        <p class="fineprint reveal" style="--d:3">
+          * Subscribe to try the beta.
+        </p>
+        <div class="btn-row btn-row--stack reveal" style="--d:4">
           <span class="btn btn--pending">Coming to Android</span>
+          <a class="btn" href="https://doromir.substack.com/subscribe" rel="noopener" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836ZM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46ZM22.54 0H1.46v2.836h21.08V0Z"></path></svg>
+            Subscribe
+          </a>
         </div>
       </div>
 
@@ -71,7 +78,7 @@
            Decorative here: it is named nowhere in the copy and says nothing the
            headline does not, so it stays out of the accessibility tree. -->
       <div class="hero-art reveal" style="--d:2" aria-hidden="true">
-        <canvas class="orb" data-orb></canvas>
+        <canvas class="orb" data-orb=""></canvas>
       </div>
 
     </div>
@@ -87,16 +94,15 @@
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/wake.webp" type="image/webp">
-                <img src="/assets/img/screens/wake.png" width="780" height="1688" loading="lazy"
-                     alt="The alarm ringing full-screen: a glowing green orb over the time 06:45, the greeting Good morning, and a Dismiss and speak button.">
+                <img src="/assets/img/screens/wake.png" width="780" height="1688" loading="lazy" alt="The alarm ringing full-screen: a glowing green orb over the time 06:45, the greeting Good morning, and a Dismiss and speak button." class="">
               </picture>
             </div>
           </div>
         </div>
         <div class="showcase-copy reveal" style="--d:1">
           <p class="kicker">Capture</p>
-          <h2>Wake up. Start remembering.</h2>
-          <p>
+          <h2 class="">Wake up. Start remembering.</h2>
+          <p class="">
             The alarm takes over the lock screen. One tap starts recording. No unlocking or hunting for an app while the dream fades away.
           </p>
         </div>
@@ -118,12 +124,11 @@
       <div class="wrap">
         <div class="showcase showcase--flip">
           <div class="showcase-art reveal">
-            <div class="phone float" data-scrollshot>
+            <div class="phone float" data-scrollshot="">
               <div class="phone-screen">
                 <picture>
                   <source srcset="/assets/img/screens/journal.webp" type="image/webp">
-                  <img src="/assets/img/screens/journal.png" width="780" height="3988" loading="lazy"
-                       alt="The dream journal: a five-day capture streak, a row of recurring tags, and dated entries titled The tide came up the stairs, Rehearsing a talk I never wrote and Flying low over the harbour, each tagged with its motifs.">
+                  <img src="/assets/img/screens/journal.png" width="780" height="3988" loading="lazy" alt="The dream journal: a five-day capture streak, a row of recurring tags, and dated entries titled The tide came up the stairs, Rehearsing a talk I never wrote and Flying low over the harbour, each tagged with its motifs.">
                 </picture>
               </div>
             </div>
@@ -151,12 +156,11 @@
       <div class="showcase showcase--split">
 
         <div class="showcase-art showcase-art--left reveal">
-          <div class="phone float" data-scrollshot>
+          <div class="phone float" data-scrollshot="">
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/insights.webp" type="image/webp">
-                <img src="/assets/img/screens/insights.png" width="780" height="5188" loading="lazy"
-                     alt="The insights screen: a dreams-and-sleep finding, a recall summary, recurring themes and mood mix, then a row of sleep metrics — 7.5 hours, 23% REM, 17% deep, 53ms HRV — and a chart laying dream entries over sleep and activity.">
+                <img src="/assets/img/screens/insights.png" width="780" height="5188" loading="lazy" alt="The insights screen: a dreams-and-sleep finding, a recall summary, recurring themes and mood mix, then a row of sleep metrics — 7.5 hours, 23% REM, 17% deep, 53ms HRV — and a chart laying dream entries over sleep and activity.">
               </picture>
             </div>
           </div>
@@ -177,22 +181,21 @@
             <div class="phone-screen map-cycle">
               <picture>
                 <source srcset="/assets/img/screens/dreammap.webp" type="image/webp">
-                <img src="/assets/img/screens/dreammap.png" width="780" height="1688" loading="lazy"
-                     alt="The Dream Map: 240 dreams drawn as coloured dots joined by 1,122 lines, clustering into recurring subjects. Tapping a tag lights up only the dreams that share it.">
+                <img src="/assets/img/screens/dreammap.png" width="780" height="1688" loading="lazy" alt="The Dream Map: 240 dreams drawn as coloured dots joined by 1,122 lines, clustering into recurring subjects. Tapping a tag lights up only the dreams that share it.">
               </picture>
               <picture class="map-focus" aria-hidden="true">
                 <source srcset="/assets/img/screens/dreammap-1.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-1.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
-              <picture class="map-focus" aria-hidden="true">
+              <picture class="map-focus zaemit-force-visible" aria-hidden="true">
                 <source srcset="/assets/img/screens/dreammap-2.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-2.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
-              <picture class="map-focus" aria-hidden="true">
+              <picture class="map-focus zaemit-force-visible" aria-hidden="true">
                 <source srcset="/assets/img/screens/dreammap-3.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-3.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
-              <picture class="map-focus" aria-hidden="true">
+              <picture class="map-focus zaemit-force-visible" aria-hidden="true">
                 <source srcset="/assets/img/screens/dreammap-4.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-4.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
@@ -227,8 +230,7 @@
               <div class="phone-screen">
                 <picture>
                   <source srcset="/assets/img/screens/private-ai.webp" type="image/webp">
-                  <img src="/assets/img/screens/private-ai.png" width="780" height="1688" loading="lazy"
-                       alt="An onboarding step titled Pick how your dream insights are written, with a panel confirming Gemini Nano is ready and no download is needed.">
+                  <img src="/assets/img/screens/private-ai.png" width="780" height="1688" loading="lazy" alt="An onboarding step titled Pick how your dream insights are written, with a panel confirming Gemini Nano is ready and no download is needed.">
                 </picture>
               </div>
             </div>
@@ -264,9 +266,8 @@
                  the wordmark is already in the header and the copy beside this
                  says what the row is about. -->
             <div class="phone-screen">
-              <canvas class="phone-stream" data-stream aria-hidden="true"></canvas>
-              <img class="phone-mark" src="/assets/img/icon.svg" width="240" height="240"
-                   alt="" aria-hidden="true" loading="lazy">
+              <canvas class="phone-stream is-live" data-stream="" aria-hidden="true" width="336" height="727"></canvas>
+              <img class="phone-mark" src="/assets/img/icon.svg" width="240" height="240" alt="" aria-hidden="true" loading="lazy">
             </div>
           </div>
         </div>
@@ -321,9 +322,15 @@
       <p class="kicker reveal">Availability</p>
       <h2 class="reveal" style="--d:1">Android first. In beta now.</h2>
       <p class="reveal" style="--d:2">
-        There is no iOS version yet. To join the beta, email
-        <a href="mailto:support@doromir.com">support@doromir.com</a>.
+        There is no iOS version yet. Subscribe to the Doromir Substack if you want to
+        try the beta. First 100 users receive a free lifetime membership.
       </p>
+      <div class="btn-row btn-row--center reveal" style="--d:3">
+        <a class="btn" href="https://doromir.substack.com/subscribe" rel="noopener" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836ZM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46ZM22.54 0H1.46v2.836h21.08V0Z"></path></svg>
+          Subscribe
+        </a>
+      </div>
     </div>
   </section>
 
@@ -340,17 +347,17 @@
       <ul class="footer-social">
         <li>
           <a href="https://www.tiktok.com/@nerdywhiskers" aria-label="Nerdy Whiskers on TikTok" rel="me noopener" target="_blank">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07Z"></path></svg>
           </a>
         </li>
         <li>
           <a href="https://x.com/NerdyWhisker" aria-label="Nerdy Whiskers on X" rel="me noopener" target="_blank">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231ZM17.083 19.77h1.833L7.084 4.126H5.117Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231ZM17.083 19.77h1.833L7.084 4.126H5.117Z"></path></svg>
           </a>
         </li>
         <li>
-          <a href="https://nerdywhiskers.substack.com/" aria-label="Nerdy Whiskers on Substack" rel="me noopener" target="_blank">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836ZM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46ZM22.54 0H1.46v2.836h21.08V0Z"/></svg>
+          <a href="https://doromir.substack.com/" aria-label="Doromir on Substack" rel="me noopener" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836ZM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46ZM22.54 0H1.46v2.836h21.08V0Z"></path></svg>
           </a>
         </li>
       </ul>
@@ -365,7 +372,7 @@
 </footer>
 
 <script src="/assets/js/stream.js"></script>
-<script src="/assets/js/orb.js" defer></script>
-<script src="/assets/js/reveal.js" defer></script>
-</body>
-</html>
+<script src="/assets/js/orb.js" defer=""></script>
+<script src="/assets/js/reveal.js" defer=""></script>
+
+</body></html>
