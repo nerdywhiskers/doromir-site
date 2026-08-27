@@ -1539,10 +1539,16 @@ section {
    is the same body copy the FAQ and the legal pages set, so an entry inherits
    every later refinement to it for free; only the two rules that position a
    standalone panel have to be undone here. */
+/* `.page-title` only carries an 8px bottom margin because on every other page a
+   `.page-meta` sits under it and supplies the 40px gap before the content. The
+   blog has no subtitle, so the log has to stand itself off the title. Adjacent
+   siblings collapse, so this stays 40px rather than doubling if a subtitle
+   ever comes back. */
 .log {
   display: grid;
   gap: 28px;
   max-width: var(--prose);
+  margin-top: 40px;
   margin-bottom: 72px;
 }
 
@@ -1640,22 +1646,6 @@ section {
    padding, though: while it is the only panel on the page it sets the left edge
    the entries will later inherit, and while it sits under them its copy has to
    start on the same line theirs does. */
-.log-empty {
-  padding: clamp(24px, 4vw, 48px);
-}
-
-.log-empty h2 {
-  font-size: 1.5rem;
-  line-height: 1.3;
-  margin-bottom: 14px;
-}
-
-.log-empty p {
-  font-size: 17px;
-  line-height: 28px;
-  color: var(--body-dim);
-}
-
 /* ── Footer ─────────────────────────────────────────────────────────────────
    The one place on the page that deliberately stops shouting. Everything above
    is neo-brutalist — 4px rules, rose display type, uppercase chips — and the

@@ -53,7 +53,7 @@
       Blog
     </span>
     <h1 class="page-title">Notes from the build</h1>
-    <p class="page-meta">What shipped, what got cut, and the reasoning behind the parts of the app that are hard to explain from the outside. Newest first.</p>
+    <p class="page-meta">Follow the dream development</p>
 
     <!-- ── The log ──────────────────────────────────────────────────────────
          Entries live in this file, newest first, rather than one page per post.
@@ -69,7 +69,6 @@
            2. Fill it in. The REFERENCE block under the skeleton is a worked entry
               showing every element that is already styled, so lift pieces out of
               it rather than inventing markup.
-           3. Delete the `.log-empty` card once the first real entry is in.
 
          RULES FOR AN ENTRY
            - `id` is the date in `YYYY-MM-DD` form, and it is the permalink. It
@@ -94,20 +93,41 @@
     -->
     <div class="log">
 
-      <!-- Delete this whole block when the first entry lands. -->
-      <div class="glass log-empty reveal">
-        <p class="kicker">No entries yet</p>
-        <h2>The log starts with the beta.</h2>
-        <p>
-          Doromir is on Android in beta, and the first entries are still being
-          written. They will cover what went into the app, what came back out of
-          it, and the decisions that are hard to read off a screenshot.
+      <article class="glass prose log-entry reveal" id="2026-08-26">
+        <p class="log-date">
+          <a href="#2026-08-26"><time datetime="2026-08-26">26 August 2026</time></a>
         </p>
+        <h2 class="log-title">Why Doromir?</h2>
+
         <p>
-          Until then, the <a href="/faq/">FAQ</a> covers how the app works and
-          <a href="/pricing/">pricing</a> covers what it costs.
+          I've always wanted to get better at dream recall. Years ago, I dabbled in
+          serious dream journaling and lucid dreaming techniques, even keeping a
+          paper (!) journal at my bedside to write down my dreams immediately.
+          Journals fill up, life happens, and just like many other hobbies that take
+          effort to maintain, this one fell by the wayside as well.
         </p>
-      </div>
+
+        <p>
+          Recently, I'd been having more vivid dreams which renewed my interest in
+          the subject. Most other apps I tried using for dream journaling were either
+          too convoluted, locked useful features behind paywalls, or simply provided a
+          bad user experience. Privacy was also an important factor: I didn't want my
+          dreams going to some all-consuming cloud AI. These are the things that made
+          me decide to develop a tool that I would use for myself.
+        </p>
+
+        <p>
+          I'm a big fan of Obsidian, which I use as a daily note-taking tool, and
+          which served as a philosophical inspiration. Doromir is really a dream
+          vault of sorts, with a focus on user privacy and data sovereignty. I'm also
+          a strong believer in local LLMs, and so the goal is to only use open-source
+          models, preferably ones that can run directly locally on mobile devices.
+          Doromir's goal is not to give you a million different lucid dreaming
+          techniques or complicated charts to fill out. The goal is simple.
+          <strong>Make it as easy as possible to build a dream journal habit, with
+          minimal friction.</strong> I hope you'll build this habit with me.
+        </p>
+      </article>
 
       <!-- ══ SKELETON ═══════════════════════════════════════════════════════
            Everything an entry needs and nothing it does not. Copy the element
