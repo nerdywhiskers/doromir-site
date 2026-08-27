@@ -379,12 +379,12 @@ strong {
   color: var(--white);
 }
 
-/* The header carries the brand lockup and two actions — the thing you came to do
-   (Download) and the thing you came to ask (FAQ). Privacy, Terms and data
-   deletion stay in the footer, which is where people look for them and where
-   Play's review expects them.
+/* The header carries the brand lockup and four actions — the thing you came to do
+   (Download) and the three the product answers with: what it costs, how it works,
+   and what has changed. Privacy, Terms and data deletion stay in the footer, which
+   is where people look for them and where Play's review expects them.
 
-   Only one of the two is styled as a button. A row of equal-weight buttons has no
+   Only one of the four is styled as a button. A row of equal-weight buttons has no
    primary, and the header's job is to make the download obvious. */
 .header-actions {
   display: flex;
@@ -412,7 +412,7 @@ strong {
   color: var(--rose);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .brand-mark {
     width: 32px;
     height: 32px;
@@ -426,21 +426,25 @@ strong {
     gap: 14px;
   }
 
-  /* Three items where there were two. The button keeps its height, so the touch
-     target is unchanged; only the air either side of the word comes in. */
+  /* Four items where the wide layout has room for four and a half. The button
+     keeps its height, so the touch target is unchanged; only the air either side
+     of the word comes in. */
   .header-actions .btn--sm {
     padding: 10px 16px;
   }
 }
 
-/* Below about 400px the brand lockup and three actions stop sharing a line, and
+/* Below about 440px the brand lockup and four actions stop sharing a line, and
    `.brand-row` wraps. Left alone the actions land under the wordmark hugging the
    left edge, which reads as an overflow rather than a decision. Giving them the
    whole second row and spreading them across it makes it a two-row header
    instead — and the tighter row gap keeps the two halves reading as one lockup.
 
-   Measured, not guessed: at the sizes set above, the row fits down to 398px. */
-@media (max-width: 400px) {
+   Measured, not guessed, and re-measured when the blog took a fourth slot:
+   untightened the row needs 494px, and at the sizes set above it needs 440px.
+   Both queries move together — a gap between them is the left-hugging overflow
+   this one exists to prevent, and re-titling a link is enough to open one. */
+@media (max-width: 440px) {
   .brand-row {
     row-gap: 14px;
   }
@@ -608,6 +612,14 @@ main > .wrap > .chip:first-child {
   margin-top: 36px;
 }
 
+/* `.closer` centres its text, but a flex row does not inherit that. Without this the
+   row still starts at the left edge of the section and the button sits under nothing.
+   A modifier rather than a `.closer .btn-row` descendant rule, so the centred row
+   stays available to any section that wants it. */
+.btn-row--center {
+  justify-content: center;
+}
+
 /* ── Surfaces ───────────────────────────────────────────────────────────────*/
 .glass {
   background: var(--glass-fill);
@@ -744,8 +756,22 @@ section {
   padding-bottom: clamp(40px, 6vw, 72px);
 }
 
-.hero h1 {
-  max-width: 18ch;
+/* The headline is a two-line lockup: "Speak your dream" / "before it fades."
+   Both halves have to fit, which pins the h1's width to a band measured against
+   its own font: "Speak your dream" is 8.48em wide, and "Speak your dream before
+   it" is 12.70em. Anything narrower than 8.48em drops to three lines; anything
+   from 12.70em up pulls "before it" onto line one and orphans "fades.".
+
+   15ch lands at 10.88em, near the middle of that band, and the hero's own
+   font-size clamp below keeps the column-to-type ratio inside it at every width.
+   Retype the headline and both numbers move, so re-measure rather than nudging. */
+.hero-grid h1 {
+  max-width: 15ch;
+  /* Gentler than the global h1's 6.2vw. Between 900px and 1333px the shared scale
+     outgrows the hero's copy column and forces a third line; this keeps the two
+     in step. Identical to the global scale at both ends, where the 2.5rem floor
+     and the 4.5rem ceiling take over. */
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
 }
 
 .hero .lede {
@@ -800,8 +826,11 @@ section {
 }
 
 @media (min-width: 900px) {
+  /* The copy column carries a two-line headline at this size, so it takes the
+     larger share. The art column holds only the orb, which is a soft radial with
+     no detail to lose, so it gives up the width. */
   .hero-grid {
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1.25fr 0.75fr;
   }
 
   .hero-art .phone {
@@ -992,9 +1021,11 @@ section {
   font-size: 13px;
   line-height: 20px;
   max-width: 42ch;
+  color: var(--muted);
 }
 
-.showcase-copy .fineprint {
+.showcase-copy .fineprint,
+.hero-copy .fineprint {
   margin-top: 16px;
 }
 
@@ -1077,9 +1108,19 @@ section {
   color: var(--teal);
 }
 
+/* Left unmeasured this paragraph runs the full 1152px container, which stranded
+   "membership." alone on a second line on both closers. 58ch wraps it into two
+   near-even lines instead (635/574 on pricing, 610/636 on the landing page) and
+   sits next to the lede's 56ch rather than inventing a new measure.
+
+   `text-wrap: pretty` is the guard for the next copy edit, not for this one:
+   where it is supported the browser reflows to avoid a one-word last line. It is
+   ignored elsewhere, so the measure above is what actually does the work. */
 .closer p:not(.kicker) {
   color: var(--muted);
-  margin-top: 14px;
+  margin: 14px auto 0;
+  max-width: 58ch;
+  text-wrap: pretty;
 }
 
 /* ── Privacy pledge panel ───────────────────────────────────────────────────
@@ -1354,7 +1395,8 @@ section {
   line-height: 28px;
 }
 
-.prose ul {
+.prose ul,
+.prose ol {
   margin: 0 0 1rem;
   padding-left: 22px;
 }
@@ -1486,6 +1528,124 @@ section {
   white-space: nowrap;
 }
 
+/* ── Dev log ────────────────────────────────────────────────────────────────
+   Entries stack on one page rather than getting a file each. This site has no
+   build step, so a page per post means hand-copying the head, header and footer
+   for every entry and keeping a separate index in step with all of them — and a
+   dev log is read as a stream anyway. Each entry keeps its own dated anchor, so
+   one entry is still linkable on its own.
+
+   The entries reuse `.prose` outright instead of restating its type scale. That
+   is the same body copy the FAQ and the legal pages set, so an entry inherits
+   every later refinement to it for free; only the two rules that position a
+   standalone panel have to be undone here. */
+/* `.page-title` only carries an 8px bottom margin because on every other page a
+   `.page-meta` sits under it and supplies the 40px gap before the content. The
+   blog has no subtitle, so the log has to stand itself off the title. Adjacent
+   siblings collapse, so this stays 40px rather than doubling if a subtitle
+   ever comes back. */
+.log {
+  display: grid;
+  gap: 28px;
+  max-width: var(--prose);
+  margin-top: 40px;
+  margin-bottom: 72px;
+}
+
+.log .prose {
+  /* The column is set once, on `.log`. */
+  max-width: none;
+  /* The grid gap spaces the entries; `.prose`'s own trailing margin would double
+     the last one and push the footer down. */
+  margin-bottom: 0;
+}
+
+/* A deep link lands on the entry, not tight against the top of the window. */
+.log-entry {
+  scroll-margin-top: 24px;
+}
+
+/* The date is the permalink, so it is the one link in an entry that must not
+   read as body copy: muted and undecorated, the same quiet treatment the footer
+   links get, since neither is what the visitor came to read. */
+.log-date {
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.log-date a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.log-date a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+/* `.prose h2:first-of-type` zeroes the top margin of an entry's heading, but the
+   date line above it means the heading is no longer first. Restate it here. */
+.log-title {
+  margin-top: 0;
+}
+
+/* A screenshot inside an entry. The frame is not decoration: a raw capture has
+   square corners, and square corners inside a 12px card read as something pasted
+   in rather than part of it. The hairline does the rest of the work, because most
+   captures of this app are darker than the card they land on and would otherwise
+   have no edge at all.
+
+   `width: 100%` rather than `max-width` so a capture narrower than the column is
+   still framed to the column. The intrinsic `width`/`height` attributes on the
+   <img> are what reserve its box before it loads. */
+.log-figure {
+  margin: 24px 0;
+}
+
+.log-figure img {
+  display: block;
+  width: 100%;
+  border-radius: var(--r-card);
+  border: var(--bw-hair) solid var(--border-w10);
+}
+
+/* A capture off the phone is portrait and roughly twice as tall as it is wide, so
+   at the column's full width it is taller than the screen reading it — the entry
+   stops being an entry and becomes a screenshot with text around it. This holds a
+   tall capture to a phone-sized column and centres it, which is also closer to the
+   size the thing is actually looked at.
+
+   The caption centres with it. A left-aligned caption under a centred image reads
+   as belonging to the paragraph below rather than to the picture above. */
+.log-figure--portrait img {
+  width: auto;
+  max-width: 280px;
+  margin-inline: auto;
+}
+
+.log-figure--portrait figcaption {
+  text-align: center;
+}
+
+/* Not a <p>, so it does not inherit the prose size the paragraphs around it get.
+   Sized and coloured like the fine print on the landing page instead — a caption
+   is an aside about the picture, not the next sentence of the entry. */
+.log-figure figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+/* No entries yet. Not styled as an entry — a dated-looking panel with no date is
+   how a placeholder gets mistaken for the first post. It does borrow `.prose`'s
+   padding, though: while it is the only panel on the page it sets the left edge
+   the entries will later inherit, and while it sits under them its copy has to
+   start on the same line theirs does. */
 /* ── Footer ─────────────────────────────────────────────────────────────────
    The one place on the page that deliberately stops shouting. Everything above
    is neo-brutalist — 4px rules, rose display type, uppercase chips — and the
@@ -1532,6 +1692,56 @@ section {
 .footer-links a:hover {
   color: var(--white);
   text-decoration: underline;
+}
+
+/* The wayfinding links and the social row are one column, not two more items in
+   the footer's flex row. At three columns the legal block loses the measure it
+   needs and the icons end up marooned between two blocks of text.
+
+   The gap is small because the icon boxes carry 11px of their own padding, so
+   the space actually seen between the two rows is roughly 17px. */
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Brand marks, so these are filled paths rather than the stroked icons the rest
+   of the site draws — there is no recognisable X or TikTok note in a 2px outline.
+   Coloured and sized to sit with the links above them: this row is wayfinding
+   like the rest of the footer, not a call to follow.
+
+   The negative left margin is the icon box's own padding, cancelled, so the
+   first glyph lines up with the column edge instead of sitting inset from it. */
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 0 0 -11px;
+  padding: 0;
+}
+
+/* An 18px mark centred in a 40px box. The box is the tap target and is invisible
+   until focused; shrinking it to the glyph would make three adjacent links a
+   thumb cannot reliably hit apart. */
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.footer-social a:hover {
+  color: var(--white);
+}
+
+.footer-social svg {
+  display: block;
+  width: 18px;
+  height: 18px;
 }
 
 /* --muted, not --muted-dim, and that matters more at 12px than it did at 14px:

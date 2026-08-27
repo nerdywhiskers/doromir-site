@@ -7,6 +7,7 @@ App Store require before they will accept a submission; the rest are the product
 |---|---|
 | `/` | Landing page |
 | `/pricing/` | What the app costs, what it will cost later, and why the free tier can stay free |
+| `/blog/` | The dev log. One page, entries stacked newest first |
 | `/faq/` | The same answers the app shows under Profile → FAQ |
 | `/privacy/` | Privacy policy — **required by both stores** |
 | `/terms/` | Terms of service |
@@ -46,10 +47,37 @@ The US state the LLC is registered in. One occurrence, in section 14.
 
 ### 3. Store link on the landing page
 
-The primary call to action is currently a non-interactive
-`<span class="btn btn--pending">Coming to Google Play</span>`. Once the listing is
-live, swap it for an `<a class="btn" href="…">` and it picks up the real button
-styling (hard shadow, hover press) automatically.
+The hero's button row is a pair: a non-interactive
+`<span class="btn btn--pending">Coming to Android</span>` beside the live
+`<a class="btn">` Subscribe action. The pending pill is the placeholder. Once the
+listing is live, swap it for an `<a class="btn" href="…">` and it picks up the real
+button styling (hard shadow, hover press) automatically.
+
+Once it does, the two buttons become two live actions of equal weight, which the row
+was not designed for. Demote the Subscribe one to `.btn--ghost` in the same release, so
+the store link is unambiguously the primary.
+
+---
+
+## How someone joins the beta
+
+Three buttons point at `https://doromir.substack.com/subscribe`: one in the landing
+hero, and one closing each Availability section on `/` and `/pricing/`. Subscribing is
+the signup, because the invites go out through the publication, so the site never has to
+collect an address itself. **All three carry the same label and the same Substack mark.**
+Changing one means changing all three.
+
+This is a plain link, not Substack's `/embed` iframe, and that is deliberate. The iframe
+renders Substack's own white panel at a fixed 480px, which overflows a phone and cannot
+be restyled from this side because it is cross-origin. It also loads third-party script
+and cookies onto the same page as the "No analytics, no ads, no trackers" pledge. A link
+keeps the site's own button, costs no network request, and hands the email field to
+Substack, which is where it has to be validated anyway.
+
+The closer rows use `.btn-row .btn-row--center`. `.closer` centres its *text*, but a flex
+row does not inherit that, so without the modifier the button sits at the left edge under
+centred copy. The hero row is left-aligned like its copy, so it keeps plain
+`.btn-row .btn-row--stack` and needs no modifier.
 
 ---
 
@@ -147,10 +175,12 @@ Remove any one and the section reads as a store, which would mislead the first p
 who tries to buy. **If either plan ever ships, all three go in the same release**, and
 terms §12 has to stop saying Doromir is provided free of charge.
 
-The closer also promises **a free lifetime subscription to the first 100 users.** Nothing
-counts them, so that is a commitment kept by hand from the `support@doromir.com` inbox.
-Either keep a list as beta requests arrive, or take the sentence down — it is the one
-claim on the site that can be quietly broken by simply not tracking it.
+Both closers also promise **a free lifetime membership to the first 100 users.** Nothing
+counts them. They now point at the Doromir Substack instead of the
+`support@doromir.com` inbox, so the subscriber list, which Substack orders by signup
+date, is the closest thing to a record. It is still not a list of the first 100 *users*,
+so either keep the count by hand as invites go out, or take the sentence down. It is the
+one claim on the site that can be quietly broken by simply not tracking it.
 
 Prices and contents last set 2026-08-23 (Plus $4.99/mo; Lifetime $49.99 once). They
 descend from Scenario C of
@@ -158,6 +188,84 @@ descend from Scenario C of
 but no longer match it — the cost model prices image generation, which this page does
 not offer. Re-read that document before changing a number here, and update it if the
 product decision has genuinely moved.
+
+---
+
+## The dev log
+
+`/blog/` is one file. Entries live inside it, newest first, and each is an
+`<article>` with the date as its `id`. There is no page per post and no index to
+keep in sync, because there is no build step here to generate either — a page per
+post would mean hand-copying the `<head>`, header and footer every time.
+
+`blog/index.html` carries two commented-out blocks, and neither is meant to be
+deleted:
+
+- **SKELETON** — the minimum entry. Copy it, paste it at the top of `.log`, fill in
+  the dates and the copy.
+- **REFERENCE** — a worked entry using every element the stylesheet already handles:
+  sub-heading, both list kinds, both figure kinds, the `.note` callout. It describes
+  itself in its own copy, because HTML comments cannot nest and a commented block
+  therefore cannot carry comments of its own. Lift pieces out of it rather than
+  inventing markup.
+
+Delete the `.log-empty` card once the first real entry lands. Three things matter:
+
+- **The `id` is the permalink**, and it is the date in `YYYY-MM-DD` form. It never
+  changes once published, even if the headline does — a linked entry that moves is
+  worse than one with a stale title.
+- **`datetime` and the visible date have to agree.** The attribute is what a reader
+  or a feed reads; the text beside it is what a person reads.
+- **Entry bodies reuse `.prose`**, the same typography the FAQ and the legal pages
+  set, so `<h3>`, `<ul>`, `<ol>` and `<strong>` are already styled. Only `.log-date`,
+  `.log-title` and `.log-figure` are the log's own.
+
+Screenshots go in `assets/img/blog/`, named for the entry that uses them, and get a
+`<figure class="log-figure">`. A capture off the phone adds `log-figure--portrait`
+as well: portrait captures are about twice as tall as they are wide, and at the
+column's full width one is taller than the screen reading it, so the entry becomes a
+screenshot with text around it. The modifier holds it to a phone-sized column.
+
+The visitor-facing label is **Blog** everywhere it appears: the header link, the
+chip at the top of the page, and the `<title>`. The page's own headline is what
+says the rest. "Dev log" survives only in this README and in the source comments,
+where it describes the kind of thing the page is.
+
+Renaming that link is not free. The header fits four actions and a button on one
+row only down to a measured width, and the two-row fallback below it is scoped to
+a media query holding that number. A longer label moves it. See the two header
+queries in `assets/css/site.css` — the comment on the second one carries the
+current measurements and the reason they travel together.
+
+---
+
+## Social links
+
+Three accounts, in the footer of every page: TikTok
+([@nerdywhiskers](https://www.tiktok.com/@nerdywhiskers)), X
+([@NerdyWhisker](https://x.com/NerdyWhisker)) and
+[Substack](https://doromir.substack.com/). The first two belong to **Nerdy Whiskers**,
+the publisher, not to Doromir the product, which is why their `aria-label`s say so.
+
+The Substack is the exception. `doromir.substack.com` is the app's own publication, so
+its `aria-label` reads "Doromir on Substack". Nerdy Whiskers keeps a separate general dev
+log at `nerdywhiskers.substack.com`; this site deliberately does not link it, because the
+Availability closer sends beta signups to the Doromir publication and two Substack links
+in one footer would split them.
+
+They are inline SVG rather than an icon font or a sprite, for the same reason
+everything else here is: no network request, no dependency, and `currentColor` so
+they take the footer's `--muted` and its white hover for free. Brand marks are the
+one place on this site that draws filled icons instead of the 2px strokes the chips
+and buttons use — there is no recognisable X or TikTok note in an outline.
+
+Adding a fourth is a copy of one `<li>` into every page's footer. Two rules travel
+with it:
+
+- Each mark keeps its 40px box. It is the tap target, and three adjacent 18px
+  glyphs with no padding are three links a thumb cannot pick between.
+- The list's `margin-left: -11px` is that box's own padding cancelled, so the first
+  glyph lines up with the column of links above it rather than sitting inset.
 
 ---
 

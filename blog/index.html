@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog — Doromir</title>
+<meta name="description" content="Notes from building Doromir: what shipped, what got cut, and the reasoning behind the parts of the app that are hard to explain from the outside.">
+<meta name="theme-color" content="#000000">
+<!-- SVG first; browsers that understand it prefer it, the PNG stays for those
+     that do not. -->
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Blog — Doromir">
+<meta property="og:description" content="What shipped, what got cut, and why. Notes from building Doromir.">
+<meta property="og:image" content="/assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="stream" aria-hidden="true"></canvas>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-row">
+      <a class="brand" href="/" aria-label="Doromir home">
+        <img class="brand-mark" src="/assets/img/icon.svg" width="40" height="40" alt="" aria-hidden="true">
+        <span class="brand-name">Doromir</span>
+      </a>
+      <nav class="header-actions" aria-label="Main">
+        <a class="header-link" href="/pricing/">Pricing</a>
+        <a class="header-link" href="/faq/">FAQ</a>
+        <a class="header-link" href="/blog/" aria-current="page">Blog</a>
+        <a class="btn btn--sm" href="/#download">Download</a>
+      </nav>
+    </div>
+    <hr class="rule">
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <span class="chip chip--teal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      Blog
+    </span>
+    <h1 class="page-title">Notes from the build</h1>
+    <p class="page-meta">Follow the dream development</p>
+
+    <!-- ── The log ──────────────────────────────────────────────────────────
+         Entries live in this file, newest first, rather than one page per post.
+         There is no build step on this site, so a page per post means hand-copying
+         the <head>, header and footer for every entry and then keeping an index
+         in sync with all of them by hand. A dev log is read as a stream anyway,
+         and each entry keeps its own anchor, so a single entry is still linkable.
+
+         HOW TO POST
+           1. Copy the SKELETON below and paste it as the first child of `.log`,
+              directly under the opening <div class="log"> tag. Newest first is
+              the whole ordering rule; there is nothing else to update.
+           2. Fill it in. The REFERENCE block under the skeleton is a worked entry
+              showing every element that is already styled, so lift pieces out of
+              it rather than inventing markup.
+
+         RULES FOR AN ENTRY
+           - `id` is the date in `YYYY-MM-DD` form, and it is the permalink. It
+             never changes once posted, even if the headline does. A second entry
+             on the same day takes a suffix: `2026-01-01-2`.
+           - The `href` of the date link is `#` plus that same `id`. Change one,
+             change both, or the entry stops linking to itself.
+           - `datetime` on the <time> is the plain machine date, with no suffix.
+             The text between the tags is the human one. The two agree.
+           - Entry bodies reuse `.prose`, the same typography the FAQ and the legal
+             pages set, so headings, lists, bold and links are already styled. Do
+             not add inline styles to an entry; if something is unstyled, it belongs
+             in site.css where every entry gets it.
+
+         Screenshots go in `assets/img/blog/`, named for the entry that uses them.
+         A wide capture uses `.log-figure` on its own. A capture off the phone is
+         portrait and would run taller than the screen reading it, so that one adds
+         `.log-figure--portrait`, which holds it to a phone-sized column.
+
+         Note that HTML comments do not nest, so neither template block below can
+         carry comments of its own. The reference entry describes itself instead.
+    -->
+    <div class="log">
+
+      <article class="glass prose log-entry reveal" id="2026-08-26">
+        <p class="log-date">
+          <a href="#2026-08-26"><time datetime="2026-08-26">26 August 2026</time></a>
+        </p>
+        <h2 class="log-title">Why Doromir?</h2>
+
+        <p>
+          I've always wanted to get better at dream recall. Years ago, I dabbled in
+          serious dream journaling and lucid dreaming techniques, even keeping a
+          paper (!) journal at my bedside to write down my dreams immediately.
+          Journals fill up, life happens, and just like many other hobbies that take
+          effort to maintain, this one fell by the wayside as well.
+        </p>
+
+        <p>
+          Recently, I'd been having more vivid dreams which renewed my interest in
+          the subject. Most other apps I tried using for dream journaling were either
+          too convoluted, locked useful features behind paywalls, or simply provided a
+          bad user experience. Privacy was also an important factor: I didn't want my
+          dreams going to some all-consuming cloud AI. These are the things that made
+          me decide to develop a tool that I would use for myself.
+        </p>
+
+        <p>
+          I'm a big fan of Obsidian, which I use as a daily note-taking tool, and
+          which served as a philosophical inspiration. Doromir is really a dream
+          vault of sorts, with a focus on user privacy and data sovereignty. I'm also
+          a strong believer in local LLMs, and so the goal is to only use open-source
+          models, preferably ones that can run directly locally on mobile devices.
+          Doromir's goal is not to give you a million different lucid dreaming
+          techniques or complicated charts to fill out. The goal is simple.
+          <strong>Make it as easy as possible to build a dream journal habit, with
+          minimal friction.</strong> I hope you'll build this habit with me.
+        </p>
+      </article>
+
+      <!-- ══ SKELETON ═══════════════════════════════════════════════════════
+           Everything an entry needs and nothing it does not. Copy the element
+           below, paste it at the top of `.log`, and replace the three dates and
+           the two lines of copy. Keep this block here for next time.
+
+      <article class="glass prose log-entry reveal" id="2026-01-01">
+        <p class="log-date">
+          <a href="#2026-01-01"><time datetime="2026-01-01">1 January 2026</time></a>
+        </p>
+        <h2 class="log-title">The headline, written as a sentence</h2>
+        <p>
+          The opening paragraph. One idea, what changed, and why it matters.
+        </p>
+      </article>
+
+      ══════════════════════════════════════════════════════════════════════ -->
+
+
+      <!-- ══ REFERENCE ══════════════════════════════════════════════════════
+           A worked entry using every element the stylesheet already handles. It
+           describes itself, because a commented block cannot hold comments. Read
+           it, take the parts an entry needs, and leave the rest here.
+
+      <article class="glass prose log-entry reveal" id="2026-01-01">
+        <p class="log-date">
+          <a href="#2026-01-01"><time datetime="2026-01-01">1 January 2026</time></a>
+        </p>
+        <h2 class="log-title">A headline written as a sentence, not a label</h2>
+
+        <p>
+          The opening paragraph carries the entry. Say what changed and why it
+          mattered, in plain words. <strong>Bold is emphasis</strong>, and it goes
+          white, so spend it on the one phrase in a paragraph that has to land.
+          Anything already explained elsewhere gets a link instead of a retelling:
+          the <a href="/faq/">FAQ</a> and <a href="/pricing/">pricing</a> are
+          usually the right targets.
+        </p>
+
+        <h3>A sub-heading, when one entry has two halves</h3>
+
+        <p>
+          Sub-headings come out marigold, so they read as a change of subject
+          inside the card rather than as a second entry starting.
+        </p>
+
+        <ul>
+          <li>An unordered list, for things that have no order.</li>
+          <li>Markers are rose, set once by the shared prose styling.</li>
+        </ul>
+
+        <ol>
+          <li>An ordered list, for steps that happen in sequence.</li>
+          <li>Same measure and the same markers as the list above it.</li>
+        </ol>
+
+        <figure class="log-figure">
+          <img src="/assets/img/blog/2026-01-01-wide.png" width="1200" height="750" loading="lazy"
+               alt="Describe what the picture shows, in a sentence. Never write image of or screenshot of, and never leave this empty on a picture that carries meaning.">
+          <figcaption>
+            A wide capture fills the column. The caption is optional and is for what
+            the picture cannot say about itself.
+          </figcaption>
+        </figure>
+
+        <figure class="log-figure log-figure--portrait">
+          <img src="/assets/img/blog/2026-01-01-phone.png" width="780" height="1688" loading="lazy"
+               alt="Describe the screen and what is different about it, not that it is a phone.">
+          <figcaption>
+            A capture off the phone adds the log-figure--portrait class, which holds
+            it to a phone-sized column instead of letting it run taller than the
+            screen reading it.
+          </figcaption>
+        </figure>
+
+        <div class="note">
+          <p>
+            A callout, for the one thing in an entry a reader must not skim past.
+            A behaviour change, or something they have to do by hand. One per
+            entry at most, or it stops meaning anything.
+          </p>
+        </div>
+
+        <p>
+          A closing paragraph, if the entry earns one. Short entries are fine and
+          two sentences is a legitimate post.
+        </p>
+      </article>
+
+      ══════════════════════════════════════════════════════════════════════ -->
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-nav">
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/privacy/">Privacy &amp; data</a></li>
+        <li><a href="/terms/">Terms of service</a></li>
+        <li><a href="/privacy/#delete">Data deletion</a></li>
+      </ul>
+      <ul class="footer-social">
+        <li>
+          <a href="https://www.tiktok.com/@nerdywhiskers" aria-label="Nerdy Whiskers on TikTok" rel="me noopener" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07Z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://x.com/NerdyWhisker" aria-label="Nerdy Whiskers on X" rel="me noopener" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231ZM17.083 19.77h1.833L7.084 4.126H5.117Z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://doromir.substack.com/" aria-label="Doromir on Substack" rel="me noopener" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836ZM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46ZM22.54 0H1.46v2.836h21.08V0Z"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <p class="footer-legal">
+      Doromir is published by Nerdy Whiskers LLC.<br>
+      Contact: <a href="mailto:support@doromir.com">support@doromir.com</a>
+    </p>
+  </div>
+</footer>
+
+<script src="/assets/js/stream.js"></script>
+<script src="/assets/js/reveal.js" defer></script>
+</body>
+</html>

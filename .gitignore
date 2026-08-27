@@ -3,3 +3,6 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Zaemit AI tool config (auto-generated)
+.mcp.json
