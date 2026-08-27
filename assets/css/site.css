@@ -756,8 +756,22 @@ section {
   padding-bottom: clamp(40px, 6vw, 72px);
 }
 
-.hero h1 {
-  max-width: 18ch;
+/* The headline is a two-line lockup: "Speak your dream" / "before it fades."
+   Both halves have to fit, which pins the h1's width to a band measured against
+   its own font: "Speak your dream" is 8.48em wide, and "Speak your dream before
+   it" is 12.70em. Anything narrower than 8.48em drops to three lines; anything
+   from 12.70em up pulls "before it" onto line one and orphans "fades.".
+
+   15ch lands at 10.88em, near the middle of that band, and the hero's own
+   font-size clamp below keeps the column-to-type ratio inside it at every width.
+   Retype the headline and both numbers move, so re-measure rather than nudging. */
+.hero-grid h1 {
+  max-width: 15ch;
+  /* Gentler than the global h1's 6.2vw. Between 900px and 1333px the shared scale
+     outgrows the hero's copy column and forces a third line; this keeps the two
+     in step. Identical to the global scale at both ends, where the 2.5rem floor
+     and the 4.5rem ceiling take over. */
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
 }
 
 .hero .lede {
@@ -812,8 +826,11 @@ section {
 }
 
 @media (min-width: 900px) {
+  /* The copy column carries a two-line headline at this size, so it takes the
+     larger share. The art column holds only the orb, which is a soft radial with
+     no detail to lose, so it gives up the width. */
   .hero-grid {
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1.25fr 0.75fr;
   }
 
   .hero-art .phone {
@@ -1091,9 +1108,19 @@ section {
   color: var(--teal);
 }
 
+/* Left unmeasured this paragraph runs the full 1152px container, which stranded
+   "membership." alone on a second line on both closers. 58ch wraps it into two
+   near-even lines instead (635/574 on pricing, 610/636 on the landing page) and
+   sits next to the lede's 56ch rather than inventing a new measure.
+
+   `text-wrap: pretty` is the guard for the next copy edit, not for this one:
+   where it is supported the browser reflows to avoid a one-word last line. It is
+   ignored elsewhere, so the measure above is what actually does the work. */
 .closer p:not(.kicker) {
   color: var(--muted);
-  margin-top: 14px;
+  margin: 14px auto 0;
+  max-width: 58ch;
+  text-wrap: pretty;
 }
 
 /* ── Privacy pledge panel ───────────────────────────────────────────────────
