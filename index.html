@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Doromir — speak your dream before it fades</title>
@@ -21,10 +21,11 @@
      candidate. Preload the WebP so it is in flight before the CSS resolves the
      <picture>; the PNG fallback path is unaffected. -->
 <link rel="preload" as="image" href="/assets/img/screens/wake.webp" type="image/webp">
-<link rel="stylesheet" href="/assets/css/site.css"></head>
-<body class="zaemit-text-editing">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
 <a class="skip" href="#main">Skip to content</a>
-<canvas id="stream" aria-hidden="true" width="1653" height="6307" class="is-live"></canvas>
+<canvas id="stream" aria-hidden="true"></canvas>
 
 <header class="site-header">
   <div class="wrap">
@@ -94,15 +95,15 @@
             <div class="phone-screen">
               <picture>
                 <source srcset="/assets/img/screens/wake.webp" type="image/webp">
-                <img src="/assets/img/screens/wake.png" width="780" height="1688" loading="lazy" alt="The alarm ringing full-screen: a glowing green orb over the time 06:45, the greeting Good morning, and a Dismiss and speak button." class="">
+                <img src="/assets/img/screens/wake.png" width="780" height="1688" loading="lazy" alt="The alarm ringing full-screen: a glowing green orb over the time 06:45, the greeting Good morning, and a Dismiss and speak button.">
               </picture>
             </div>
           </div>
         </div>
         <div class="showcase-copy reveal" style="--d:1">
           <p class="kicker">Capture</p>
-          <h2 class="">Wake up. Start remembering.</h2>
-          <p class="">
+          <h2>Wake up. Start remembering.</h2>
+          <p>
             The alarm takes over the lock screen. One tap starts recording. No unlocking or hunting for an app while the dream fades away.
           </p>
         </div>
@@ -187,15 +188,15 @@
                 <source srcset="/assets/img/screens/dreammap-1.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-1.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
-              <picture class="map-focus zaemit-force-visible" aria-hidden="true">
+              <picture class="map-focus" aria-hidden="true">
                 <source srcset="/assets/img/screens/dreammap-2.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-2.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
-              <picture class="map-focus zaemit-force-visible" aria-hidden="true">
+              <picture class="map-focus" aria-hidden="true">
                 <source srcset="/assets/img/screens/dreammap-3.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-3.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
-              <picture class="map-focus zaemit-force-visible" aria-hidden="true">
+              <picture class="map-focus" aria-hidden="true">
                 <source srcset="/assets/img/screens/dreammap-4.webp" type="image/webp">
                 <img src="/assets/img/screens/dreammap-4.png" width="780" height="1688" loading="lazy" alt="">
               </picture>
@@ -266,7 +267,7 @@
                  the wordmark is already in the header and the copy beside this
                  says what the row is about. -->
             <div class="phone-screen">
-              <canvas class="phone-stream is-live" data-stream="" aria-hidden="true" width="336" height="727"></canvas>
+              <canvas class="phone-stream" data-stream aria-hidden="true"></canvas>
               <img class="phone-mark" src="/assets/img/icon.svg" width="240" height="240" alt="" aria-hidden="true" loading="lazy">
             </div>
           </div>
