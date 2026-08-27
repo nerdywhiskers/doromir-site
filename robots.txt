@@ -1,0 +1,11 @@
+# Everything here is public marketing copy. Nothing is disallowed.
+#
+# /delete-data/ and /404.html carry <meta name="robots" content="noindex">
+# instead of a rule here on purpose: a crawler has to fetch a page to read that
+# tag, so disallowing them would keep the noindex from ever being seen and leave
+# both URLs eligible for the index on inbound links alone.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://doromir.com/sitemap.xml

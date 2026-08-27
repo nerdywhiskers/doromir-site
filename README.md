@@ -103,6 +103,75 @@ through Jekyll.
 
 ---
 
+## Search engines
+
+There is no build step, so everything below is hand-written and has exactly one
+maintenance rule each. None of it is optional decoration: without it a crawler sees
+eight unrelated HTML files rather than one product.
+
+**`sitemap.xml`** lists the six indexable pages. `/delete-data/` and `/404.html`
+stay out because both are `noindex`. It carries no `<lastmod>`, `<changefreq>` or
+`<priority>` on purpose — Google ignores the last two, and a hand-written date on
+the first goes stale the moment a page changes without someone remembering to come
+back and edit it, which is read as an unreliable signal and scores worse than
+leaving it off. **Rule: add a `<url>` when you add a page.**
+
+**`robots.txt`** disallows nothing and points at the sitemap. The two `noindex`
+pages are deliberately *not* listed here — a crawler has to fetch a page to read
+its `noindex` tag, so blocking them in `robots.txt` would stop the tag from ever
+being seen and leave both URLs indexable on inbound links alone.
+
+**Every page carries `<link rel="canonical">` with its full `https://doromir.com/`
+address.** Pages can serve the same files from more than one hostname, and the
+canonical is what says which one counts. **Rule: a new page needs a canonical
+pointing at itself.** `/delete-data/` is the one exception — it points at
+`/privacy/`, the page that actually holds the section, because it is a redirect
+stub rather than a page of its own.
+
+**`og:image` is an absolute URL on every page.** Open Graph has no notion of the
+page it was found on, so a relative path resolves to nothing and every link
+preview on every platform silently falls back to a blank card. This is the one
+tag here where a plausible-looking value is the same as no value at all.
+
+The image is `assets/img/doromir-banner.png`, and `twitter:card` is
+`summary_large_image` so it renders as a wide card rather than a thumbnail. The
+banner is 1024x512, which is a 2:1 ratio against the 1.91:1 the platforms
+actually crop to, so a couple of percent comes off the top and bottom edges.
+Nothing sits close enough to either edge to be lost. **If it is ever re-cut, aim
+for 1200x630 and keep the wordmark and tagline out of the outer 5%.** Filenames
+are case-sensitive on Pages, so the tag and the file have to match exactly.
+
+**Titles carry the search terms; `og:title` carries the voice.** The `<title>` is
+the blue headline in a search result and the strongest single signal Google has
+for what a page is about, and nobody is searching for a brand they have not heard
+of yet. So the titles say what the thing is: `Doromir - private dream journal and
+alarm for Android`, `Dream journal FAQ - Doromir`. None of this is visible on the
+page. The h1 is a separate piece of text and still reads "Speak your dream before
+it fades."
+
+`og:title` on the landing page deliberately keeps that original line instead. A
+social card is being scrolled past by someone who was not looking for you, where
+a good line beats a matched keyword, and `og:title` counts for nothing in ranking.
+The two tags exist so they can differ. Keep titles under about 60 characters,
+which is where Google starts truncating. The legal pages are left alone; they
+should not be competing for anything.
+
+**Structured data.** The landing page carries a `MobileApplication` block in
+JSON-LD: what the app is, who publishes it, that it costs nothing. It holds no
+`aggregateRating`, and must not gain one until there are real ratings to report —
+invented ratings are the one thing in this vocabulary Google treats as a manual
+action rather than a mistake. Blog entries are marked up inline with microdata
+instead of a second JSON-LD block, so the machine-readable copy *is* the visible
+copy and the two cannot drift apart. See the dev log section.
+
+**Not present, and the reason.** There is no `FAQPage` block on `/faq/`. Google
+withdrew FAQ rich results for everything except government and health sites in
+2023, so the visible payoff is gone, and the cost is a hand-maintained second copy
+of twenty-three questions that would silently fall out of step with the page on the
+first edit. The FAQ's semantic `h3` questions already carry the meaning.
+
+---
+
 ## Keeping the claims true
 
 **Everything on `/privacy/` is a factual claim about the app, verified against the
@@ -209,7 +278,7 @@ deleted:
   therefore cannot carry comments of its own. Lift pieces out of it rather than
   inventing markup.
 
-Delete the `.log-empty` card once the first real entry lands. Three things matter:
+Four things matter:
 
 - **The `id` is the permalink**, and it is the date in `YYYY-MM-DD` form. It never
   changes once published, even if the headline does — a linked entry that moves is
@@ -219,6 +288,13 @@ Delete the `.log-empty` card once the first real entry lands. Three things matte
 - **Entry bodies reuse `.prose`**, the same typography the FAQ and the legal pages
   set, so `<h3>`, `<ul>`, `<ol>` and `<strong>` are already styled. Only `.log-date`,
   `.log-title` and `.log-figure` are the log's own.
+- **The `itemscope` and `itemprop` attributes are structured data, and they come
+  across with the skeleton.** Nothing renders differently without them, which is
+  exactly why they get stripped by accident. They mark the entry as a dated post
+  with a headline, using the tags it already has. Microdata rather than a second
+  JSON-LD block on purpose: the machine-readable copy *is* the visible copy, so an
+  edit to the headline cannot leave a stale duplicate behind the way a separate
+  block would.
 
 Screenshots go in `assets/img/blog/`, named for the entry that uses them, and get a
 `<figure class="log-figure">`. A capture off the phone adds `log-figure--portrait`
@@ -227,7 +303,7 @@ column's full width one is taller than the screen reading it, so the entry becom
 screenshot with text around it. The modifier holds it to a phone-sized column.
 
 The visitor-facing label is **Blog** everywhere it appears: the header link, the
-chip at the top of the page, and the `<title>`. The page's own headline is what
+chip at the top of the page, and the front of the `<title>`. The page's own headline is what
 says the rest. "Dev log" survives only in this README and in the source comments,
 where it describes the kind of thing the page is.
 

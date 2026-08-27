@@ -3,19 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blog — Doromir</title>
-<meta name="description" content="Notes from building Doromir: what shipped, what got cut, and the reasoning behind the parts of the app that are hard to explain from the outside.">
+<title>Blog — Doromir dream journal</title>
+<meta name="description" content="The Doromir dev log. Why the app exists, what is being built, and the thinking behind an offline dream journal that keeps every recording on your phone.">
 <meta name="theme-color" content="#000000">
 <!-- SVG first; browsers that understand it prefer it, the PNG stays for those
      that do not. -->
 <link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/img/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/icon.png">
+<link rel="canonical" href="https://doromir.com/blog/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Doromir">
+<meta property="og:url" content="https://doromir.com/blog/">
 <meta property="og:title" content="Blog — Doromir">
-<meta property="og:description" content="What shipped, what got cut, and why. Notes from building Doromir.">
-<meta property="og:image" content="/assets/img/icon.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="Follow the dream development. Why Doromir exists, and what is being built next.">
+<meta property="og:image" content="https://doromir.com/assets/img/doromir-banner.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="The Doromir mark on a dark marbled background, over the line: Your fully private Dream Journal.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
@@ -82,6 +88,12 @@
              pages set, so headings, lists, bold and links are already styled. Do
              not add inline styles to an entry; if something is unstyled, it belongs
              in site.css where every entry gets it.
+           - The `itemscope` and `itemprop` attributes are structured data, not
+             styling, and nothing on the page renders differently without them.
+             They mark the entry as a dated post with a headline using the tags it
+             already has, so a search engine reads the same words the reader does
+             and there is no second copy of the entry to keep in step. They come
+             across with the skeleton. Leave them on.
 
          Screenshots go in `assets/img/blog/`, named for the entry that uses them.
          A wide capture uses `.log-figure` on its own. A capture off the phone is
@@ -91,13 +103,15 @@
          Note that HTML comments do not nest, so neither template block below can
          carry comments of its own. The reference entry describes itself instead.
     -->
-    <div class="log">
+    <div class="log" itemscope itemtype="https://schema.org/Blog">
 
-      <article class="glass prose log-entry reveal" id="2026-08-26">
+      <article class="glass prose log-entry reveal" id="2026-08-26"
+               itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
         <p class="log-date">
-          <a href="#2026-08-26"><time datetime="2026-08-26">26 August 2026</time></a>
+          <a href="#2026-08-26" itemprop="url"><time datetime="2026-08-26" itemprop="datePublished">26 August 2026</time></a>
         </p>
-        <h2 class="log-title">Why Doromir?</h2>
+        <h2 class="log-title" itemprop="headline">Why Doromir?</h2>
+        <meta itemprop="author" content="Nerdy Whiskers">
 
         <p>
           I've always wanted to get better at dream recall. Years ago, I dabbled in
@@ -134,11 +148,13 @@
            below, paste it at the top of `.log`, and replace the three dates and
            the two lines of copy. Keep this block here for next time.
 
-      <article class="glass prose log-entry reveal" id="2026-01-01">
+      <article class="glass prose log-entry reveal" id="2026-01-01"
+               itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
         <p class="log-date">
-          <a href="#2026-01-01"><time datetime="2026-01-01">1 January 2026</time></a>
+          <a href="#2026-01-01" itemprop="url"><time datetime="2026-01-01" itemprop="datePublished">1 January 2026</time></a>
         </p>
-        <h2 class="log-title">The headline, written as a sentence</h2>
+        <h2 class="log-title" itemprop="headline">The headline, written as a sentence</h2>
+        <meta itemprop="author" content="Nerdy Whiskers">
         <p>
           The opening paragraph. One idea, what changed, and why it matters.
         </p>
@@ -152,9 +168,10 @@
            describes itself, because a commented block cannot hold comments. Read
            it, take the parts an entry needs, and leave the rest here.
 
-      <article class="glass prose log-entry reveal" id="2026-01-01">
+      <article class="glass prose log-entry reveal" id="2026-01-01"
+               itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
         <p class="log-date">
-          <a href="#2026-01-01"><time datetime="2026-01-01">1 January 2026</time></a>
+          <a href="#2026-01-01" itemprop="url"><time datetime="2026-01-01" itemprop="datePublished">1 January 2026</time></a>
         </p>
         <h2 class="log-title">A headline written as a sentence, not a label</h2>
 
