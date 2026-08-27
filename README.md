@@ -103,6 +103,52 @@ through Jekyll.
 
 ---
 
+## Search engines
+
+There is no build step, so everything below is hand-written and has exactly one
+maintenance rule each. None of it is optional decoration: without it a crawler sees
+eight unrelated HTML files rather than one product.
+
+**`sitemap.xml`** lists the six indexable pages. `/delete-data/` and `/404.html`
+stay out because both are `noindex`. It carries no `<lastmod>`, `<changefreq>` or
+`<priority>` on purpose — Google ignores the last two, and a hand-written date on
+the first goes stale the moment a page changes without someone remembering to come
+back and edit it, which is read as an unreliable signal and scores worse than
+leaving it off. **Rule: add a `<url>` when you add a page.**
+
+**`robots.txt`** disallows nothing and points at the sitemap. The two `noindex`
+pages are deliberately *not* listed here — a crawler has to fetch a page to read
+its `noindex` tag, so blocking them in `robots.txt` would stop the tag from ever
+being seen and leave both URLs indexable on inbound links alone.
+
+**Every page carries `<link rel="canonical">` with its full `https://doromir.com/`
+address.** Pages can serve the same files from more than one hostname, and the
+canonical is what says which one counts. **Rule: a new page needs a canonical
+pointing at itself.** `/delete-data/` is the one exception — it points at
+`/privacy/`, the page that actually holds the section, because it is a redirect
+stub rather than a page of its own.
+
+**`og:image` is an absolute URL on every page.** Open Graph has no notion of the
+page it was found on, so a relative path resolves to nothing and every link
+preview on every platform silently falls back to a blank card. This is the one
+tag here where a plausible-looking value is the same as no value at all.
+
+**Structured data.** The landing page carries a `MobileApplication` block in
+JSON-LD: what the app is, who publishes it, that it costs nothing. It holds no
+`aggregateRating`, and must not gain one until there are real ratings to report —
+invented ratings are the one thing in this vocabulary Google treats as a manual
+action rather than a mistake. Blog entries are marked up inline with microdata
+instead of a second JSON-LD block, so the machine-readable copy *is* the visible
+copy and the two cannot drift apart. See the dev log section.
+
+**Not present, and the reason.** There is no `FAQPage` block on `/faq/`. Google
+withdrew FAQ rich results for everything except government and health sites in
+2023, so the visible payoff is gone, and the cost is a hand-maintained second copy
+of twenty-three questions that would silently fall out of step with the page on the
+first edit. The FAQ's semantic `h3` questions already carry the meaning.
+
+---
+
 ## Keeping the claims true
 
 **Everything on `/privacy/` is a factual claim about the app, verified against the
@@ -209,7 +255,7 @@ deleted:
   therefore cannot carry comments of its own. Lift pieces out of it rather than
   inventing markup.
 
-Delete the `.log-empty` card once the first real entry lands. Three things matter:
+Four things matter:
 
 - **The `id` is the permalink**, and it is the date in `YYYY-MM-DD` form. It never
   changes once published, even if the headline does — a linked entry that moves is
@@ -219,6 +265,13 @@ Delete the `.log-empty` card once the first real entry lands. Three things matte
 - **Entry bodies reuse `.prose`**, the same typography the FAQ and the legal pages
   set, so `<h3>`, `<ul>`, `<ol>` and `<strong>` are already styled. Only `.log-date`,
   `.log-title` and `.log-figure` are the log's own.
+- **The `itemscope` and `itemprop` attributes are structured data, and they come
+  across with the skeleton.** Nothing renders differently without them, which is
+  exactly why they get stripped by accident. They mark the entry as a dated post
+  with a headline, using the tags it already has. Microdata rather than a second
+  JSON-LD block on purpose: the machine-readable copy *is* the visible copy, so an
+  edit to the headline cannot leave a stale duplicate behind the way a separate
+  block would.
 
 Screenshots go in `assets/img/blog/`, named for the entry that uses them, and get a
 `<figure class="log-figure">`. A capture off the phone adds `log-figure--portrait`

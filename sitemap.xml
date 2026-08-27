@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Every indexable page on the site, and nothing else. /delete-data/ and /404.html
+  are noindex and stay out.
+
+  No <lastmod>, <changefreq> or <priority>. Google ignores the last two outright,
+  and there is no build step here to keep the first one honest, so a hand-written
+  date would go stale the first time a page changed without anyone remembering to
+  come back and edit it. A stale lastmod is read as an unreliable signal and is
+  worse than none. The one rule this file has: add a <url> when you add a page.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://doromir.com/</loc></url>
+  <url><loc>https://doromir.com/pricing/</loc></url>
+  <url><loc>https://doromir.com/faq/</loc></url>
+  <url><loc>https://doromir.com/blog/</loc></url>
+  <url><loc>https://doromir.com/privacy/</loc></url>
+  <url><loc>https://doromir.com/terms/</loc></url>
+</urlset>

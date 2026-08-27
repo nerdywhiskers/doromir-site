@@ -11,10 +11,13 @@
 <link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/img/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/icon.png">
+<link rel="canonical" href="https://doromir.com/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Doromir">
+<meta property="og:url" content="https://doromir.com/">
 <meta property="og:title" content="Doromir — speak your dream before it fades">
 <meta property="og:description" content="An alarm clock that wakes you into a voice recorder. Nothing leaves your phone.">
-<meta property="og:image" content="/assets/img/icon.png">
+<meta property="og:image" content="https://doromir.com/assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
 <!-- The hero screenshot is the largest thing above the fold and the page's LCP
@@ -22,6 +25,52 @@
      <picture>; the PNG fallback path is unaffected. -->
 <link rel="preload" as="image" href="/assets/img/screens/wake.webp" type="image/webp">
 <link rel="stylesheet" href="/assets/css/site.css">
+
+<!-- Structured data. Says in machine terms what the page already says in copy:
+     what this is, who publishes it, and that it costs nothing. Search engines do
+     not read a marketing page's claims, so without this the app is just a website
+     to them.
+
+     Deliberately absent: `aggregateRating`. There are no ratings yet, and inventing
+     them is the one thing in this vocabulary that Google treats as a manual-action
+     offence rather than a mistake. `availability` is LimitedAvailability, not
+     InStock, because the app is a beta you have to subscribe to reach. When it
+     lands on the Play Store, that becomes InStock and `installUrl` gets the link. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Doromir",
+  "url": "https://doromir.com/",
+  "operatingSystem": "Android",
+  "applicationCategory": "HealthApplication",
+  "description": "An alarm clock and dream journal that wakes you into a voice recorder. The recording is transcribed on the phone, and nothing leaves the device.",
+  "image": "https://doromir.com/assets/img/icon.png",
+  "screenshot": [
+    "https://doromir.com/assets/img/screens/wake.png",
+    "https://doromir.com/assets/img/screens/journal.png",
+    "https://doromir.com/assets/img/screens/insights.png"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/LimitedAvailability"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nerdy Whiskers LLC",
+    "url": "https://doromir.com/",
+    "logo": "https://doromir.com/assets/img/icon.png",
+    "email": "support@doromir.com",
+    "sameAs": [
+      "https://doromir.substack.com/",
+      "https://x.com/NerdyWhisker",
+      "https://www.tiktok.com/@nerdywhiskers"
+    ]
+  }
+}
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
