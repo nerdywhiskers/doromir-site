@@ -133,6 +133,29 @@ page it was found on, so a relative path resolves to nothing and every link
 preview on every platform silently falls back to a blank card. This is the one
 tag here where a plausible-looking value is the same as no value at all.
 
+The image is `assets/img/doromir-banner.png`, and `twitter:card` is
+`summary_large_image` so it renders as a wide card rather than a thumbnail. The
+banner is 1024x512, which is a 2:1 ratio against the 1.91:1 the platforms
+actually crop to, so a couple of percent comes off the top and bottom edges.
+Nothing sits close enough to either edge to be lost. **If it is ever re-cut, aim
+for 1200x630 and keep the wordmark and tagline out of the outer 5%.** Filenames
+are case-sensitive on Pages, so the tag and the file have to match exactly.
+
+**Titles carry the search terms; `og:title` carries the voice.** The `<title>` is
+the blue headline in a search result and the strongest single signal Google has
+for what a page is about, and nobody is searching for a brand they have not heard
+of yet. So the titles say what the thing is: `Doromir - private dream journal and
+alarm for Android`, `Dream journal FAQ - Doromir`. None of this is visible on the
+page. The h1 is a separate piece of text and still reads "Speak your dream before
+it fades."
+
+`og:title` on the landing page deliberately keeps that original line instead. A
+social card is being scrolled past by someone who was not looking for you, where
+a good line beats a matched keyword, and `og:title` counts for nothing in ranking.
+The two tags exist so they can differ. Keep titles under about 60 characters,
+which is where Google starts truncating. The legal pages are left alone; they
+should not be competing for anything.
+
 **Structured data.** The landing page carries a `MobileApplication` block in
 JSON-LD: what the app is, who publishes it, that it costs nothing. It holds no
 `aggregateRating`, and must not gain one until there are real ratings to report —
@@ -280,7 +303,7 @@ column's full width one is taller than the screen reading it, so the entry becom
 screenshot with text around it. The modifier holds it to a phone-sized column.
 
 The visitor-facing label is **Blog** everywhere it appears: the header link, the
-chip at the top of the page, and the `<title>`. The page's own headline is what
+chip at the top of the page, and the front of the `<title>`. The page's own headline is what
 says the rest. "Dev log" survives only in this README and in the source comments,
 where it describes the kind of thing the page is.
 
