@@ -18,61 +18,20 @@ no package manager. Open `index.html` in a browser and it works.
 
 ---
 
-## Before this goes live
+## Download and updates
 
-Three placeholders are deliberately left in the source and are styled loud
-(amber, dashed underline) so they cannot ship unnoticed.
-
-### 1. `DOMAIN-TBD` — the contact email
-
-Appears in every page's footer and in the contact section of each legal page.
-Replace once the domain is bought:
-
-```powershell
-Get-ChildItem -Recurse -Filter *.html |
-  ForEach-Object {
-    (Get-Content $_.FullName -Raw) -replace 'DOMAIN-TBD', 'yourdomain.com' |
-      Set-Content $_.FullName -Encoding utf8
-  }
-```
-
-Then delete the now-pointless `<span class="todo">` wrappers around the addresses.
-
-Use a `support@` forwarding address on the domain, never a personal one — it is
-displayed publicly on the store listing.
-
-### 2. `STATE-TBD` — governing law in `/terms/`
-
-The US state the LLC is registered in. One occurrence, in section 14.
-
-### 3. Store link on the landing page
-
-The hero's button row is a pair: a non-interactive
-`<span class="btn btn--pending">Coming to Android</span>` beside the live
-`<a class="btn">` Subscribe action. The pending pill is the placeholder. Once the
-listing is live, swap it for an `<a class="btn" href="…">` and it picks up the real
-button styling (hard shadow, hover press) automatically.
-
-Once it does, the two buttons become two live actions of equal weight, which the row
-was not designed for. Demote the Subscribe one to `.btn--ghost` in the same release, so
-the store link is unambiguously the primary.
-
----
-
-## How someone joins the beta
-
-Three buttons point at `https://doromir.substack.com/subscribe`: one in the landing
-hero, and one closing each Availability section on `/` and `/pricing/`. Subscribing is
-the signup, because the invites go out through the publication, so the site never has to
-collect an address itself. **All three carry the same label and the same Substack mark.**
-Changing one means changing all three.
+The Android beta is available on [Google Play](https://play.google.com/store/apps/details?id=com.nerdywhiskers.dreamapp&hl=en).
+The landing hero and the Availability sections on `/` and `/pricing/` link directly to
+the listing. Each uses the primary `.btn` style for the store and a secondary
+`.btn--ghost` link to `https://doromir.substack.com/subscribe` for updates. The
+newsletter is optional and does not gate installation.
 
 This is a plain link, not Substack's `/embed` iframe, and that is deliberate. The iframe
 renders Substack's own white panel at a fixed 480px, which overflows a phone and cannot
 be restyled from this side because it is cross-origin. It also loads third-party script
 and cookies onto the same page as the "No analytics, no ads, no trackers" pledge. A link
 keeps the site's own button, costs no network request, and hands the email field to
-Substack, which is where it has to be validated anyway.
+Substack, which validates newsletter subscriptions.
 
 The closer rows use `.btn-row .btn-row--center`. `.closer` centres its *text*, but a flex
 row does not inherit that, so without the modifier the button sits at the left edge under
@@ -237,19 +196,15 @@ so, and **all three are load-bearing** because the section carries no explanator
 
 1. the `Planned` kicker on each card,
 2. the `Not yet available` line where a second price would normally sit,
-3. `.tier--planned`'s dashed, shadowless border — the same not-yet-a-link treatment
-   `.btn--pending` gives the store button on the landing page.
+3. `.tier--planned`'s dashed, shadowless border.
 
 Remove any one and the section reads as a store, which would mislead the first person
 who tries to buy. **If either plan ever ships, all three go in the same release**, and
 terms §12 has to stop saying Doromir is provided free of charge.
 
-Both closers also promise **a free lifetime membership to the first 100 users.** Nothing
-counts them. They now point at the Doromir Substack instead of the
-`support@doromir.com` inbox, so the subscriber list, which Substack orders by signup
-date, is the closest thing to a record. It is still not a list of the first 100 *users*,
-so either keep the count by hand as invites go out, or take the sentence down. It is the
-one claim on the site that can be quietly broken by simply not tracking it.
+Both closers also promise **a free lifetime membership to the first 100 users.** The
+static site does not count installs or identify those users. Track the offer through a
+separate process or remove the claim.
 
 Prices and contents last set 2026-08-23 (Plus $4.99/mo; Lifetime $49.99 once). They
 descend from Scenario C of
@@ -326,8 +281,8 @@ the publisher, not to Doromir the product, which is why their `aria-label`s say 
 The Substack is the exception. `doromir.substack.com` is the app's own publication, so
 its `aria-label` reads "Doromir on Substack". Nerdy Whiskers keeps a separate general dev
 log at `nerdywhiskers.substack.com`; this site deliberately does not link it, because the
-Availability closer sends beta signups to the Doromir publication and two Substack links
-in one footer would split them.
+Availability closers offer newsletter updates through the Doromir publication and two
+Substack links in one footer would split them.
 
 They are inline SVG rather than an icon font or a sprite, for the same reason
 everything else here is: no network request, no dependency, and `currentColor` so

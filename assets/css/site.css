@@ -547,6 +547,12 @@ main > .wrap > .chip:first-child {
   height: 20px;
 }
 
+.btn .play-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
 /* Header-sized. The press physics are the same gesture at a smaller scale — the
    shadow and its hover growth shrink with the button, so it reads as the same
    object rather than a different one. */
@@ -584,24 +590,6 @@ main > .wrap > .chip:first-child {
 
 .btn--ghost:active {
   box-shadow: 2px 2px 0 var(--shadow-rose);
-}
-
-/* Not-yet-a-link: the app is not on the store yet, so the primary CTA is a
-   status, not a button. It keeps the button's shape but none of its affordance —
-   no shadow, no hover, no pointer. */
-.btn--pending {
-  background: transparent;
-  border-color: var(--border-rose-50);
-  border-style: dashed;
-  color: var(--rose);
-  box-shadow: none;
-  cursor: default;
-}
-
-.btn--pending:hover {
-  transform: none;
-  box-shadow: none;
-  color: var(--rose);
 }
 
 .btn-row {
@@ -1205,10 +1193,9 @@ section {
 
    Free gets the app's full active-surface treatment — solid 2px border plus the
    hard non-blurred offset shadow, both in teal — the same pairing `.pledge` uses,
-   because this is the same claim about trust. The planned tiers get `.btn--pending`'s
-   treatment instead: the shape kept, the affordance removed. Dashed and shadowless
-   is what this system already means by "real, but not yet something you can act
-   on", and it stops two unbuilt tiers from reading as products. */
+   because this is the same claim about trust. The planned tiers keep their shape but
+   use a dashed border and no shadow. This treatment signals that those tiers are
+   planned and stops them from reading as products available to buy. */
 .tier {
   padding: clamp(24px, 3.6vw, 40px);
 }

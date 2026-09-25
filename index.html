@@ -36,15 +36,15 @@
 
      Deliberately absent: `aggregateRating`. There are no ratings yet, and inventing
      them is the one thing in this vocabulary that Google treats as a manual-action
-     offence rather than a mistake. `availability` is LimitedAvailability, not
-     InStock, because the app is a beta you have to subscribe to reach. When it
-     lands on the Play Store, that becomes InStock and `installUrl` gets the link. -->
+     offence rather than a mistake. The Android beta is available on Google Play,
+     so `availability` is InStock and `installUrl` points to its listing. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "MobileApplication",
   "name": "Doromir",
   "url": "https://doromir.com/",
+  "installUrl": "https://play.google.com/store/apps/details?id=com.nerdywhiskers.dreamapp&hl=en",
   "operatingSystem": "Android",
   "applicationCategory": "HealthApplication",
   "description": "An alarm clock and dream journal that wakes you into a voice recorder. The recording is transcribed on the phone, and nothing leaves the device.",
@@ -58,7 +58,7 @@
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
-    "availability": "https://schema.org/LimitedAvailability"
+    "availability": "https://schema.org/InStock"
   },
   "publisher": {
     "@type": "Organization",
@@ -114,13 +114,16 @@
           Fully private, nothing leaves your phone.
         </p>
         <p class="fineprint reveal" style="--d:3">
-          * Join the mailing list to try the beta version.
+          The Android beta is available on Google Play.
         </p>
         <div class="btn-row btn-row--stack reveal" style="--d:4">
-          <span class="btn btn--pending">Coming to Android</span>
-          <a class="btn" href="https://doromir.substack.com/subscribe" rel="noopener" target="_blank">
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.nerdywhiskers.dreamapp&amp;hl=en" rel="noopener" target="_blank">
+            <img class="play-icon" src="/assets/img/google-play.svg" width="20" height="20" alt="" aria-hidden="true">
+            Get it on Google Play
+          </a>
+          <a class="btn btn--ghost" href="https://doromir.substack.com/subscribe" rel="noopener" target="_blank">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836ZM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46ZM22.54 0H1.46v2.836h21.08V0Z"></path></svg>
-            Subscribe
+            Get updates
           </a>
         </div>
       </div>
@@ -367,21 +370,23 @@
     </div>
   </section>
 
-  <!-- The header's Download button lands here. Until there is a store listing to
-       point at, this section *is* the download: it says which platform, that it
-       is a beta, and how to get in. -->
+  <!-- The header's Download button lands here, where the Android beta is linked. -->
   <section class="closer" id="download">
     <div class="wrap">
       <p class="kicker reveal">Availability</p>
       <h2 class="reveal" style="--d:1">Android first. In beta now.</h2>
       <p class="reveal" style="--d:2">
-        There is no iOS version yet. Subscribe to the Doromir Substack if you want to
-        try the beta. First 100 users receive a free lifetime membership.
+        There is no iOS version yet. Download the Android beta on Google Play.
+        First 100 users receive a free lifetime membership.
       </p>
       <div class="btn-row btn-row--center reveal" style="--d:3">
-        <a class="btn" href="https://doromir.substack.com/subscribe" rel="noopener" target="_blank">
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.nerdywhiskers.dreamapp&amp;hl=en" rel="noopener" target="_blank">
+          <img class="play-icon" src="/assets/img/google-play.svg" width="20" height="20" alt="" aria-hidden="true">
+          Get it on Google Play
+        </a>
+        <a class="btn btn--ghost" href="https://doromir.substack.com/subscribe" rel="noopener" target="_blank">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836ZM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46ZM22.54 0H1.46v2.836h21.08V0Z"></path></svg>
-          Subscribe
+          Get updates
         </a>
       </div>
     </div>
